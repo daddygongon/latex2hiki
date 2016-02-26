@@ -1,6 +1,7 @@
 require 'optparse'
 require "latex2hiki/version"
-require "latex2hiki/latex2hiki"
+#require "latex2hiki/latex2hiki"
+require "latex2hiki/latex2hiki_new"
 
 module Latex2hiki
   # Your code goes here...
@@ -24,7 +25,6 @@ module Latex2hiki
         }
       end
       command_parser.parse!(@argv)
-      p ARGV[0]
       puts NKF.nkf("-w",Latex.new(File.read(ARGV[0])).to_hiki)
       exit
     end

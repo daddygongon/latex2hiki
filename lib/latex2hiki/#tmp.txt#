@@ -1,0 +1,8 @@
+text = <<"EOS"
+StartCharMetrics 315
+C32 ; WX 278 ; N space ; B 0 0 0 0 ;
+C32 ; WX 278 ; N exclam ; B 90 0 187 718 ;
+EndCharMetrics
+EOS
+
+def parse_afm(text)
