@@ -24,6 +24,8 @@ module Latex2hiki
         }
       end
       command_parser.parse!(@argv)
+      p ARGV[0]
+      puts NKF.nkf("-w",Latex.new(File.read(ARGV[0])).to_hiki)
       exit
     end
   end
