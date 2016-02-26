@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "latex2hiki"
+
+Latex2hiki::Command.run(ARGV)
