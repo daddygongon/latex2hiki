@@ -1,0 +1,65 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{fancybox}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+\end{flushleft}
+} }
+
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+
+
+\begin{document}
+\chapter{基本操作}
+\section{最初の一葉(FirstLeaf):文法とヘルプとプロット}
+
+\ChartElement{解説}
+\input{InputShiftEnter.tex} 
+\input{CommandTwo.tex} 
+\input{Help.tex} 
+
+\ChartElement{課題}
+\input{ExPlot.tex} 
+\input{ExPlot3d.tex} 
+
+\ChartElement{解答例}
+\input{ExAnsPlot.tex} 
+\input{ExAnsPlot3d.tex} 
+
+\ChartElement{補足}
+\input{Error.tex} 
+
+\end{document}

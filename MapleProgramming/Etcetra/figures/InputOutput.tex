@@ -1,0 +1,226 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: InputOutput.mw
+%% Generated: Sat Sep 01 07:24:50 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\begin{center}
+\textbf{ファイル入出力}\end{center}
+}
+\begin{maplelatex}\begin{flushright}
+Copyright @2006 by Shigeto R. Nishitani\end{flushright}
+\end{maplelatex}
+\begin{maplelatex}作ったanimationをgifファイルとして保存したり，測定データなどを読み込んで表示する手軽な方法がある．そのためにはファイルとのやりとりをする必要があります．\end{maplelatex}
+\subsection{\textbf{データの入出力}}
+\subsubsection{\textbf{\textit{ファイル名の取得}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ファイル名の取得は，Javaの標準関数を使ったMapletパッケージのGetFile関数を使う．GetFile関数を呼びだして開いたファイル選択ウィンドウでファイルを指定するとファイルのパスがfile1に入る．}\end{Maple Normal}
+
+\textbf{restart;}\textbf{with(Maplets[Examples]):}\textbf{file1:=GetFile();}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{file1 := "/Users/bob/MapleTest/data1.txt"}{\[\displaystyle {\it file1}\, := \,``/Users/bob/MapleTest/data1.txt''\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Windowsでは"\"を"/"に変換する必要がある．日本語のファイル名は文字化けして使えない．}\end{Maple Normal}
+
+\textbf{with(StringTools):}\textbf{file2:=SubstituteAll(file1,"\\\\","/");}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{file2 := "/Users/bob/MapleTest/data1.txt"}{\[\displaystyle {\it file2}\, := \,``/Users/bob/MapleTest/data1.txt''\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ファイル名の変更は手でやるか，あるいはSubstitute関数を使う．}\end{Maple Normal}
+
+\textbf{with(StringTools):}\textbf{file2:=Substitute(file1,"data1","data2");}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{file2 := "/Users/bob/MapleTest/data2.txt"}{\[\displaystyle {\it file2}\, := \,``/Users/bob/MapleTest/data2.txt''\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{簡単なデータのやりとり}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ファイルとの単純なデータのやりとりはwritedata,readdata関数を使う．例えば，以下のようなデータを作ったとする．これをファイルへ書きだすには，以下のようする．}\end{Maple Normal}
+
+\textbf{f1:=t->subs(\{a=10,b=40000,c=380,d=128\},a+b/(c+(t-d)\symbol{94}2) ):}\textbf{T:=[seq(f1(i)*(0.6+0.8*evalf(rand()/10\symbol{94}12)),i=1..256)]:}\textbf{writedata(file1,T);}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+同じようにして読み込んで表示させてみる．}\end{Maple Normal}
+
+\textbf{T:=readdata(file1,1):}\textbf{with(plots):}\textbf{listplot(T);}\mapleresult
+\mapleplot{InputOutputplot2d1.eps}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{少し高度なデータのやりとり}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+writeto関数で出力を外部ファイルへ切り替えることも可能．}\end{Maple Normal}
+
+\textbf{interface(quiet=true);}\textbf{writeto(file2);}\textbf{for i from 1 to 10 do}\textbf{s1:=data||i;}\textbf{printf("\%10.5f \%s\symbol{92}n",evalf(f1(i)),s1);}\textbf{end do:}\textbf{writeto(terminal):}\textbf{interface(quiet=false);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{false}{\[\displaystyle {\it false}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{true}{\[\displaystyle {\it true}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+C言語の標準的なデータ読み込みに似せた動きもできる．以下はfopen, readline, sscanf, fcloseを使ったデータの入力．}\end{Maple Normal}
+
+\textbf{fd:=fopen(file2,READ);}\textbf{for i from 1 to 2 do}\textbf{l1:=readline(fd);}\textbf{d:=sscanf(l1,"\%f \%s");}\textbf{end do;}\textbf{fclose(fd):}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{fd := 1}{\[\displaystyle {\it fd}\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{l1 := "  12.42292 data1"}{\[\displaystyle {\it l1}\, := \,``  12.42292 data1''\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{d := [12.42292, "data1"]}{\[\displaystyle d\, := \,[ 12.42292,``data1'']\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{l1 := "  12.46063 data2"}{\[\displaystyle {\it l1}\, := \,``  12.46063 data2''\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{d := [12.46063, "data2"]}{\[\displaystyle d\, := \,[ 12.46063,``data2'']\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+fdにファイル識別子(file descripter)を持っていき，readlineで1行ずつ読ませる．これをsscanfでformatにしたがってl1に格納していく．l1には自動的に適切な形式で変数を入れてくれる．}\end{Maple Normal}
+
+\textbf{d[1];}\textbf{whattype(d[1]);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{12.46063}{\[\displaystyle  12.46063\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{float}{\[\displaystyle {\it float}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{animationの出力}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+animationなどのgif形式のplotを外部ファイルへ出力して表示させるには，以下の一連のコマンドのようにする．}\end{Maple Normal}
+
+\textbf{plotsetup(gif,plotoutput=file2):}\textbf{display(tmp,insequence=true);}\textbf{plotsetup(default):}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+こいつをquicktimeなどに食わせれば，Maple以外のソフトで動画表示が可能となる．3次元図形の標準規格であるvrmlも同じようにして作成することが可能です(?vrml;参照)．}\end{Maple Normal}
+
+\end{maplegroup}
+\section{\textbf{linuxでのフィルターとしての利用法}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+linux版では文字ベースのmapleを使って，filterとして高度な作業をさせることが出来ます．スクリプトの中に外部ファイルとの入出力を組み込めば，いままで紹介してきた複雑な動作をブラックボックスの内部処理としてそのまま使えます．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+[bob@asura0 \symbol{126}/test]\$ cat test.txt}\end{Maple Normal}
+
+\begin{Maple Normal}{
+T:=readdata("./data101");}\end{Maple Normal}
+
+\begin{Maple Normal}{
+interface(quiet=true);}\end{Maple Normal}
+
+\begin{Maple Normal}{
+writeto("./result");}\end{Maple Normal}
+
+\begin{Maple Normal}{
+print(T[1]);}\end{Maple Normal}
+
+\begin{Maple Normal}{
+writeto(terminal);}\end{Maple Normal}
+
+\begin{Maple Normal}{
+interface(quiet=false);}\end{Maple Normal}
+
+\begin{Maple Normal}{
+とすれば，data101から読み込んだデータに何らかの処理を施した結果をresultに打ち出すことが可能．interface(quiet=true)で余計な出力を抑止しています．これをmapleに食わせると}\end{Maple Normal}
+
+\begin{Maple Normal}{
+[bob@asura0 \symbol{126}/test]\$ /usr/local/maple9.5/bin/maple < test.txt}\end{Maple Normal}
+
+\begin{Maple Normal}{
+|\\symbol{94}/|     Maple 9.5 (IBM INTEL LINUX)}\end{Maple Normal}
+
+\begin{Maple Normal}{
+.\_|\|   |/|\_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2004}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\  MAPLE  /  All rights reserved. Maple is a trademark of}\end{Maple Normal}
+
+\begin{Maple Normal}{
+<\_\_\_\_ \_\_\_\_>  Waterloo Maple Inc.}\end{Maple Normal}
+
+\begin{Maple Normal}{
+|       Type ? for help.}\end{Maple Normal}
+
+\begin{Maple Normal}{
+> T:=readdata("./data101");}\end{Maple Normal}
+
+\begin{Maple Normal}{
+T := [1.23, 2.35]}\end{Maple Normal}
+
+\begin{Maple Normal}{
+> interface(quiet=true);}\end{Maple Normal}
+
+\begin{Maple Normal}{
+false}\end{Maple Normal}
+
+\begin{Maple Normal}{
+true}\end{Maple Normal}
+
+\begin{Maple Normal}{
+> quit}\end{Maple Normal}
+
+\begin{Maple Normal}{
+bytes used=211000, alloc=262096, time=0.00}\end{Maple Normal}
+
+\begin{Maple Normal}{
+めでたく出力されているはず．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+[bob@asura0 \symbol{126}/test]\$ cat result}\end{Maple Normal}
+
+\begin{Maple Normal}{
+1.23}\end{Maple Normal}
+\end{maplegroup}
+\section{\textbf{演習}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

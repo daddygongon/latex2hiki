@@ -1,0 +1,85 @@
+
+!!!!Equals 
+
+1.  a=3, b=4としてa,bの四則演算をおこなえ．また，べき乗{{math 'a^b'}}を求めよ．
+<<<maple
+> a:=3:
+> b:=4:
+> a+b;a-b;a*b;a/b;a^b;      #省略
+>>>
+
+
+2.  eq1=3*x+4=2*x-2, a=2とした場合のeq1/a,eq1+aを試し，両辺を観察せよ．
+<<<maple
+> eq1:=3*x+4=2*x-2;
+> a:=2;
+> eq1/a;
+> eq1+2;
+>>>
+{{dmath ' eq1:=3x+4=2x-2  '}}
+{{dmath ' a:=2  '}}
+{{dmath ' \frac{3}{2}x+2 = x-1  '}}
+{{dmath ' 3x+6=2x
+ '}}
+
+
+3.  3点(1,2),(-3,4),(-1,1)を通る２次方程式を求めよ．
+
+まず2次関数を定義する．
+<<<maple
+> restart;
+> f:=x->a*x^2+b*x+c;
+>>>
+{{dmath ' f := x \mapsto ax^2+bx+c
+ '}}
+(1,2)を通ることから，f(1)=2が成立．これをeq1として保存．
+<<<maple
+> eq1:=f(1)=2;
+>>>
+{{dmath ' eq1 := a+b+c=2
+ '}}
+他の点も同様に
+<<<maple
+> eq2:=f(-3)=4;
+> eq3:=f(-1)=1;
+>>>
+{{dmath ' eq2\, := \,9\,a-3\,b+c=4  '}}
+{{dmath ' eq3\, := \,a-b+c=1  '}}
+{{dmath '  '}}
+
+この3個の連立方程式から，a,b,cを求めれば解となる．
+<<<maple
+> solve({eq1,eq2,eq3},{a,b,c});
+>>>
+{{dmath ' \left\{ a=1/2,b=1/2,c=1 \right\}
+ '}}
+
+
+4.  方程式{{math '\sin(x+1)-x^2=0'}}の２つの解をfsolveのヘルプを参照して求めよ．
+
+まず，2つの関数とみなしてプロット．
+<<<maple
+> plot([sin(x+1),x^2],x=-1..1);
+>>>
+||{{attach_view(Equalsplot2d1.png,Equals)}}||
+解が２つあることに注意．与えられた関数値が０となる方程式として定義し，これをsolveでとく．
+<<<maple
+> eq1:=sin(x+1)-x^2=0;
+> solve(eq1,x);
+>>>
+{{dmath ' eq1 := \,\sin \left( x+1 \right) -{x}^{2}=0  '}}
+{{dmath ' -1+{\it RootOf} \left( -\sin \left( {\it \_Z} \right) +1-2\,{\it \_Z}+{{\it \_Z}}^{2} \right)  '}}
+{{dmath '  '}}
+これでは解を求めてくれないので，fsolveで数値解を求める．
+<<<maple
+> fsolve(eq1,x);
+>>>
+{{dmath ' 0.9615690350
+ '}}
+これではxの負にあるもう一つの解がでない．これを解決するには，fsolveでxに初期値を入れて実行する．
+<<<maple
+> fsolve(eq1,x=-1..0);
+>>>
+{{dmath ' -.6137631294
+ '}}
+
