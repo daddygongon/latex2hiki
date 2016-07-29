@@ -1,0 +1,1869 @@
+{{toc}}
+
+!基本操作
+
+!!!解説
+
+
+!!入力領域と注意点(ShiftEnter) 
+Mapleを起動すると赤いプロンプトがともっている．ここに命令（コマンド）を打ち込んでMapleの計算部に『こちらの意志』を伝えて動作させる．例えば，
+<<<maple
+> plot(sin(x),x); 
+>>>
+と入力し，
+[ Enter ]
+を入力してみよ．sin関数がプロットされる．
+||{{attach_view(FirstLeafplot2d1.png,)}}||
+#  赤い領域のどこにカーソルがあっても
+[ Enter ]
+を入れれば，そのブロックごとMapleに命令として渡される．テキストでは
+[ Enter ]
+を省略している．
+#  テキストの修正は普通のワープロソフトと同じ．
+#  命令の入力ではなく，\textbf{改行だけをいれたいときはshift+enterを入れる．}
+#  命令は，enterを入れた順に解釈されるのであって，テキストの上下とは関係ない．
+
+
+
+!!命令コマンドの基本形(command();) 
+命令コマンドは全て次のような構造を取る．
+<<<maple
+> command(引数1,引数2,...);
+>>>
+あるいは
+<<<maple
+> command(引数1,オプション1,オプション2,...);
+>>>
+となる．
+
+#  ()の中の引数やオプションの間はコンマで区切る．
+#  最後の;（セミコロン）は次のコマンドとの区切り記号．
+#  セミコロン(;)をコロン(:)に替えるとMapleからの返答が出力されなくなるが，Mapleへの入力は行われている．
+#  C言語などの手続き型プログラミング言語の標準的なフォーマットと同じ．
+
+命令コマンドを，英語の命令文と解釈してもよい．たとえば，
+<<<maple
+sin(x)をxについて0からpiまでplotせよ．
+>>>
+という日本語を英語に訳すと，
+<<<maple
+plot sin(x) with x from 0 to Pi.
+>>>
+となる．この英語をMaple語に訳して
+<<<maple
+> plot(sin(x),x=0..Pi);
+>>>
+となったとみなせる．英語文法のVerb (動詞), Object (目的語)を当てはめると，Mapleへの命令は，
+<<<maple
+> Verb(Object, その他の修飾);
+>>>
+である．英文でピリオドを忘れるなと中学時代に言われたのと同じく，Mapleでセミコロンを忘れぬように．
+
+
+
+
+!!ヘルプ(?) 
+ヘルプは少し違った構文で，例えば先程のコマンドplotのヘルプを参照するときには，
+<<<maple
+> ?plot;
+>>>
+である．
+
+ヘルプ画面は，左側に操作アイコン，検索ウィンドウ，関連リストが表示され，右側にヘルプの本文がある．本文は，簡単な意味と使い方，説明，例，参照で構成される．ほとん
+どが日本語に訳されているが，古いテキストやあまり使わないコマンドは英語のまま．英語が分からなくても例を参考にすればだいたい予測できる．と言うより，日本語訳を読ん
+でも初めはチンプンカンプン．Mapleコマンドのコンセプトに慣れるまでは使用例をまねるのが一番の早道でしょう．
+
+
+!!初等関数とそのほかの関数(Functions)
+
+!!!解説
+
+
+!!初等関数(ElementaryFunctions) 
+
+!!!!四則演算とevalf 
+四則演算は"+-*/"．割り切れない割り算は分数のまま表示される．
+<<<maple
+> 3/4;
+>>>
+$$
+\frac{3}{4}
+$$
+強制的に数値(浮動小数点数)で出力するにはevalfを用いる．
+<<<maple
+> evalf(3/4);
+>>>
+$$
+0.7500000000
+$$
+
+!!!!多項式関数(polynom) 
+かけ算も省略せずに打ち込む必要がある．またベキ乗は\verb="^"=である．
+<<<maple
+> 3*x^2-4*x+3;
+>>>
+$$
+3x^2-4x+3
+$$
+
+!!!!平方根(sqrt) 
+平方根はsquare rootを略したsqrtを使う．
+<<<maple
+> sqrt(2);
+>>>
+$$
+\sqrt{2}
+$$
+
+
+!!!!三角関数(trigonal) 
+sin, cosなどの三角関数はラジアンで入力する．ただし， $\sin^2x$などは
+<<<maple
+> sin^2 x;
+>>>
+<<<maple
+Error, missing operator or `;`
+>>>
+ではだめで，
+<<<maple
+> sin(x)^2;
+>>>
+$$
+\sin^2x
+$$
+と省略せずに打ち込まねばならない．三角関数でよく使う定数$\pi$は"Pi"と入力する．Mapleは大文字と小文字を区別するので注意．
+
+ラジアン(radian)に度(degree)から変換するには以下のようにする．
+<<<maple
+> convert(90*degrees, radians);
+  convert(1/6*Pi,degrees);
+>>>
+$$
+\frac{1}{2}\pi
+$$
+$$
+30\,\, degrees
+$$
+
+!!!!その他の関数(inifnc) 
+その他の初等関数やよく使われる超越関数など，Mapleの起動時に用意されている関数のリストは，
+<<<maple
+> ?inifnc;
+>>>
+で得られる．
+
+
+
+!!ユーザー定義関数(unapply) 
+初等関数やその他の関数を組み合わせてユーザー定義関数を作ることができる．
+
+関数$f(x) = 2 x - 3$とおくとする場合，Mapleでは，
+<<<maple
+> f:=x->2*x-3;
+>>>
+$$
+f:= x \rightarrow 2 x - 3
+$$
+と，矢印で書く．これが関数としてちゃんと定義されているかは，いくつかの数値や変数を$f(x)$に代入して確認する．
+<<<maple
+> f(3);               #res: 3 (以降出力を省略する場合はこのように表記)
+  f(a);               #res: 2 a - 3
+  plot(f(x),x=-2..2);
+>>>
+||{{attach_view(Functionsplot2d1.png,)}}||
+もう一つ関数定義のコマンドとして次のunapplyも同じ意味である．
+<<<maple
+> f:=unapply(2*x-3,x);
+>>>
+$$
+f:= x \rightarrow 2 x - 3
+$$
+ただし，矢印での定義ではときどき変な振る舞いになるので，unapplyを常に使うようにこころがけたほうが安全．
+
+
+
+
+!!packageの呼び出し(with) 
+Mapleが提供する膨大な数の関数から，目的とするものを捜し出すにはhelpを使う．普段は使わない関数は，使う前に明示的に呼び出す必要がある．例えば，線形代数によく使われる関数群は，
+<<<maple
+> with(LinearAlgebra):
+>>>
+としておく必要がある．この他にもいくつもの有益な関数パッケージが用意されている．
+<<<maple
+> ?index[package];
+>>>
+で用意されているすべてのpackageが表示される．
+
+
+
+!!等号(Equals)
+
+
+!!!!等号の意味 
+等号は，数学でいろいろな意味を持つことを中学校で学ぶ．それぞれの状況による意味の違いを人間は適当に判断できるが，プログラムであるMapleでは無理．Mapleでは，それぞれ違った記号や操作として用意され，人間がMapleに指示する必要がある．
+
+
+!!変数への代入:= (colonequal) 
+変数に値を代入する時には:= (colonequal)を使う．例えば，
+<<<maple
+a=3, b=2のとき，a+bはいくらか？
+>>>
+という問題を，Mapleで解かす時には，
+<<<maple
+aに3, bに2を代入したとき，a+bはいくらか？
+>>>
+と読み直し，
+<<<maple
+> a:=3; #res: 3
+> b:=2; #res: 2
+> a+b;  #res: 5
+>>>
+式の定義も同様．以下は$ax+b=cx^2+dx+e$という式をeq1と定義している．
+<<<maple
+> eq1:=a*x+b=c*x^2+d*x+e;
+>>>
+$$
+3x+2=cx^2+dx+e
+$$
+a,bに値が代入されていることに注意．
+
+
+!!変数の初期化(restart) 
+一度何かを代入した変数を何も入れていない状態に戻す操作を変数の初期化という．すべての変数を一度に初期化するには，
+<<<maple
+> restart;
+>>>
+とする．なにか新たなひとまとまりの作業をするときには，このコマンドを冒頭に入れることを習慣づけるように．
+
+作業の途中でひとつの変数だけを初期化するには，シングルクォート’でくくる．
+<<<maple
+> a:='a';
+>>>
+$$
+a
+$$
+一時的代入にsubsがある．
+
+
+!!方程式の解(solve) 
+<<<maple
+3x=2を満たすxをもとめよ．
+>>>
+という問題は，
+<<<maple
+> solve(3*x=2,x);
+>>>
+$$
+\frac{2}{3}
+$$
+連立方程式は以下のとおり．
+<<<maple
+> solve({x+y=1,x-y=2},{x,y});
+>>>
+$$
+\left\{x = \frac{3}{2}, y = -\frac{1}{2} \right\}
+$$
+ただし，solveだけでは，x,yに値は代入されない．
+<<<maple
+> sol1:=solve({x+y=1,x-y=2},{x,y});
+> assign(sol1);
+>>>
+$$
+sol1 := \left\{x = \frac{3}{2}, y = -\frac{1}{2} \right\}
+$$
+とする必要がある．確認してみると
+<<<maple
+> x,y;
+>>>
+$$
+\frac{3}{2},-\frac{1}{2}
+$$
+となり，値が代入されていることがわかる．
+
+
+!!!!方程式の数値解(fsolve) 
+解析的に解けない場合は，数値的に解を求めるfsolveを使う．上でxにassignしているので，xを初期化している．
+<<<maple
+> x:='x';
+> fsolve(log(x)-exp(-x),x);
+>>>
+$$
+x := x 
+1.309799586 
+$$
+
+
+
+
+!!恒等式(Identity) 
+式の変形にも等号が使われる．例えば，
+$$
+(x-2)^2=x^2-4x+4
+$$
+というのが等号で結ばれている．式の変形とは，変数$x$がどんな値であっても成り立つ恒等的な変形である．
+
+この式変形も，問題としては，
+<<<maple
+(x-2)^2を展開(expand)せよ
+>>>
+と与えられるので，そのままMapleコマンドに読み替えて
+<<<maple
+> expand( (x-2)^2 );
+>>>
+$$
+x^2-4x+4
+$$
+とすればよい．因数分解(factor)や微分(diff)・積分(int)も同様に等号で結ばれるが，Mapleには操作を指示する必要がある．詳しくは他の単元で．
+
+
+!Programming
+
+!!!解説
+
+
+!!値の変数への代入(:=) 
+
+Mapleは変数の初期設定で型宣言をする必要がない．数式処理の章で示したとおり，変数への代入は:=を使う．変数a,bにそれぞれ10,3を代入し，a+bの結果をc
+に代入するというプログラムは以下の通り．
+<<<maple
+> a:=10: b:=3: c:=a+b;
+>>>
+$$
+c\, := \,13
+$$
+
+
+!!整数と浮動小数点数 
+浮動小数点数から整数に直すにはいくつかの関数がある.
+*  trunc：数値から数直線で 0 に向って最も近い整数
+*  round：数値の四捨五入
+*  floor：数値より小さな最も大きな整数
+*  ceil：数値より大きな最も小さな整数
+負の値の時に floor と trunc は違った値を返す.
+||{{attach_view(MapleProgrammingimage0.png,)}}||
+
+小数点以下を取りだすにはfrac が用意されている.
+<<<maple
+> frac(1.7);
+>>>
+$$
+0.7
+$$
+
+整数の割り算はirem(余り)とiquo(商).
+<<<maple
+> irem(7,3); #res: 1
+> iquo(7,3); #res: 2
+>>>
+
+
+!!出力(print, printf) 
+Mapleではデフォルトで結果が出力される．これを抑えるには行末の”；”を”：”に変える必要がある．出力を明示的におこなうにはprintを使う．デバッグの時に便利．
+<<<maple
+> x:=1: print(x); #res: 1
+>>>
+さらに，出力を整えるのに便利なprintf関数がある．これはC言語と同じ構文で，
+<<<maple
+> printf("Hello world!!\n");
+>>>
+<<<maple
+Hello world!!
+>>>
+と打ち込んでenterを押せば，出力が即座に表示される．値を表示するときには，
+<<<maple
+> i:=3: printf("%3d\n",i);
+>>>
+$$
+3
+$$
+となる．これは
+
+「変数iに入っている値を，3桁の整数形式で打ち出した後，改行せよ」
+
+と言う意味．%3dが出力の形式，\nが改行を意味する．OSによっては，\は¥と画面あるいはキーボードで表示されているかもしれない．実数の出力指定は%10.5fで，全部で10桁，小数点以下5桁で浮動小数点数を表示．複数の変数の出力は
+<<<maple
+> printf("%3d : %10.5f \n",i,a);
+>>>
+などとなる．
+
+!!!caption:printfの書式指定
+||%指定 || 意味 
+||%o || 整数を8進数で表示．
+||%d || 整数を10進数で表示．
+||%x,%X || 整数を16進数で表示．xは小文字，Xは大文字を使用．
+||%f || 浮動小数点数として表示．
+||%e,%E || 指数形式で表示．eは小文字，Eは大文字を使用．
+||%s || 文字列を出力． 
+
+
+
+!!ループ(Loop)
+
+!!!解説
+
+
+!!for-loop 
+繰り返す操作はloopでおこなう．もっとも単純なfor-loop．
+<<<maple
+> for i from 1 to 3 do 
+    i; 
+  end do;
+>>>
+$$
+1 
+2 
+3 
+$$
+初期値や増減を調整したfor-loop
+<<<maple
+> for i from 10 by -2 to 0 do
+    i; 
+  end do;
+>>>
+$$
+10 
+8 
+6 
+4 
+2 
+0 
+$$
+loop回数が少ないときは，loopの中身も出力される．これを止めるには，end do;の最後のセミコロンをコロンに変える．
+
+
+!!二重ループ 
+i,jという二つの変数を使って2重化したループ．
+<<<maple
+> for i from 1 to 3 do 
+    for j from 1 to 3 do 
+      print(i,j); 
+    end do; 
+  end do;
+>>>
+$$
+1, 1 
+1, 2 
+1, 3 
+2, 1 
+2, 2 
+2, 3 
+3, 1 
+3, 2 
+3, 3 
+$$
+while-loop も同じように使える.
+<<<maple
+> i:=0; 
+  while i<5 do 
+    i:=i+1;
+  end do;
+>>>
+$$
+0 
+1 
+2 
+3 
+4 
+5 
+$$
+
+
+!!!課題
+
+#  printfを使って次のように表示せよ．
+
+i) Hello world. ii) 1+1=2
+#  次の数を順に表示せよ．
+
+i) 1から5までの整数．ii) 5から1までの整数 ．iii) 1から10にある偶数．
+
+#  9x9表を作れ．
+#  1 から 5 までの和を求めよ.
+#  nを5にして，$n!=n \times (n-1) \times (n-1) \cdots 3 \times 2 \times 1$を求めよ.
+
+
+!!!解答例
+
+# 
+
+<<<maple
+> printf("Hello world!!\n");
+>>>
+<<<maple
+Hello world!!
+>>>
+<<<maple
+> i:=1; 
+> printf("%d+%d=%d\n",i,i,i+i);
+>>>
+$$
+ 1 
+1+1=2 
+$$
+
+# 
+i)
+<<<maple
+> for i from 1 to 5 do
+    i;
+  end do;
+>>>
+$$
+ 1 
+ 2 
+ 3 
+ 4 
+ 5 
+$$
+ii)
+<<<maple
+> for i from 5 to 1 by -1 do
+    i; 
+  end do;
+>>>
+$$
+ 5 
+ 4 
+ 3 
+ 2 
+ 1 
+$$
+iii)
+<<<maple
+> for i from 2 to 10 by 2 do
+    i; 
+  end do;
+>>>
+$$
+ 2 
+ 4 
+ 6 
+ 8 
+ 10 
+$$
+
+# 
+<<<maple
+> for i from 1 to 9 do 
+    for j from 1 to 9 do
+      printf("%4d",i*j); 
+    end do;
+    printf("\n"); 
+  end do;
+>>>
+<<<maple
+   1   2   3   4   5   6   7   8   9
+   2   4   6   8  10  12  14  16  18
+   3   6   9  12  15  18  21  24  27
+   4   8  12  16  20  24  28  32  36
+   5  10  15  20  25  30  35  40  45
+   6  12  18  24  30  36  42  48  54
+   7  14  21  28  35  42  49  56  63
+   8  16  24  32  40  48  56  64  72
+   9  18  27  36  45  54  63  72  81
+>>>
+
+<<<maple
+> sum1:=0; for i from 1 to 5 do 
+    sum1:=sum1+i; 
+  end do;
+>>>
+$$
+ 0 
+ 1 
+ 3 
+ 6 
+ 10 
+ 15 
+$$
+
+# 
+<<<maple
+> n:=5: 
+  total1:=1:
+  for i from 1 to n do 
+    total1:=total1*i; 
+  end do;
+>>>
+$$
+ 1 
+ 2 
+ 6 
+ 24 
+120 
+$$
+
+
+!!配列(List)
+
+!!!解説
+
+配列は変数を入れる箱が沢山用意されていると考えればよい．配列を使うときは，箱を指す数(示数，index)をいじっているのか，箱の中身(要素)をいじっているのかを区別すれば，動作を理解しやすい．Mapleにはいくつかの配列構造が用意されている．もっとも，頻繁に使うlistを示す．
+
+
+!!基本 
+リスト構造は，中に入れる要素を[]でくくる．
+<<<maple
+> restart; list1:=[1,3,5,7];
+>>>
+$$
+{\it list1}\, := \,[1,3,5,7]
+$$
+
+要素にアクセスするには，以下のようにインデックスを指定する．
+<<<maple
+> list1[2]; list1[-1]; list1[2..4];
+>>>
+$$
+3 
+7 
+[3, 5, 7] 
+$$
+-1,-2等は後ろから1番目，2番目を指す．C言語と違い0番目はない．
+
+<<<maple
+> list1[0];
+>>>
+<<<maple
+Error, invalid subscript selector
+>>>
+
+ひとつの要素を書き換えるには，以下のようにする．
+<<<maple
+> list1[3]:=x: list1;
+>>>
+$$
+[1, 3, x, 7]
+$$
+
+要素の数，および要素の中身を取り出すには以下のようにする．
+<<<maple
+> nops(list1); 
+> op(list1);
+>>>
+$$
+4 
+1, 3, x, 7 
+$$
+
+
+!!for-loopの省略形 
+for-loopを省略するのによく使う手を二つ.
+(#より後ろはコメント文です)
+
+
+!!!!配列の生成(seq) 
+<<<maple
+> aa:=[]; #空で初期化 
+  for i from 1 to 3 do 
+    aa:=[op(aa),i]; #付け足していく
+  end do:
+  print(aa);
+>>>
+$$
+{\it aa}\, := \,[] 
+[1, 2, 3] 
+$$
+同じことをseqを使って短く書くことができる．
+<<<maple
+> aa :=[seq(i,i=1..3)];
+>>>
+$$
+{\it aa}\, := \,[1,2,3]
+$$
+
+
+!!!!配列の和(sum) 
+<<<maple
+> n:=nops(aa): 
+  total:=0: 
+  for i from 1 to n do 
+    total:=total+aa[i]; 
+  end do:
+  print(total):
+>>>
+$$
+6
+$$
+
+同じことをsumを使って短く書くことができる．
+<<<maple
+> sum(aa[i],i=1..nops(aa));
+>>>
+<<<maple
+Error, invalid subscript selector
+>>>
+
+sumやseqを使っていると，このようなエラーがよくでる．これは，for-loopをまわすときにiに値が代入されているため引っかかる．変数を換えるか，iを初期化すればよい．
+<<<maple
+> i;
+>>>
+$$
+4
+$$
+
+                                      
+<<<maple
+> sum(aa[j],j=1..nops(aa));
+>>>
+$$
+6
+$$
+
+
+!!リストへの付け足し(append, prepend) 
+opを用いると，リストに新たな要素を前後，あるいは途中に付け足すことができる．
+<<<maple
+> list1:=[op(list1),9];
+>>>
+$$
+{\it list1}\, := \,[1,3,x,7,9]
+$$
+
+
+!!2つの要素の入れ替え 
+要素の３，４番目の入れ替えは以下の通り．
+<<<maple
+> tmp:=list1[3]: 
+  list1[3]:=list1[4]: 
+  list1[4]:=tmp: 
+  list1;
+>>>
+$$
+[1, 3, 7, x, 9]
+$$
+
+
+!!2次元配列(listlist) 
+[ ] を二重化することで 2 次元の配列を作ることも可能で,リストのリスト (listlist) と呼ばれる.
+<<<maple
+> l2:=[[1,2,3,4],[1,3,5,7]];
+>>>
+$$
+{\it l2}\, := \,[[1,2,3,4],[1,3,5,7]]
+$$
+
+                         
+要素へのアクセスは以下の通り．
+<<<maple
+> l2[2]; l2[2,3]; l2[2][3];
+>>>
+$$
+[1, 3, 5, 7] 
+5 
+5 
+$$
+
+
+!!listの表示(listplot) 
+listに入っている数値を視覚化するのにはlistplotが便利．
+<<<maple
+> la:=[1,2,3,4,3,2,1]; 
+  with(plots): 
+  listplot(la);
+>>>
+$$
+[1, 2, 3, 4, 3, 2, 1]
+$$
+||{{attach_view(MapleProgrammingplot2d1.png,)}}||
+
+
+
+
+!!!課題
+
+#  1から100までの整数のうち5個をランダムに含んだ配列を生成せよ．
+
+1から6までのランダムな数を生成する関数は，
+<<<maple
+> roll:=rand(1..6):
+>>>
+として作ることができる．実行は次の通り．
+<<<maple
+> seq(roll(),i=1..10);
+>>>
+$$
+5, 2, 5, 6, 2, 3, 4, 4, 6, 5
+$$
+#  さいころを１００回振って，出た目１から６が何回出たかを表示せよ．
+#  コイン６枚を一度に投げて，表向きの枚数を数えるプログラムを書け．
+#  0から9までの整数5個から5桁の整数を作れ．（１桁目が０になっても気にするな）
+#  小数点以下8桁のそれぞれの桁の数を配列に格納せよ．8桁の少数は以下のようにして作られる．
+#  255以下の10進数をランダムに生成して，8桁の2進数へ変換せよ．
+
+整数の割り算には irem(余り) と iquo(商) がある. 使用法は以下の通り．
+<<<maple
+> irem(7,3); #res: 1
+> iquo(7,3); #res: 2
+>>>
+
+
+!!!解答例
+
+# 
+<<<maple
+> roll:=rand(1..100): 
+  [seq(roll(),i=1..5)];
+>>>
+$$
+[27, 96, 17, 90, 34]
+$$
+
+# 
+<<<maple
+> roll:=rand(1..6):
+>>>
+$$
+[0, 0, 0, 0, 0, 0]
+$$
+<<<maple
+> for i from 1 to 100 do 
+    i1:=roll(); 
+    A[i1]:=A[i1]+1; 
+  end do:
+  A;
+>>>
+$$
+[16, 18, 21, 18, 18, 9]
+$$
+
+# 
+<<<maple
+> toss:=rand(0..1): 
+  n:=6: 
+  up:=0: 
+  for i from 1 to n do 
+    up:=up+toss(); 
+  end do:
+  up;
+>>>
+$$
+3
+$$
+
+# 
+<<<maple
+> roll:=rand(0..9): 
+  n:=5: 
+  A:=[seq(roll(),i=1..n)];
+>>>
+$$
+[5, 7, 3, 7, 6]
+$$
+
+<<<maple
+> sum1:=0:
+  for i from 1 to n do 
+    sum1:=sum1*10+A[i]; 
+  end do: 
+  sum1;
+>>>
+$$
+57376
+$$
+
+# 
+<<<maple
+> restart; 
+  n:=8:
+  roll:=rand(10^(n-1)..10^n): 
+  B:=evalf(roll()/10^n,8); 
+  A:=[]:
+>>>
+$$
+0.19550684
+$$
+
+<<<maple
+> B:=10*B; 
+  for i from 1 to n do 
+    A:=[op(A),floor(B)]; 
+    B:=(B-A[i])*10; 
+  end do: 
+  A;
+>>>
+$$
+1.95506840 
+[1, 9, 5, 5, 0, 6, 8, 4] 
+$$
+                          
+# 
+<<<maple
+> n:=8: 
+  roll:=rand(0..2^n-1): 
+  B:=roll();
+>>>
+$$
+246
+$$
+
+<<<maple
+> A:=[seq(0,j=1..n)]: 
+  for i from 1 to n do 
+    A[n-i+1]:=irem(B,2); 
+    B:=iquo(B,2);
+  end do: 
+  A;
+>>>
+$$
+[1, 1, 1, 1, 0, 1, 1, 0]
+$$
+
+
+
+!!交通整理(If)
+
+!!!解説
+
+
+!!if 
+もっとも簡単なif文の例．
+<<<maple
+> x:=-4:
+  if (x<0) then
+ 　　y:=-x; 
+  end if;
+>>>
+$$
+4
+$$
+
+例外付き．
+<<<maple
+> x:=3:
+  if (x<0) then 
+    y:=-x; 
+  else 
+    y:=x; 
+  end if;
+>>>
+$$
+3
+$$
+2個の条件がある例
+<<<maple
+> x:=3:
+  if (x<0) then 
+    y:=-x; 
+  elif (x>5) then 
+    y:=x; 
+  else
+    y:=2*x; 
+  end if;
+>>>
+$$
+6
+$$
+
+
+!!!!条件文に使える式と意味 
+関係演算子は<, <=, >, >=, =, <>で表記される．論理演算子にはand, or, xor, notがある．その他にもブール値を返す関数としてimplies, evalb, type などいくつかあり，条件分岐に使える．
+
+!!!caption:条件分岐のいくつかの例
+||xとyの値が一致 || (x=y) 
+||xとyの値が一致しない || (x<>y) 
+||条件文を複数つなぐ || ((x>0) and (x<4)) 
+||||  ((x<0) or (x>4)) 
+||||  not (x=0)  
+
+
+!!nextとbreak 
+do-loopの途中で流れを変更するための命令．nextはdo-loop を一回スキップ．breakはそこで do-loop
+を一つ抜ける．以下のコードの出力結果を参照．
+<<<maple
+> for i from 1 to 5 do 
+    if (i=3) then 
+	  next; 
+    end if; 
+    print(i); 
+  end do:
+>>>
+<<<maple
+#res: 1 2 4 5
+>>>
+
+<<<maple
+> for i from 1 to 5 do
+    if (i=3) then
+      break; 
+    end if; 
+    print(i); 
+  end do:
+>>>
+<<<maple
+#res: 1 2
+>>>
+
+
+
+!!!課題
+
+#  西暦を代入したら，明治，大正，昭和，平成で答えてくれるプログラムを作成せよ．西暦1868, 1912,1926,1989年をそれぞれの元年とする．
+#  整数を代入したら，それ以下の素数をすべて表示するプログラムを作れ．素数かどうかの判定はMapleコマンドのisprimeを用いよ．
+#  pが素数でp+2も素数のとき，これらは双子の素数と呼ばれる．10以上，100以下の双子の素数を全部見つけて出力せよ．
+#  素数判定を原理から実現せよ．
+ある数nが素数かどうか(自分自身の数nと1以外の数で割りきれないかどうか)を判定せよ．割り算の余り(剰余)はiremで求まる．例えば
+<<<maple
+> residue:=irem(9,2);
+>>>
+として変数residue(余りの英語)をprintfしてみよ．番兵を置いておいて，n-1から2までの数でnを次々と割っていき，一度でも割り切れれば番兵にマークをつける．ループが終わった後に番兵のマークを見て素数(prime number)かどうかを判定すればよい．
+#  うるう年かどうかを表示するプログラムをかけ．\\
+うるう年は4で割り切れる数の年．ただし，100で割り切れる年はうるう年でなく，400で割り切れる年はうるう年．
+#  ゴールドバッハの予想 \\
+「6以上の偶数は二つの素数の和として表わされる」という予想を100以下の偶数について検証せよ．あらかじめ100までの素数をリストアップしておいてそのなかから組み合わせを探すと便利．
+
+
+!!!解答例
+
+# 
+<<<maple
+> year:=1890; 
+  if year<1868 then printf("明治より前です．\n"); 
+  elif year<1912 then printf("明治%d年です．\n",year-1868+1); 
+  elif year<1926 then printf("大正%d年です．\n",year-1912+1); 
+  elif year<1989 then printf("昭和%d年です．\n",year-1926+1); 
+  elif year<2011 then printf("平成%d年です．\n",year-1989+1); 
+  else printf("今年より後です．\n"); 
+  end;
+>>>
+<<<maple
+明治23年です．
+>>>
+
+# 
+<<<maple
+> n:=10:
+  for i from 1 to n do 
+    if (isprime(i)) then 
+      print(i); 
+    end if; 
+  end do;
+>>>
+<<<maple
+#res: 2 3 5 7
+>>>
+
+# 
+<<<maple
+> for i from 10 to 100-2 do 
+    if (isprime(i) and isprime(i+2)) then 
+      print(i,i+2);
+    end if; 
+  end do;
+>>>
+<<<maple
+                                    11, 13
+                                    17, 19
+                                    29, 31
+                                    41, 43
+                                    59, 61
+                                    71, 73
+>>>
+
+# 
+<<<maple
+> n:=12: 
+  banpei:=0:
+  for i from 2 to n-1 do 
+    residue:=irem(n,i); 
+    # print(n,residue): 
+    if residue=0 then 
+      banpei:=1; 
+      break; 
+    end if; 
+  end do: 
+  if banpei=1 then 
+    printf("%d is not prime number.\n",n); 
+  else 
+    printf("%d is prime number.\n",n); 
+  end if;
+>>>
+<<<maple
+12 is not prime number.
+>>>
+
+# 
+<<<maple
+> year:=[2010,1984,2004,1800,1900,1600,2000]: 
+  for i from 1 to nops(year) do 
+    if (irem(year[i],400)=0) then 
+      printf("%d is a leap year.\n",year[i]); 
+    elif (irem(year[i],4)=0) and (irem(year[i],100)<>0) then
+      printf("%d is a leap year.\n",year[i]); 
+    else printf("%d is not a leap year.\n",year[i]); 
+    end if;
+  end do;
+>>>
+<<<maple
+2010 is not a leap year. 
+1984 is a leap year. 
+2004 is a leap year. 
+1800 is not a leap year. 
+1900 is not a leap year. 
+1600 is a leap year. 
+2000 is a leap year.
+>>>
+
+別解
+<<<maple
+> for i from 1 to nops(year) do 
+    if (irem(year[i],4)=0) and ((irem(year[i],100)<>0) or (irem(year[i],400)=0)) then 
+      printf("%d is a leap year.\n",year[i]); 
+    else 
+      printf("%d is not a leap year.\n",year[i]); 
+    end if;
+  end do;
+>>>
+<<<maple
+略
+>>>
+
+# 
+<<<maple
+> prime1:=[]; 
+  for i from 1 to 100 do 
+    if isprime(i) then 
+      prime1:=[op(prime1),i];
+    end if; 
+  end do; 
+  prime1;
+>>>
+<<<maple
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
+73, 79, 83, 89, 97]
+>>>
+<<<maple
+> nops(prime1);
+>>>
+$$
+25
+$$
+
+<<<maple
+> for i from 6 to 100 by 2 do 
+    for j1 from 1 to nops(prime1) do 
+      for j2 from 1 to nops(prime1) do 
+        if i=(prime1[j1]+prime1[j2]) then
+          print(i,prime1[j1],prime1[j2]); 
+          break;
+        end if 
+      end do; 
+      if j2<=nops(prime1) then
+        break; 
+      end if; 
+    end do; 
+  end do;
+>>>
+<<<maple
+6, 3, 3
+8, 3, 5
+10, 3, 7
+中略
+98, 19, 79
+100, 3, 97
+>>>
+                                  
+
+
+!!手続き関数(Procedure)
+
+!!!解説
+
+
+!!基本 
+複雑な手続きや，何度も繰り返すルーチンはprocで作る．
+procは以下のようにして作る．
+<<<
+ユーザ関数名:=proc(仮引数)
+  動作
+end proc;
+>>>
+<<<maple
+> test1:=proc(a) 
+    print(a); 
+  end proc:
+>>>
+procの呼び出しは，以下のようになる．
+<<<maple
+> test1(13);
+>>>
+$$
+13
+$$
+仮引数としてはどんな型(変数や配列)でもよい．複数指定するときにはコンマで区切る．仮引数をprocの中で変更することはできない．下で示すglobalで取り込むか，local変数にコピーして使う．
+
+
+!!戻り値 
+procの戻り値はreturnで指定される．return文がないときは，最後の動作結果が戻り値となる．
+<<<maple
+> test2:=proc(a) 
+    return a+1; 
+  end proc:
+>>>
+<<<maple
+> test2(13);
+>>>
+$$
+14
+$$
+
+
+!!グローバル(大域)，ローカル(局所)変数 
+procの内部だけで使われるのがlocal，外部を参照するのがglobal．global,localを省略してもMapleが適当に判断してくれるが，あまり信用せず，明示的に宣言した方が良い．宣言の仕方は以下の通り．
+<<<
+変数名:=proc(引数)
+  local 変数,変数...;
+  global 変数,変数...;
+  動作の記述
+end proc;
+>>>
+
+
+!!!課題
+
+#  三角形の面積 
+底辺と高さを引数として，面積を返す関数areaを作れ．
+
+#  MyIsprime
+前章の課題４で求めた素数判定プログラムをprocにせよ．
+
+#  ルートの距離
+
+二つの位置座標
+x1:=[0.0, 0.0]
+x2:=[1.0, 1.0]
+から距離を求めるMyDistance関数を作れ．
+
+次に，4つの位置座標
+x[1]=[0.0, 0.0]
+x[2]=[1.0, 1.0]
+x[3]=[1.0, 0.0]
+x[4]=[0.0, 1.0]
+を読み込んで，座標順に[1,2,3,4,1]と巡る距離を求めよ．
+
+#  最大数
+
+ランダムな整数が格納されたリストを受け取り，そのリスト中の最大数を返す関数MyMaxを作れ．1から100までのランダムな整数のリストは次のようにして作れる．
+<<<maple
+> roll:=rand(1..100): 
+  n:=50: 
+  A:=[seq(roll(),i=1..n)];
+>>>
+$$
+A\, := \,[45,96,6,98,59,44,100,38,69,27,96,17,90,34,18,52 
+   ,56,43,83,25,90,93,60,93,14,50,47,8,46,44,9,77,59 
+   ,16,1,70,77,39,92,71,67,78,51,53,12,19,63,40,90,3 
+$$
+
+
+!!!解答例
+
+# 
+<<<maple
+> area:=proc(base,height) 
+    base*height/2; 
+  end proc:
+>>>
+<<<maple
+> area(3,4); #res: 6
+>>>
+
+# 
+<<<maple
+> restart; 
+  n:=19: 
+  banpei:=0; 
+  for i from 2 to n-1 do 
+    amari:=irem(n,i);
+    print(amari): 
+    if amari=0 then 
+      banpei:=1; 
+      break;
+    end if; 
+  end do: 
+  if banpei=1 then 
+    print(n," is not prime number."); 
+  else 
+    print(n," is prime number."); 
+  end if;
+>>>
+$$
+0 
+1 
+1 
+1 
+19, "\, is\, prime\, number." 
+$$
+
+<<<maple
+> MyIsprime:=proc(n) 
+    local i,amari; 
+    for i from 2 to evalf(sqrt(n)) do
+      amari:=irem(n,i); 
+      if amari=0 then 
+        return false; 
+      end if; 
+    end do:
+    return true;
+  end proc:
+>>>
+
+<<<maple
+> MyIsprime(104729);
+>>>
+$$
+true
+$$
+
+#  
+<<<maple
+> restart; x1:=[0.0, 0.0]: x2:=[1.0, 1.0]:
+>>>
+
+<<<maple
+> MyDistance:=proc(x1,x2) 
+    local dx,dy; 
+    dx:=(x1[1]-x2[1]); 
+    dy:=(x1[2]-x2[2]);
+    sqrt(dx^2+dy^2); 
+  end proc:
+>>>
+<<<maple
+> MyDistance(x1,x2);
+>>>
+$$
+1.414213562
+$$
+<<<maple
+> x[1]:=[0.0, 0.0]: x[2]:=[1.0, 1.0]: x[3]:=[1.0, 0.0]: x[4]:=[0.0, 1.0]: x[5]:=x[1]: 
+  sum(MyDistance(x[i],x[i+1]),i=1..4);
+>>>
+$$
+4.828427124
+$$
+
+# 
+<<<maple
+> MyMax:=proc(A) 
+    local imax,i; 
+    imax:=0; 
+    for i from 1 to nops(A) do 
+      if A[i]>imax then 
+          imax:=A[i];
+      end if 
+    end do; 
+    return imax; 
+  end proc:
+>>>
+<<<maple
+> MyMax(A);
+>>>
+$$
+100
+$$
+
+
+
+!その他(Etcetra)
+
+!!ファイルの入出力(InputOutput)
+
+!!!解説
+
+自作したanimationをプレゼン資料に貼り付けたり，測定データなどを読み込んでMapleで手軽に表示，加工したくなります．このとき必要となるファイルとのやりとりを紹介します．
+
+
+!!ファイル名の取得 
+ファイル名の取得は，Javaの標準関数を使ったMapletパッケージのGetFile関数を使う．GetFile関数を呼びだして開いたファイル選択ウィンドウでファイルを指定するとファイルのパスがfile1に入る．
+<<<maple
+> restart; with(Maplets[Examples]): file1:=GetFile();
+>>>
+<<<maple
+                       "/Users/bob/MapleTest/data1.txt"
+>>>
+Windowsでは"\"を"/"に変換する必要がある．日本語のファイル名は文字化けして使えない．
+<<<maple
+> with(StringTools): file2:=SubstituteAll(file1,"\\\\","/");
+>>>
+<<<maple
+                       "/Users/bob/MapleTest/data1.txt"
+>>>
+ファイル名の変更は手でやるか，あるいはSubstitute関数を使う．
+<<<maple
+<<<maple
+> with(StringTools): file2:=Substitute(file1,"data1","data2");
+>>>
+<<<maple
+                       "/Users/bob/MapleTest/data2.txt"
+>>>
+
+
+!!簡単なデータのやりとり 
+ファイルとの単純なデータのやりとりはwritedata,readdata関数を使う．
+例えば，以下のようなデータ(T)を作ったとする．
+<<<maple
+> f1:=t->subs({a=10,b=40000,c=380,d=128},a+b/(c+(t-d)^2) ):
+> T:=[seq(f1(i)*(0.6+0.8*evalf(rand()/10^12)),i=1..256)]:
+>>>
+これをファイル(file1)へ書きだすには，以下のようにする．
+<<<maple
+> writedata(file1,T);
+>>>
+読み込んで表示させてみる．readdataのoption(=1)は一列のデータを読み込むことを意図している．
+<<<maple
+> T:=readdata(file1,1): 
+> with(plots): listplot(T);
+>>>
+||{{attach_view(InputOutputplot2d1.png,)}}||
+
+
+!!少し高度なデータのやりとり 
+writeto関数で出力を外部ファイルへ切り替えることも可能．
+<<<maple
+> interface(quiet=true); 
+  writeto(file2); 
+  for i from 1 to 10 do 
+    s1:=data||i;
+    printf("%10.5f %s\n",evalf(f1(i)),s1); 
+  end do: 
+  writeto(terminal):
+  interface(quiet=false);
+>>>
+<<<maple
+                                    false
+                                     true
+>>>
+C言語の標準的なデータ読み込みに似せた動きもできる．以下はfopen, readline, sscanf, fcloseを使ったデータの入力．
+<<<maple
+> fd:=fopen(file2,READ); 
+  for i from 1 to 2 do 
+    l1:=readline(fd); 
+    d:=sscanf(l1,"%f %s"); 
+  end do; 
+  fclose(fd):
+>>>
+<<<maple
+                                      1
+                              "  12.42292 data1"
+                             [12.42292, "data1"]
+                              "  12.46063 data2"
+                             [12.46063, "data2"]
+>>>
+fdにファイル識別子(file descripter)を持っていき，readlineで1行ずつl1に読ませる．これをsscanfでformatにしたがってdに格納していく．dには自動的に適切な形式で変数を入れてくれる．
+<<<maple
+> d[1]; whattype(d[1]);
+>>>
+<<<maple
+                                   12.46063
+                                    float
+>>>
+なお，C言語と違って，配列の最初を指すindexは"1"であることをお忘れなく．
+
+
+!!animationの出力 
+animationなどのgif形式のplotを外部ファイルへ出力して表示させるには，以下の一連のコマンドのようにする．
+<<<maple
+> plotsetup(gif,plotoutput=file2): 
+> display(tmp,insequence=true);
+> plotsetup(default):
+>>>
+こいつをquicktimeなどに食わせれば，Maple以外のソフトで動画表示が可能となる．3次元図形の標準規格であるvrmlも同じようにして作成することが可能です(?vrml;参照)．
+
+
+!!Mapleのフィルターとしての利用法 
+linux版やMac版では文字ベースのmapleを使って，filterとして高度な作業をさせることが出来ます．スクリプトの中に外部ファイルとの入出力を組み込めば，いままで紹介してきた複雑な動作をブラックボックスの内部処理としてそのまま使えます．
+<<<maple
+[bob@asura0 ~/test]$ cat test.txt
+T:=readdata("./data101");
+interface(quiet=true);
+writeto("./result");
+print(T[1]);
+writeto(terminal);
+interface(quiet=false);
+>>>
+とすれば，data101から読み込んだデータに何らかの処理を施した結果をresultに打ち出すことが可能．interface(quiet=true)で余計な出力を抑止しています．これをmapleに食わせると
+<<<maple
+[bob@asura0 ~/test]$ /usr/local/maple9.5/bin/maple < test.txt
+    |\^/|     Maple 9.5 (IBM INTEL LINUX)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2004
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+> T:=readdata("./data101");
+                           T := [1.23, 2.35]
+> interface(quiet=true);
+                                false
+                                 true
+> quit
+bytes used=211000, alloc=262096, time=0.00
+>>>
+めでたく出力されているはず．
+<<<maple
+[bob@asura0 ~/test]$ cat result
+1.23
+>>>
+
+Mac版でのパス(path)は下記を参照．
+<<<maple
+bob%  /Library/Frameworks/Maple.framework/Versions/15/bin/maple
+    |\^/|     Maple 15 (APPLE UNIVERSAL OSX)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2011
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+> quit
+memory used=1.2MB, alloc=1.4MB, time=0.07
+>>>
+
+
+
+!!!解説
+
+{{toc_here}}
+
+!!ランダムな配列の生成 
+1から100までの整数5個からなる配列の生成．
+<<<maple
+> restart: 
+  roll:=rand(1..100): 
+  n:=5: 
+  A:=[seq(roll(),i=1..n)];
+>>>
+<<<maple
+                             [93, 45, 96, 6, 98]
+>>>
+
+
+!!要素数の取り出し 
+for-loopで配列を使うときには，配列の大きさ(要素数)がfor-loopの終了条件になることが多い．
+リスト構造では単純にnopsとすればよい．
+<<<maple
+> nops(A);
+>>>
+<<<maple
+                                      5
+>>>
+
+
+!!すべての要素の表示 
+配列はおなじ箱が沢山用意されていると考えればよい．配列をfor-loopで使うときは，箱を指す数(示数，index)をいじっているのか，箱の中身(要素)をいじっているのかを意識すれば，動作を理解しやすい．
+<<<maple
+> for i from 1 to n do 
+    print(i,A[i]); 
+  end do;
+>>>
+<<<maple
+                                    1, 93
+                                    2, 45
+                                    3, 96
+                                     4, 6
+                                    5, 98
+>>>
+逆順の表示
+<<<maple
+> for i from n by -1 to 1 do
+    print(i,A[i]); 
+  end do;
+>>>
+<<<maple
+                                    5, 98
+                                     4, 6
+                                    3, 96
+                                    2, 45
+                                    1, 93
+>>>
+逆順の表示2
+<<<maple
+> for i from 1 to n do
+    print(n-i+1,A[n-i+1]); 
+  end do;
+>>>
+<<<maple
+                                    5, 98
+                                     4, 6
+                                    3, 96
+                                    2, 45
+                                    1, 93
+>>>
+
+!!和 
+<<<maple
+> sum1:=0: 
+  for i from 1 to n do 
+    sum1:=sum1+A[i]; 
+  end do: 
+  sum1;
+>>>
+<<<maple
+                                     338
+>>>
+
+!!!!課題：積を求めよ． 
+
+!!値の代入 
+<<<maple
+> k:=64: 
+  for i from 1 to n do 
+    A[i]:=A[i]/k; 
+  end do: 
+  A;
+>>>
+<<<maple
+                        [93/64, 45/64, 3/2, 3/32, 49/32]
+>>>
+
+!!!!課題：先の和と組み合わせて，全要素の和が1になるように規格化せよ． 
+
+!!!!課題：配列Bへ逆順に代入せよ． 
+
+
+!!一桁の整数5個から5桁の整数を作る 
+まず，一桁の整数でできるランダムな配列を作成する．
+<<<maple
+> roll:=rand(0..9): n:=5: A:=[seq(roll(),i=1..n)];
+>>>
+<<<maple
+                            A := [3, 5, 4, 0, 7]
+>>>
+<<<maple
+> sum1:=0; 
+  for i from 1 to n do 
+    sum1:=sum1*10+A[i]; 
+  end do: 
+  sum1;
+>>>
+<<<maple
+                                      0
+                                    35407
+>>>
+
+!!!!課題：上記と同様にして，10桁の2進数を10進数へ変換せよ 
+
+
+
+!!255以下の10進数をランダムに生成して，8桁の2進数へ変換せよ． 
+<<<maple
+> n:=8: 2^n;
+>>>
+<<<maple
+                                     256
+>>>
+<<<maple
+> roll:=rand(0..255):
+  B:=roll();
+>>>
+<<<maple
+                                     161
+>>>
+ちょっとカンニング．
+<<<maple
+> convert(B,binary);
+>>>
+<<<maple
+                            10100001
+>>>
+
+<<<maple
+> A:=[]:
+  for i from 1 to n do
+    A:=[irem(B,2),op(A)];
+    B:=iquo(B,2);
+  end do:
+  A;
+>>>
+$$
+[1, 0, 1, 0, 0, 0, 0, 1]
+$$
+
+
+!!!!課題：8桁の整数のそれぞれの桁の値を配列に格納せよ． 
+8桁の整数は以下のようにして作られる．
+<<<maple
+> n:=8; 
+  roll:=rand(10^(n-1)..10^n): 
+  B:=roll();
+>>>
+<<<maple
+                                      8
+                                   17914675
+>>>
+
+!!小数点以下8桁のそれぞれの桁の数を配列に格納せよ 
+<<<maple
+> n:=8: 
+  roll:=rand(10^(n-1)..10^n): 
+  B:=evalf(roll()/10^n);
+>>>
+<<<maple
+                                 0.6308447100
+>>>
+<<<maple
+> B:=10*B:
+  A:=[]:
+  for i from 1 to n do
+    A:=[op(A),floor(B)];
+    B:=(B-A[i])*10;
+  end do:
+  A;
+>>>
+$$
+[6, 3, 0, 8, 4, 4, 7, 1]
+$$
+
+
+!!最大数 
+<<<maple
+> roll:=rand(1..100): 
+  n:=5: 
+  A:=[seq(roll(),i=1..n)]; 
+  i_max:=A[1]: 
+  for i from 2 to n do 
+    if (A[i]>i_max) then 
+      i_max:=A[i]; 
+    end if; 
+  end do: 
+  i_max;
+>>>
+<<<maple
+                                      64
+>>>
+
+!!!!課題：最小値を求めよ． 
+
+
+!!ある値の上下で分けた個数 
+<<<maple
+> roll:=rand(1..100): 
+  n:=5: A:=[seq(roll(),i=1..n)];
+  i_div:=50:i_low:=0:i_high:=0: 
+  for i from 1 to n do 
+    if (A[i]>i_div) then
+      i_high:=i_high+1; 
+    else 
+      i_low:=i_low+1; 
+    end if 
+  end do; 
+  print(i_low,i_high);
+>>>
+<<<maple
+                                     2, 3
+>>>
+
+
+!!素数かどうかの判定 
+<<<maple
+> n:=10; 
+  for i from 1 to n do 
+    if (isprime(i)) then 
+      print(i); 
+    end if; 
+  end do;
+>>>
+
+
+!!2つの要素の入れ替え 
+<<<maple
+> roll:=rand(1..100): n:=5: A:=[seq(roll(),i=1..n)]; sel:=rand(1..n):
+  isel:=sel(); 
+  jsel:=sel(); 
+  a:=A[isel]; b:=A[jsel]; A[isel]:=b; A[jsel]:=a; 
+  A;
+>>>
+<<<maple
+                      [60, 93, 14, 50, 47]
+                               2
+                               4
+                               93
+                               50
+                               50
+                               93
+                      [60, 50, 14, 93, 47]
+>>>
+より短くするには，
+<<<maple
+> roll:=rand(1..100):
+  n:=5:
+  A:=[seq(roll(),i=1..n)];
+  sel:=rand(1..n):
+  isel:=sel();
+  jsel:=sel();
+  a:=A[isel];
+  A[isel]:=A[jsel];
+  A[jsel]:=a;
+  A;
+>>>
+<<<maple
+                       [9, 77, 59, 16, 1]
+                               5
+                               4
+                               1
+                               16
+                               1
+                       [9, 77, 59, 1, 16]
+>>>
+
+
+!!コインの表向きの枚数 
+<<<maple
+> roll:=rand(0..1):
+  n:=10:
+  up:=0:
+  for i from 1 to n do
+    trial:=roll();
+    if (trial=1) then 
+      up:=up+1;
+    end if;
+  end do:
+  up;
+>>>
+<<<maple
+                                      5
+>>>
+
+
+!!!!課題：1..6のサイコロを20回振って，出た目を記録せよ． 
+記録には，要素が0の配列を最初に用意し，出た目を示数にして配列の要素をひとつずつ増やす．
+
+!!2次元配列 
+2次元配列に対しても同様の操作ができる．ここでは列に対する規格化を示す．
+<<<maple
+> roll:=rand(1..5):
+  n:=3:
+  A:=[seq([seq(roll(),i=1..n)],j=1..n)];
+>>>
+<<<maple
+                     A := [[5, 2, 2], [2, 3, 2], [4, 2, 1]]
+>>>
+<<<maple
+> roll:=rand(1..5):
+  n:=3:
+  A:=[seq([seq(roll(),i=1..n)],j=1..n)];
+>>>
+<<<maple
+                            1, 1, 5
+                            1, 2, 2
+                            1, 3, 2
+                            2, 1, 2
+                            2, 2, 3
+                            2, 3, 2
+                            3, 1, 4
+                            3, 2, 2
+                            3, 3, 1
+>>>
+i,jの順序に注意．
+<<<maple
+> for j from 1 to n do
+    tmp:=0;
+    for i from 1 to n do
+      tmp:=tmp+A[i,j];
+    end do;
+    for i from 1 to n do
+      A[i,j]:=A[i,j]/tmp;
+    end do;
+  end do:
+  A;
+>>>
+<<<maple
+         [[5/11, 2/7, 2/5], [2/11, 3/7, 2/5], [4/11, 2/7, 1/5]]
+>>>
+

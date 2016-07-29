@@ -15,6 +15,7 @@ module MkMapleHiki
 
     def initialize(argv=[])
       @argv = argv
+      @scale = 80
     end
 
     def execute
@@ -30,10 +31,14 @@ module MkMapleHiki
           init(name)
           exit
         }
-        opt.on('--figures [NAME]','gather NAME directory.') { |name|
+        opt.on('--figures [NAME]','gather and convert figures in NAME dir.') { |name|
           name = name || './'
-          gather_figures(name)
+#          gather_figures(name)
+          convert_figures(name)
           exit
+        }
+        opt.on('--scale [VAL]%','set scale for convert figures.') { |val|
+          @scale = val.to_i
         }
         opt.on('--hiki [NAME]','make hiki contents from NAME directory.') { |name|
           @src=read_src(name)
@@ -59,7 +64,9 @@ module MkMapleHiki
       else
 #        dir_base_proc
       end
-      print toc
+      hiki_file = File.join(@src[:local_site],'text',File.basename(name))
+      File.write(hiki_file, toc)
+      FileUtils.chmod(0666,hiki_file,:verbose=>true)
     end
 
     def toc_file_base_proc(toc_file)
@@ -67,9 +74,8 @@ module MkMapleHiki
       parser=[]
       str_started=false
       lines.each{|line|
-        elements=line.match(/^\\(\w+){([\w\/\.\(\))ぁ-んァ-ヴ一-龠ーｱ-ﾝﾟﾞ・ｰｬｭｮｧ-ｫｯ]+)}/u)
+        elements=line.match(/^\\(\w+){([\w\/\.\(\):ぁ-んァ-ヴ一-龠ーｱ-ﾝﾟﾞ・ｰｬｭｮｧ-ｫｯ]+)}/u)
         next unless elements
-#        p [str_started,elements]
         if !str_started
           if elements[2]!='document'
             next
@@ -79,28 +85,35 @@ module MkMapleHiki
         end
         parser << [elements[1],elements[2]]
       }
-
-      toc="{{toc}}\n"
+#      p parser
+      converts = @src[:convert_specific_def]
+      level = @src[:level]
+      text="{{toc}}\n"
       parser.each{|elements|
+        tt=""
         case elements[0]
         when 'chapter'
-          toc << "\n!#{elements[1]}\n"
+          level.times{ tt << '!' }
+          text << "\n#{tt}#{elements[1]}\n"
         when 'section'
-          toc << "\n!!#{elements[1]}\n"
-        when 'subsection','ChartElement','ChartElementTwo'
-          toc << "\n!!!#{elements[1]}\n"
+          (level+1).times{ tt << '!' }
+          p [tt,elements[1]]
+          text << "\n#{tt}#{elements[1]}\n"
+        when 'subsection'#,'ChartElement','ChartElementTwo'
+          (level+2).times{ tt << '!' }
+          text << "\n#{tt}#{elements[1]}\n"
         when 'input'
+          p elements[1]
           latex_txt= File.read(File.join(File.dirname(toc_file),elements[1]))
-          converts = @src[:convert_specific_def]
           converts.each_pair{|key,val|
 #            latex_txt.gsub!(key,val)
           }
-#          p latex_txt
+#          hiki_txt = NKF.nkf("-w",Latex.new(latex_txt,:level=>level).to_hiki)
           hiki_txt = NKF.nkf("-w",Latex.new(latex_txt).to_hiki)
-          toc << "\n#{hiki_txt}\n"
+          text << "\n#{hiki_txt}\n"
         end
       }
-      return toc
+      return text
     end
 
     def gather_figures(name)
@@ -112,6 +125,23 @@ module MkMapleHiki
       files.each{|file|
         next if File.dirname(file)==target
         FileUtils.cp(file,target,:verbose=>true)
+      }
+    end
+
+    def convert_figures(name)
+      @src=read_src(name)
+      extension = @src[:fig_extension] || '.eps'
+      p file_dir =File.join(name,'figures')
+      files = Dir.entries(file_dir)
+      p target_dir = File.join(@src[:local_site],'cache','attach',File.basename(name))
+      FileUtils.mkdir_p(target_dir,:verbose=>true)
+      files.each{|file|
+        next if File.extname(file) != extension
+        p source = File.join(file_dir,file)
+        p name = File.basename(file,extension)
+        p target = File.join(target_dir,name+'.png')
+        p command = "convert #{source} -resize #{@scale}\% #{target}"
+        system command
       }
     end
 
