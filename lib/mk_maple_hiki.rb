@@ -41,8 +41,8 @@ module MkMapleHiki
           @scale = val.to_i
         }
         opt.on('--hiki [NAME]','make hiki contents from NAME directory.') { |name|
-          @src=read_src(name)
           name = name || './'
+          @src=read_src(name)
           make_hiki(name)
           exit
         }
