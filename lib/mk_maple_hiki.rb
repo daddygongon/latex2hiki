@@ -33,7 +33,7 @@ module MkMapleHiki
         }
         opt.on('--figures [NAME]','gather and convert figures in NAME dir.') { |name|
           name = name || './'
-#          gather_figures(name)
+          gather_figures(name)
           convert_figures(name)
           exit
         }
