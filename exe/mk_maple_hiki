@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "mk_maple_hiki"
+
+MkMapleHiki::Command.run(ARGV)

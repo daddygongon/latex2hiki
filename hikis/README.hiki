@@ -3,6 +3,7 @@
 latex文書をhiki構造に変換するCUI.
 
 単独のlatex fileをhiki化するだけでなく，目次にしたがって構造化されたhikiサイトを自動構築することを目指している．
+
 ||options||操作||DIR_NAME/.latex2hikiの初期値
 ||--init [DIR_NAME]|| ベースとなるlatexサイトを構築する
 ||--figures [DIR_NAME]|| 下部のdirectoriesから画像ファイルを集める ||fig_extension='.eps'
@@ -39,7 +40,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/latex2hiki. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [[Contributor Covenant|contributor-covenant.org]] code of conduct.
 
 
-## License
+!! License
 
 The gem is available as open source under the terms of the [[MIT License|http://opensource.org/licenses/MIT]].
 

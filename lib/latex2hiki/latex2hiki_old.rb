@@ -99,17 +99,6 @@ class Latex < String
         elsif is_itemize then
           output << "* "+$1+"\n"
         end
-
-      when /\\begin\{MapleInput\}/
-        output << "<<<maple\n"
-      when /\\end\{MapleInput\}/
-        output << ">>>\n"
-      when /\\begin\{MapleError\}/
-        output << "<<<maple\n"
-      when /\\end\{MapleError\}/
-        output << ">>>\n"
-
-
       when /\\begin\{quote\}/
         is_quote = true
       when /\\end\{quote\}/
@@ -133,19 +122,6 @@ class Latex < String
 
 
 
-      when /\\begin\{MapleOutput\}/,/\\begin\{MapleOutputGather\}/,/\\begin\{gather\}/ then
-        output << "\$\$\n"
-        is_quote_eq = true
-      when /\\end\{MapleOutput\}/,/\\end\{MapleOutputGather\}/,/\\end\{gather\}/ then
-        output << "\$\$\n"
-        is_quote_eq = false
-      when /\\notag/ then
-        output << $`+"\n"
-
-      when /\\MaplePlot\{(.*)\}\{(.*)\}/
-        target=File::basename($2,".eps")+".png"
-        output << "||{{attach_view(#{target},#{$target_dir})}}||\n"
-
       when /\\begin\{tabular\}/
         is_table = true
       when /\\end\{tabular\}/
@@ -155,8 +131,20 @@ class Latex < String
       when /\\begin\{center\}/
       when /\\end\{center\}/
       when /\\caption\{(.*)\}/
-#        output << "'''"+$1+"'''\n"
         output << "!!!caption:"+$1+"\n"
+
+      when /\\begin\{gather\}/ then
+        output << "\$\$\n"
+        is_quote_eq = true
+      when /\\end\{gather\}/ then
+        output << "\$\$\n"
+        is_quote_eq = false
+      when /\\notag/ then
+        output << $`+"\n"
+
+      when /\\MaplePlot\{(.*)\}\{(.*)\}/
+        target=File::basename($2,".eps")+".png"
+        output << "||{{attach_view(#{target},#{$target_dir})}}||\n"
 
       when /\\begin\{equation\*\}/
         is_quote_eq = true
@@ -165,7 +153,7 @@ class Latex < String
         else
           output << "\$\$\n"
         end
-      when /\\end\{equation\*\}/ 
+      when /\\end\{equation\*\}/
         is_quote_eq = false
         output << "\$\$\n"
       when /\\begin\{equation\}/
@@ -216,6 +204,5 @@ end
 
 if __FILE__ == $0
   $target_dir=File::dirname(ARGV[0])
-#  puts NKF.nkf("-e",Latex.new(File.read(ARGV[0])).to_hiki)
   puts NKF.nkf("-w",Latex.new(File.read(ARGV[0])).to_hiki)
 end
