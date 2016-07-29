@@ -58,7 +58,12 @@ module MkMapleHiki
     end
 
     def make_hiki(name)
-      toc_file = File.join(name,"#{File.basename(name)}.tex")
+      if name=='./'
+        toc_file = File.basename(Dir.pwd(name).tex) 
+      else
+        toc_file = File.join(name,"#{File.basename(name)}.tex")
+      end
+
       if File.exists?(toc_file) then
         toc=toc_file_base_proc(toc_file)
       else
