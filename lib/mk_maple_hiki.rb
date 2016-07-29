@@ -69,7 +69,12 @@ module MkMapleHiki
       else
 #        dir_base_proc
       end
-      hiki_file = File.join(@src[:local_site],'text',File.basename(name))
+      if name=='./'
+        hiki_file = File.join(@src[:local_site],'text',File.basename(Dir.pwd))
+      else
+        hiki_file = File.join(@src[:local_site],'text',File.basename(name))
+      end
+
       File.write(hiki_file, toc)
       FileUtils.chmod(0666,hiki_file,:verbose=>true)
     end
