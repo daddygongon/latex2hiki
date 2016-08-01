@@ -1,5 +1,5 @@
 :fig_extension: ".eps"
-:level: 2
+:level: 0
 :local_site: "/Users/bob/Sites/new_ist_data/maple_hiki_data"
 :convert_specific_def:
   MapleInput: quote

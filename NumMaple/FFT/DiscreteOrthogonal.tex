@@ -4,28 +4,28 @@
 \begin{quotation}
 直交多項式は，
 \begin{equation*}
-\varphi _{{n}} \left( x \right) =0 \,at\,x_1,\,x_2,\,\cdots x_{{n}}
+\varphi _{n} \left( x \right) =0 \,at\,x_1,\,x_2,\,\cdots x_{n}
 \end{equation*}
 である．$n-1$以下の次数$m,\,l$では，
 \begin{equation*}
-\sum _{i=1}^{n}\phi_{{l}} \left( x_{{i}} \right) \varphi _{{m}} \left( x_{{i}} \right) =\delta_{{{\it ml}}}C_{{l}}
+\sum _{i=1}^{n}\phi_{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) =\delta_{\it ml}C_{l}
 \end{equation*}
 が成り立つ．これは，直交関係と違い積分でないことに注意．証明は略．
 \end{quotation}
 これを使えば，この先程の直交関数展開
 \begin{equation*}
-F \left( x \right) =\sum _{l=1}^{N}a_{{l}}\varphi _{{l}} \left( x \right)
+F \left( x \right) =\sum _{l=1}^{N}a_{l}\varphi _{l} \left( x \right)
 \end{equation*}
-の両辺に$\varphi _{{m}} \left( x_{{i}} \right)$を掛けて$i$について和をとれば，
+の両辺に$\varphi _{m} \left( x_{i} \right)$を掛けて$i$について和をとれば，
 \begin{gather}
-\sum _{i=1}^{n} F \left(x _{i }\right)\phi _{m }\left(x _{i }\right) =
-\sum _{i=1}^{n}  \sum _{l=1}^{N}a_{{l}}\varphi _{{l}} \left( x_{{i}} \right) \varphi _{{m}} \left( x_{{i}} \right)  \notag \\
-=\sum _{l=1}^{N}  a_{{l}}\sum _{i=1}^{n}\varphi _{{l}} \left( x_{{i}} \right) \varphi _{{m}} \left( x_{{i}} \right) \notag \\
-=\sum _{l=1}^{N}a_{{l}}\delta_{{{\it ml}}}C_{{m}}=a_{{m}}C_{{m}} \notag
+\sum _{i=1}^{n} F \left(x _{i }\right)\phi _{m }\left(x _{i }\right) = \\
+\sum _{i=1}^{n}  \sum _{l=1}^{N}a_{l}\varphi _{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right)  \notag \\
+=\sum _{l=1}^{N}  a_{l}\sum _{i=1}^{n}\varphi _{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) \notag \\
+=\sum _{l=1}^{N}a_{l}\delta_{\it ml}C_{m}=a_{m}C_{m} \notag
 \end{gather}
 となる．つまり，
 \begin{equation*}
-a_{{m}}=\frac{1}{C_{{m}}} {\sum _{i=1}^{n}F \left( x_{{i}} \right) \varphi _{{m}} \left( x_{{i}} \right) }
+a_{m}=\frac{1}{C_{m}} {\sum _{i=1}^{n}F \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) }
 \end{equation*}
 となり，単純な関数の代入とかけ算で係数が決定される．
 

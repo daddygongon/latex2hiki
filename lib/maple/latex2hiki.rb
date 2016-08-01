@@ -13,9 +13,6 @@ class Latex < String
     @text.gsub!(/\\%/,'%')
     @text.gsub!("。","．")
     @text.gsub!("、","，")
-#    @text.gsub!(/\{\{(.+?)\}\}/,"\{#{$1}\}")
-#    @text.gsub!(/\{\{\{(.+?)\}\}\}/){|text| "\{#{$1}\}" }
-#    @text.gsub!(/\{\{(.+?)\}\}/){|text| "\{#{$1}\}" }
   end
 
   def strip_hiki
@@ -142,8 +139,9 @@ class Latex < String
       when /\\end\{MapleOutput\}/,/\\end\{MapleOutputGather\}/,/\\end\{gather\}/ then
         output << "\$\$\n"
         is_quote_eq = false
-      when /\\notag/ then
-        output << $`+"\n"
+#      when /\\notag/ then
+#        output << $`+"\n"
+#        output << 
 
       when /\\MaplePlot\{(.*)\}\{(.*)\}/
         target=File::basename($2,".eps")+".png"

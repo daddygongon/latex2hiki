@@ -159,12 +159,22 @@ module MkMapleHiki
         puts err
         exit
       end
+
       FileUtils.mkdir(File.join(name,'figures'),:verbose=>true)
-      @src = {:fig_extension => '.eps',
+
+      @src = {:fig_extension => '.eps',:level => 0,
         :local_site => '/Users/bob/Sites/new_ist_data/maple_hiki_data'}
       file=File.open(File.join(name,'.latex2hiki_rc'),'w')
       YAML.dump(@src,file)
       file.close
+
+      if File.exists?(File.join(name,'Rakefile')) then
+        print "Remove Rakefile from targetdir."
+      else
+        @source_path = File.expand_path('..', __FILE__)
+        FileUtils.cp(File.join(@source_path,'maple','new_rakefile'),
+                     File.join(name,'Rakefile'),:verbose=>true)
+      end
     end
   end
 end
