@@ -100,10 +100,12 @@ module MkMapleHiki
         tt=""
         case elements[0]
         when 'chapter'
+          next if level<0
           level.times{ tt << '!' }
           p [tt,elements[1]]
           text << "\n#{tt}#{elements[1]}\n"
         when 'section'
+          next if (level+1)<0
           (level+1).times{ tt << '!' }
           p [tt,elements[1]]
           text << "\n#{tt}#{elements[1]}\n"
@@ -113,9 +115,6 @@ module MkMapleHiki
         when 'input'
           p elements[1]
           latex_txt= File.read(File.join(File.dirname(toc_file),elements[1]))
-          converts.each_pair{|key,val|
-#            latex_txt.gsub!(key,val)
-          }
           hiki_txt = NKF.nkf("-w",Latex.new(latex_txt).to_hiki)
           text << "\n#{hiki_txt}\n"
         end
