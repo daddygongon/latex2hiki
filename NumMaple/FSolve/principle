@@ -1,0 +1,44 @@
+
+!!!二分法(bisection) 
+二分法は領域の端{{math 'x_1, x_2'}}で関数値{{math 'f(x_1),f(x_2)'}}を求め，中間の値を次々に計算して，解を囲い込んでいく方法である．
+<<<maple
+> plot(func(z),z=0..0.8,gridlines=true);
+>>>
+||{{attach_view(C2_fsolveplot2d2.png,FSolve)}}||
+
+||
+||{{math 'x_1'}} || {{math 'x_2'}} ||{{math 'f(x_1)'}} || {{math 'f(x_2)'}}  
+||0.0 || 0.8 ||　　　　　 ||　　　　　  
+||　　　　||  　　　　||  　　　　|| 　　　　 
+||　　　　||  　　　　||  　　　　|| 　　　　 
+||　　　　||  　　　　||  　　　　|| 　　　　 
+
+
+
+!!!Newton法(あるいはNewton-Raphson法) 
+Newton法は最初の点{{math 'x_1'}}から接線をひき，それがx軸(y=0)と交わった点を新たな点{{math 'x_2'}}とする．さらにそこでの接線を求めて...
+
+という操作を繰り返しながら解を求める方法である．関数の微分をdf(x)とすると，これらの間には
+||　　　　　　　　　　　　　　　||
+という関係が成り立つ．
+<<<maple
+> df:=unapply(diff(func(x),x),x);
+>>>
+||　　　　　　　　　　　　　　　||
+
+<<<maple
+> with(plots):with(plottools): 
+> x1:=1.0:x0:=0.0: 
+> p:=plot(func(z),z=0..1.1):
+> p1:=plot(df(x1)*(z-x1)+func(x1),z=0..1.1,color=blue):
+> p2:=[disk([x1,func(x1)],0.02), disk([x0,0],0.02)]:
+> display(p,p1,p2,gridlines=true);
+>>>
+||{{attach_view(C2_fsolveplot2d3.png,FSolve)}}||
+
+||
+||{{math 'x_1'}} ||{{math 'f(x_1)'}} || {{math 'df(x_1)'}}  
+||1.0　|| 　　　　 || 　　　　  
+||　　　　　　　|| 　　　　　　　 || 　　　　　　　  
+||　　　　　　　|| 　　　　　　　 || 　　　　　　　  
+||

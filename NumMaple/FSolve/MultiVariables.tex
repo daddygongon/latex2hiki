@@ -1,0 +1,25 @@
+2変数の関数では，解を求める一般的な手法は無い．この様子は実際に2変数の関数で構成される面の様子をみれば納得されよう．
+\begin{MapleInput}
+> restart;
+> f:=(x,y)->4*x+2*y-6*x*y; g:=(x,y)->10*x-2*y+1;
+\end{MapleInput}
+\begin{MapleOutputGather}
+f\, := \,( {x,y} )\mapsto 4\,x+2\,y-6\,xy \notag \\
+g\, := \,( {x,y} )\mapsto 10\,x-2\,y+1 \notag
+\end{MapleOutputGather}
+\begin{MapleInput}
+> p1:=plot3d({f(x,y)},x=-2..2,y=-2..2,color=red):
+  p2:=plot3d({g(x,y)},x=-2..2,y=-2..2,color=blue):
+  p3:=plot3d({0},x=-2..2,y=-2..2,color=gray):
+  with(plots):
+  display([p1,p2,p3],axes=boxed,orientation=[-150,70]);
+\end{MapleInput}
+\MaplePlot{60mm}{./figures/C2_fsolveplot3d5.eps}
+
+解のある程度近くからは，Newton法で効率良く求められる．
+\begin{MapleInput}
+> fsolve({f(x,y)=0,g(x,y)=0},{x,y});
+\end{MapleInput}
+\begin{MapleOutput}
+\left\{ x=- 0.07540291160,y= 0.1229854420 \right\}
+\end{MapleOutput}

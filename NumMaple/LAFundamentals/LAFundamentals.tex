@@ -1,0 +1,65 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{tabularx}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+\begin{document}
+\chapter{線形代数--写像(LAFundamentals)}
+\section{行列と連立方程式}
+\input{SimultaneousEquations.tex}
+\section{掃き出し}
+\input{LUDecomposition.tex}
+\section{写像}
+\input{Projection.tex}
+\section{固有ベクトルの幾何学的意味}
+\input{Eigenvectors.tex}
+\section{行列式の幾何学的意味}
+\input{Determinant.tex}
+\section{行列式が0の写像}
+\input{ImageKernel.tex}
+\section{全単射}
+\input{Bijection.tex}
+\section{課題}
+\input{Problem.tex}
+
+
+\end{document}

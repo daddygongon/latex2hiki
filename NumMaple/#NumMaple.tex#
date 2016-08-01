@@ -1,0 +1,211 @@
+\documentclass[10pt,a4j]{jsbook}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage[dvipdfmx,colorlinks,linkcolor=blue,bookmarksopenlevel=4]{hyperref}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{bm}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+%\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newif\ifHIKI
+%\HIKItrue % TRUE’¤Î’Àß’Äê
+\HIKIfalse % FALSE’¤Î’Àß’Äê
+
+\begin{document}
+\title{Maple’¤Ç’Íý’²ò’¤¹’¤ë’¿ô’ÃÍ’·×’»»’¤Î’´ð’ÁÃ}
+\author{’À¾’Ã«@’´Ø’À¾’³Ø’±¡’Âç’¡¦’Íý’¹©}
+\date{\today}
+\’À¾’Îñ
+\maketitle
+\tableofcontents
+
+%\include{./NumMapleCont}
+\chapter{’Âå’¿ô’Êý’Äø’¼°(fsolve)}
+\section{’³µ’Í×}
+\input{FSolve/abs.tex} 
+\section{Maple’¤Ç’¤Î’²ò}
+\input{FSolve/solve.tex} 
+\section{’Æó’Ê¬’Ë¡’¤ÈNewton’Ë¡’¤Î’¸¶’Íý}
+\input{FSolve/principle.tex} 
+\section{’Æó’Ê¬’Ë¡’¤ÈNewton’Ë¡’¤Î’¥³’¡¼’¥É}
+\input{FSolve/code.tex} 
+\section{’¼ý’Â«’À­’¤È’°Â’Äê’À­}
+\input{FSolve/convergency.tex} 
+\section{’¼ý’Â«’È½’Äê’¾ò’·ï}
+\input{FSolve/EpsilonDelta.tex} 
+\section{2’ÊÑ’¿ô’´Ø’¿ô’¤Î’¾ì’¹ç}
+\input{FSolve/MultiVariables.tex} 
+\section{’Îã’Âê:’Æó’Ê¬’Ë¡’¤ÈNewton’Ë¡’¤Î’¼ý’Â«’À­}
+\input{FSolve/example.tex} 
+\section{’²Ý’Âê}
+\input{FSolve/Exfsolve.tex} 
+
+\chapter{’¸í’º¹(Error)}
+\section{’ÂÇ’¤Á’ÀÚ’¤ê’¸í’º¹’¤È’´Ý’¤á’¸í’º¹(Truncation and round off errors)}
+\input{Error/TruncationRoundoff.tex} 
+\section{’Í­’¸ú’·å’¿ô(Significant digits)}
+\input{Error/SignificantDigits.tex} 
+\section{’Éâ’Æ°’¾®’¿ô’ÅÀ’±é’»»’¤Ë’¤è’¤ë’²á’¤Á(FloatingPointArithmetic)}
+\input{Error/FloatingPointArithmetic.tex} 
+\section{’µ¡’³£’Àº’ÅÙ(Machine epsilon)}
+\input{Error/MachineEpsilon.tex} 
+\section{’·å’Íî’¤Á’¡¤’¾ð’Êó’Íî’¤Á’¡¤’ÀÑ’¤ß’»Ä’¤·(Cancellation)}
+\input{Error/Cancellation.tex} 
+\section{’²Ý’Âê}
+\input{Error/Problems.tex} 
+
+\chapter{’Àþ’·Á’Âå’¿ô--’¼Ì’Áü(LAFundamentals)}
+\section{’¹Ô’Îó’¤È’Ï¢’Î©’Êý’Äø’¼°}
+\input{LAFundamentals/SimultaneousEquations.tex} 
+\section{’ÁÝ’¤­’½Ð’¤·}
+\input{LAFundamentals/LUDecomposition.tex} 
+\section{’¼Ì’Áü}
+\input{LAFundamentals/Projection.tex} 
+\section{’¸Ç’Í­’¥Ù’¥¯’¥È’¥ë’¤Î’´ö’²¿’³Ø’Åª’°Õ’Ì£}
+\input{LAFundamentals/Eigenvectors.tex} 
+\section{’¹Ô’Îó’¼°’¤Î’´ö’²¿’³Ø’Åª’°Õ’Ì£}
+\input{LAFundamentals/Determinant.tex} 
+\section{’¹Ô’Îó’¼°’¤¬0’¤Î’¼Ì’Áü}
+\input{LAFundamentals/ImageKernel.tex} 
+\section{’Á´’Ã±’¼Í}
+\input{LAFundamentals/Bijection.tex} 
+\section{’²Ý’Âê}
+\input{LAFundamentals/Problem.tex} 
+
+\chapter{’Àþ’·Á’Âå’¿ô--’µÕ’¹Ô’Îó(LAMatrixInverse)}
+\section{’¹Ô’Îó’·×’»»’¤Î’³µ’Í×}
+\input{LAMatrixInverse/abstract.tex} 
+\section{’¥¬’¥¦’¥¹’¾Ã’µî’Ë¡’¤Ë’¤è’¤ë’Ï¢’Î©’°ì’¼¡’Êý’Äø’¼°’¤Î’²ò}
+\input{LAMatrixInverse/GaussianElimination.tex} 
+\section{Maple’¤Ë’¤è’¤ëLU’Ê¬’²ò}
+\input{LAMatrixInverse/LUDecomposition.tex} 
+\section{LU’Ê¬’²ò’¤Î’¥³’¡¼’¥É}
+\input{LAMatrixInverse/LUDecompositionCode.tex} 
+\section{’¥Ô’¥Ü’¥Ã’¥È’Áà’ºî}
+\input{LAMatrixInverse/Pivot.tex} 
+\section{’È¿’Éü’Ë¡’¤Ë’¤è’¤ë’Ï¢’Î©’Êý’Äø’¼°’¤Î’²ò}
+\input{LAMatrixInverse/JacobiGaussSeidel.tex} 
+\section{’²Ý’Âê}
+\input{LAMatrixInverse/Problem.tex} 
+\section{’²ò’Åú’Îã}
+\input{LAMatrixInverse/Answer.tex} 
+
+\chapter{’Àþ’·Á’Âå’¿ô--’¸Ç’Í­’ÃÍ(LAEigen)}
+\section{’¸Ç’Í­’ÃÍ}
+\input{LAEigenvectors/Eigenvectors.tex} 
+\section{’¸Ç’Í­’ÃÍ’¤Î’´ö’²¿’³Ø’Åª’°Õ’Ì£}
+\input{LAEigenvectors/GeometricalMeaning.tex} 
+\section{Google’¤Î’¥Ú’¡¼’¥¸’¥é’¥ó’¥¯}
+\input{LAEigenvectors/GooglePageRank.tex} 
+\section{’Îß’¾è(’¤Ù’¤­’¾è)’Ë¡’¤Ë’¤è’¤ê’ºÇ’Âç’¸Ç’Í­’ÃÍ’¤¬’µá’¤Þ’¤ë’¸¶’Íý}
+\input{LAEigenvectors/GooglePageRankPrinciples.tex} 
+\section{Jacobi’²ó’Å¾’¤Ë’¤è’¤ë’¸Ç’Í­’ÃÍ’¤Î’µá’¤á’Êý}
+\input{LAEigenvectors/JacobiRotation.tex} 
+\section{Jacobi’Ë¡’¤Ë’¤è’¤ë’¸Ç’Í­’ÃÍ’¤ò’µá’¤á’¤ëC’¥³’¡¼’¥É}
+\input{LAEigenvectors/JacobiRotationCode.tex} 
+\section{’¿ô’ÃÍ’·×’»»’¥é’¥¤’¥Ö’¥é’¥ê’¡¼’¤Ë’¤Ä’¤¤’¤Æ}
+\input{LAEigenvectors/LAPACK.tex} 
+\section{’²Ý’Âê}
+\input{LAEigenvectors/Problem.tex} 
+
+\chapter{’Êä’´Ö(interpolation)’¤È’¿ô’ÃÍ’ÀÑ’Ê¬(Integral)}
+\section{’³µ’Í×:’Êä’´Ö’¤È’¶á’»÷}
+\input{InterpolationIntegral/abstract.tex} 
+\section{’Â¿’¹à’¼°’Êä’´Ö(polynomial interpolation)}
+\input{InterpolationIntegral/PolynomialInterpolation.tex} 
+\section{Lagrange(’¥é’¥°’¥é’¥ó’¥¸’¥å) ’¤Î’Æâ’ÁÞ’¸ø’¼°}
+\input{InterpolationIntegral/Lagrange.tex} 
+\section{Newton(’¥Ë’¥å’¡¼’¥È’¥ó) ’¤Î’º¹’Ê¬’¾¦’¸ø’¼°}
+\input{InterpolationIntegral/Newton.tex} 
+\section{’¿ô’ÃÍ’ÀÑ’Ê¬ (Numerical integration)}
+\input{InterpolationIntegral/Integral.tex} 
+\section{’¿ô’ÃÍ’ÀÑ’Ê¬’¤Î’¥³’¡¼’¥É}
+\input{InterpolationIntegral/IntegralCode.tex} 
+\section{’²Ý’Âê}
+\input{InterpolationIntegral/Problem.tex} 
+
+\chapter{’Àþ’·Á’ºÇ’¾®2’¾è’Ë¡(LeastSquareFit)}
+\section{Maple’¤Ë’¤è’¤ë’ºÇ’¾®2’¾è’Ë¡}
+\input{LeastSquareFit/LeastSquare.tex} 
+\section{’ºÇ’¾®2’¾è’Ë¡’¤Î’¸¶’Íý}
+\input{LeastSquareFit/Principle.tex} 
+\section{$\chi^2$’¤Î’¶Ë’¾®’ÃÍ’¤«’¤é(2’ÊÑ’¿ô’¤Î’Îã)}
+\input{LeastSquareFit/ChiSquare.tex} 
+\section{’Àµ’µ¬’Êý’Äø’¼°(Normal Equations)’¤Ë’¤è’¤ë’²ò}
+\input{LeastSquareFit/NormalEquations.tex} 
+\section{’ÆÃ’°Û’ÃÍ’Ê¬’²ò(Singular Value Decomposition)’¤Ë’¤è’¤ë’²ò}
+\input{LeastSquareFit/SingularValueDecomposition.tex} 
+\section{2’¼¡’¸µ’¶Ê’ÌÌ’¤Ø’¤Î’¥Õ’¥£’¥Ã’¥È}
+\input{LeastSquareFit/SurfaceFit.tex} 
+\section{’²Ý’Âê}
+\input{LeastSquareFit/Problem.tex} 
+
+
+\chapter{’Èó’Àþ’·Á’ºÇ’¾®2’¾è’Ë¡(NonLinearFit)}
+\section{’Èó’Àþ’·Á’ºÇ’¾®2’¾è’Ë¡’¤Î’¸¶’Íý}
+\input{NonLinearFit/Principle.tex} 
+\section{’¶ñ’ÂÎ’Åª’¤Ê’¼ê’½ç}
+\input{NonLinearFit/Procedures.tex} 
+\section{Maple’¤Ë’¤è’¤ë’²ò’Ë¡’¤Î’»Ø’¿Ë}
+\input{NonLinearFit/MapleCode.tex} 
+\section{Gauss-Newton’Ë¡’¤Ë’´Ø’¤¹’¤ë’¥á’¥â}
+\input{NonLinearFit/MemoGaussNewton.tex} 
+\section{’²Ý’Âê}
+\input{NonLinearFit/Problem.tex} 
+\section{’²ò’Åú’Îã}
+\input{NonLinearFit/Ans.tex} 
+
+\chapter{FFT(Fast Fourier Transformation)}
+\section{FFT’¤Î’±þ’ÍÑ}
+\input{FFT/Applications.tex} 
+\section{FFT’¤Î’Æ°’ºî’¸¶’Íý}
+\input{FFT/Outline.tex} 
+\section{’´Ø’¿ô’Æâ’ÁÞ’¤È’¤·’¤Æ’¤ÎFourier’´Ø’¿ô’·Ï}
+\input{FFT/Fourier.tex} 
+\section{’Ä¾’¸ò’´Ø’·¸’¤«’¤é’¤Î’ÀÑ’Ê¬’¤Ë’¤è’¤ë’·¸’¿ô’·è’Äê}
+\input{FFT/Orthogonal.tex} 
+\section{’Ä¾’ÀÜ’ÀÑ’Ê¬’¤Ë’¤è’¤ë’¥Õ’¡¼’¥ê’¥¨’·¸’¿ô}
+\input{FFT/DirectIntegration.tex} 
+\section{’Áª’ÅÀ’Ä¾’¸ò’À­’¤Ë’¤è’¤ë’·×’»»’¤Î’´Ê’ÁÇ’²½}
+\input{FFT/DiscreteOrthogonal.tex} 
+\section{’¹â’Â®’¥Õ’¡¼’¥ê’¥¨’ÊÑ’´¹’¥¢’¥ë’¥´’¥ê’¥º’¥à’¤Ë’¤è’¤ë’¹â’Â®’²½}
+\input{FFT/TukeyAlgorithm.tex} 
+\section{FFT’´Ø’¿ô’¤ò’ÍÑ’¤¤’¤¿’·ë’²Ì}
+\input{FFT/FFTFunction.tex} 
+
+\end{document}

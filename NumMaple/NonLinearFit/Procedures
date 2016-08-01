@@ -1,0 +1,27 @@
+
+パラメータの初期値を
+{{dmath ' a_{{0}}+\Delta\,a,\,b_{{0}}+\Delta\,b,\,c_{{0}}+\Delta\,c,\,d_{{0}}+\Delta\,d
+ '}}
+とする．このとき関数{{math 'f'}}を真値{{math 'a_0, b_0, c_0, d_0'}}のまわりでテイラー展開し，高次項を無視すると
+{{dmath ' \Delta\,f=f \left( a_{{0}}+\Delta\,a_{{1}},b_{{0}}+\Delta\,b_{{1}},c_{{0}}+\Delta\,c_{{1}},d_{{0}}+\Delta\,d_{{1}} \right) -f \left( a_{{0}},b_{{0}},c_{{0}},d_{{0}} \right)
+ '}}
+
+{{dmath ' =\left(\frac{\partial }{\partial a }f \right)_{0}\Delta a _{1}+\left(\frac{\partial }{\partial b }f \right)_{0}\Delta b _{1}+\left(\frac{\partial }{\partial c }f \right)_{0}\Delta c _{1}+\left(\frac{\partial }{\partial d }f \right)_{0}\Delta d _{1}
+ '}}
+となる．
+
+課題でつくったデータはt = 1からt = 256までの時刻に対応したデータ点{{math 'f_{{1}},\,f_{{2}},\,\cdots  f_{{256}}'}}とする．各測定値とモデル関数から予想される値との差{{math '\Delta f_1,\Delta f_2,\cdots,\Delta f_{256}'}}は，
+{{dmath ' \left(\begin{array}{c}\Delta f _{1} \\\Delta f _{2} \\ \vdots \\\Delta f _{256} \\\end{array}\right)=J \left(\begin{array}{c}\Delta a _{1} \\\Delta b _{1} \\\Delta c _{1} \\\Delta d _{1} \\\end{array}\right)
+ '}}
+となる．ここで{{math 'J'}}はヤコビ行列と呼ばれる行列で，4列256行
+{{dmath '  J =\left(\begin{array}{cccc}\left(\frac{\partial }{\partial a }f \right)_{1} & \left(\frac{\partial }{\partial b }f \right)_{1} & \left(\frac{\partial }{\partial c }f \right)_{1} & \left(\frac{\partial }{\partial d }f \right)_{1} \\ \vdots & \vdots  &  \vdots & \vdots  \\\left(\frac{\partial }{\partial a }f \right)_{256} & \left(\frac{\partial }{\partial b }f \right)_{256} & \left(\frac{\partial }{\partial c }f \right)_{256} & \left(\frac{\partial }{\partial d }f \right)_{256} \\\end{array}\right)
+ '}}
+である．このような矩形行列の逆行列は転置行列{{math 'J^T'}}を用いて，`
+{{dmath ' J ^{-1}=\left(J ^{T }J \right)^{-1}J ^{T }
+ '}}
+と表わされる．したがって，真値からのずれは
+{{dmath ' \left(\begin{array}{c}\Delta a_2 \\\Delta b_2 \\\Delta c_2 \\\Delta d_2 \\\end{array}\right)
+=\left(J ^{T }J \right)^{-1}J ^{T }
+\left(\begin{array}{c}\Delta f _{1} \\\Delta f _{2} \\ \vdots \\\Delta f _{256} \\\end{array}\right)
+ '}}
+で求められる．理想的には{{math '(\Delta a_2,\,\Delta b_2,\,\Delta c_2,\,\Delta d_2)'}}は{{math '(\Delta a,\,\Delta b,\,\Delta c,\,\Delta d)'}}に一致するはずだが，測定誤差と高次項のために一致しない．初期値に比べ，より真値に近づくだけ．そこで，新たに得られたパラメータの組を新たな初期値に用いて，より良いパラメータに近付けていくという操作を繰り返す．新たに得られたパラメータと前のパラメータとの差がある誤差以下になったところで計算を打ち切り，フィッティングの終了となる．

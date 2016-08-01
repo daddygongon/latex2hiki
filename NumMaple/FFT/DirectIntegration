@@ -1,0 +1,100 @@
+対象とする関数をまず作る．
+<<<maple
+> restart;
+> #F:=x->piecewise(x=0,1/2,x>0,x); 
+  #F:=x->piecewise(x<1/2,x,x>=1/2,1-x);
+  #F:=x->piecewise(x<1/2,-1,x>1/2,1); 
+  F:=x->piecewise(x<1/2,-1,x>=1/2,1);
+  #F:=x->piecewise(x>0 and x<1/2,-1,x>1/2,1); 
+  #F:=x->x-1/2; 
+  plot(F(x),x=0..1);
+>>>
+{{dmath ' F := x \mapsto piecewise(x < \frac{1}{2}, -1, \frac{1}{2} \leq x, 1) 
+ '}}
+||{{attach_view(C10_FFTplot2d11.png,FFT)}}||
+piecewise関数は階段関数で，振る舞いはコメント(\#)を適当に外して確認せよ．
+初期設定．
+<<<maple
+> KK:=3; N:=2^KK;L:=1-0;
+> 2*Pi*1/L*x;
+>>>
+{{dmath ' 2 \pi x
+ '}}
+<<<maple
+> int(F(x)*cos(2*Pi*1/L*x),x=0..L);
+>>>
+{{dmath ' 0
+ '}}
+
+<<<maple
+> for n from 0 to N do
+    a[n]:=2/L*int(F(x)*cos(2*Pi*n/L*x),x=0..L); 
+  end do;
+>>>
+{{dmath ' a_0:=0  '}}
+{{dmath ' a_1:=0  '}}
+{{dmath ' a_2:=0  '}}
+{{dmath ' a_3:=0  '}}
+{{dmath ' a_4:=0  '}}
+{{dmath ' a_5:=0  '}}
+{{dmath ' a_6:=0  '}}
+{{dmath ' a_7:=0  '}}
+{{dmath ' a_8:=0  '}}
+{{dmath '  '}}
+
+<<<maple
+> for n from 0 to N do 
+    b[n]:=2/L*int(F(x)*sin(2*Pi*n/L*x),x=0..L); 
+  end do;
+>>>
+{{dmath ' b_0:=0  '}}
+{{dmath ' b_1:=\frac{4}{\pi}  '}}
+{{dmath ' b_2:=0  '}}
+{{dmath ' b_3:=\frac{4}{3\pi}  '}}
+{{dmath ' b_4:=0  '}}
+{{dmath ' b_5:=\frac{4}{5\pi}  '}}
+{{dmath ' b_6:=0  '}}
+{{dmath ' b_7:=\frac{4}{7\pi}  '}}
+{{dmath ' b_8:=0  '}}
+{{dmath '  '}}
+ここで，オイラーの関係
+{{dmath ' a[n]=c[n]+c[-n],\, b[n]=I (c[n]-c[-n])  '}}
+{{dmath ' c[-n]= \frac{1}{2} (a[n] + b[n]),\, c[n]=\frac{1}{2} (a[n] - I b[n])
+ '}}
+を使って，三角関数系から{{math '\exp'}}へ変換する．
+
+<<<maple
+> for n from 0 to N do c[n]:=1/L*int(F(x)*exp(-I*2*Pi*n/L*x),x=0..L); end do;
+> for n from 1 to N do c[-n]:=1/L*int(F(x)*exp(I*2*Pi*n/L*x),x=0..L); end do;
+>>>
+{{dmath ' c_0:=0  '}}
+{{dmath ' c_1:=\frac{2I}{\pi}  '}}
+{{dmath ' c_2:=0  '}}
+{{dmath ' c_3:=\frac{2I}{3\pi}  '}}
+{{dmath ' c_4:=0  '}}
+{{dmath ' c_5:=\frac{2I}{5\pi}  '}}
+{{dmath ' c_6:=0  '}}
+{{dmath ' c_7:=\frac{2I}{7\pi}  '}}
+{{dmath ' c_8:=0  '}}
+{{dmath ' c_{-1}:=-\frac{2I}{\pi}  '}}
+{{dmath ' c_{-2}:=0  '}}
+{{dmath ' c_{-3}:=-\frac{2I}{3\pi}  '}}
+{{dmath ' c_{-4}:=0  '}}
+{{dmath ' c_{-5}:=-\frac{2I}{5\pi}  '}}
+{{dmath ' c_{-6}:=0  '}}
+{{dmath ' c_{-7}:=-\frac{2I}{7\pi}  '}}
+{{dmath ' c_{-8}:=0  '}}
+{{dmath '  '}}
+
+<<<maple
+> F1:=unapply(sum(evalf(c[i]*exp(I*2*Pi*i/L*x)),i=-(N-1)..(N-1)),x):
+> plot({Re(F1(x)),F(x)},x=0..1);
+>>>
+||{{attach_view(C10_FFTplot2d12.png,FFT)}}||
+
+<<<maple
+> evalf(2/3/Pi);
+>>>
+{{dmath ' 0.2122065907
+ '}}
+                                

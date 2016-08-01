@@ -1,0 +1,68 @@
+データを単純に多項式で補間する方法を先ず示そう．{{math 'N+1'}}点をN次の多項式でつなぐ．この場合の補間関数は，
+{{dmath ' F \left(x \right)={\sum_{i=0}^{N} } a _{i }x ^{i }=a_{0}+a_{1}x +a_{2}x^{2}+\cdots +a_{N}x^{N}
+ '}}
+である．データの点を{{math '(x_{{i}},\,y_{{i}}),i=0..N'}}とすると
+{{dmath ' \begin{array}{cl}
+a _{0}+a _{1}x _{0}+a _{2}x _{0}^{2}+\cdots +a _{N }x _{0}^{N }& =y _{0}\\
+a _{0}+a _{1}x _{1}+a _{2}x _{1}^{2}+\cdots +a _{N }x _{1}^{N }& =y _{1}\\
+\vdots& \\
+a _{0}+a _{1}x _{N}+a _{2}x _{N}^{2}+\cdots +a _{N }x _{N}^{N }& =y _{N}
+\end{array}
+ '}}
+が，係数 {{math 'a_i'}}を未知数と見なした線形の連立方程式となっている．係数行列は
+{{dmath ' A=\left[
+\begin{array}{ccccc}
+1&x_0&x_0^2&\cdots&x_0^N \\
+1&x_1&x_1^2&\cdots&x_1^N \\
+\vdots& & & & \vdots \\
+1&x_N&x_N^2&\cdots&x_N^N 
+\end{array} \right]
+ '}}
+となる．{{math 'a_i'}}と{{math 'y_i'}}をそれぞれベクトルとみなすと
+||　　　　　　　　　　　　　　　||
+により未知数ベクトル{{math 'a_i'}}が求まる．これは単純に，前に紹介した Gauss の消去法や LU 分解で解ける．
+
+
+!!!Mapleによる多項式補間の実例 
+<<<maple
+> restart; X:=[0,1,2,3]: Y:=[1,2,3,-2]:
+> with(LinearAlgebra):
+> list1:=[X,Y];
+>>>
+{{dmath ' {\it list1}\, := \,[[0,1,2,3],[1,2,3,-2]]
+ '}}
+<<<maple
+> with(plots):
+  l1p:=listplot(Transpose(Matrix(list1))):
+  display(l1p);
+>>>
+||{{attach_view(C7_InterpolationIntegralplot2d1.png,InterpolationIntegral)}}||
+
+<<<maple
+> A:=Matrix(4,4): 
+  for i from 1 to 4 do 
+    for j from 1 to 4 do 
+      A[i,j]:=X[i]^(j-1);
+    end do; 
+  end do:
+  A;
+>>>
+{{dmath ' \left[ \begin {array}{cccc} 1&0&0&0\\ 1&1&1&1\\ 1&2&4&8\\ 1&3&9&27\end {array} \right]
+ '}}
+
+<<<maple
+> a1:=MatrixInverse(A).Vector(Y);
+>>>
+{{dmath ' {\it a1}\, := \, \left[ \begin {array}{c} 1\\ -1\\ 3\\ -1\end {array} \right]
+ '}}
+<<<maple
+> f1:=unapply(add(a1[ii]*x^(ii-1),ii=1..4),x);
+>>>
+{{dmath ' {\it f1}\, := \,x\mapsto 1-x+3\,{x}^{2}-{x}^{3}
+ '}}
+<<<maple
+> f1p:=plot(f1(x),x=0..3): 
+  l1p:=listplot(Transpose(Matrix(list1))):
+  display(f1p,l1p);
+>>>
+||{{attach_view(C7_InterpolationIntegralplot2d2.png,InterpolationIntegral)}}||

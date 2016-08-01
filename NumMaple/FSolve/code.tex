@@ -1,0 +1,57 @@
+\subsection{二分法(bisection)}
+\begin{MapleInput}
+> x1:=0: x2:=0.8: 
+  f1:=func(x1): f2:=func(x2): 
+  for i from 1 to 5 do 
+    x:=(x1+x2)/2;
+    f:=func(x); 
+    if f*f1>=0.0 then 
+      x1:=x; f1:=f; 
+    else 
+      x2:=x; f2:=f; 
+    end if;
+    printf("%20.15f, %20.15f\n",x,f); 
+  end do:
+\end{MapleInput}
+\begin{MapleError}
+0.400000000000000, -0.440000000000000 
+0.200000000000000,  0.240000000000000
+0.300000000000000, -0.110000000000000 
+0.250000000000000,  0.062500000000000
+0.275000000000000, -0.024375000000000
+\end{MapleError}
+
+\subsection{Newton法(あるいはNewton-Raphson法)}
+
+\begin{MapleInput}
+> dfunc:=unapply(diff(func(z),z),z);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it dfunc} := z\mapsto 2 z - 4
+\end{MapleOutput}
+\begin{MapleInput}
+> x:=1: f:=func(x): 
+  printf("%15.10f, %+24.25f\n",x,f); 
+  for i from 1 to 5 do
+    x:=x-f/dfunc(x); 
+    f:=func(x); 
+    printf("%15.10f, %+24.25f\n",x,f); 
+  end do:
+\end{MapleInput}
+\begin{MapleError}
+1.0000000000, -2.0000000000000000000000000 
+0.0000000000, +1.0000000000000000000000000 
+0.2500000000, +0.0625000000000000000000000
+0.2678571429, +0.0003188775510000000000000 
+0.2679491900, +0.0000000084726737970000000 
+0.2679491924, +0.0000000000000000059821834
+\end{MapleError}
+
+以下のようにDigitsを変更すれば，Mapleでは浮動小数点演算の有効数字を変えることができる．
+\begin{MapleInput}
+> Digits:=40;
+\end{MapleInput}
+\begin{MapleOutput}
+40
+\end{MapleOutput}
+

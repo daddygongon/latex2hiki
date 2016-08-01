@@ -1,0 +1,216 @@
+\documentclass[10pt,a4j]{jsbook}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage[dvipdfmx,colorlinks,linkcolor=blue,bookmarksopenlevel=4]{hyperref}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{bm}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+%\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+
+\begin{document}
+\title{Mapleで理解する数値計算の基礎}
+\author{西谷@関西学院大・理工}
+\date{\today}
+\西暦
+\maketitle
+\tableofcontents
+
+%\include{./NumMapleCont}
+\chapter{代数方程式(fsolve)}
+\section{概要}
+\input{FSolve/abs.tex} 
+\section{Mapleでの解}
+\input{FSolve/solve.tex} 
+\section{二分法とNewton法の原理}
+\input{FSolve/principle.tex} 
+\section{二分法とNewton法のコード}
+\input{FSolve/code.tex} 
+\section{収束性と安定性}
+\input{FSolve/convergency.tex} 
+\section{収束判定条件}
+\input{FSolve/EpsilonDelta.tex} 
+\section{2変数関数の場合}
+\input{FSolve/MultiVariables.tex} 
+\section{例題:二分法とNewton法の収束性}
+\input{FSolve/example.tex} 
+\section{課題}
+\input{FSolve/Exfsolve.tex} 
+
+\chapter{誤差(Error)}
+\section{打ち切り誤差と丸め誤差(Truncation and round off errors)}
+\input{Error/TruncationRoundoff.tex} 
+\section{有効桁数(Significant digits)}
+\input{Error/SignificantDigits.tex} 
+\section{浮動小数点演算による過ち(FloatingPointArithmetic)}
+\input{Error/FloatingPointArithmetic.tex} 
+\section{機械精度(Machine epsilon)}
+\input{Error/MachineEpsilon.tex} 
+\section{桁落ち，情報落ち，積み残し(Cancellation)}
+\input{Error/Cancellation.tex} 
+\section{課題}
+\input{Error/Problems.tex} 
+
+
+
+\chapter{線形代数--写像(LAFundamentals)}
+\section{行列と連立方程式}
+\input{LAFundamentals/SimultaneousEquations.tex} 
+\section{掃き出し}
+\input{LAFundamentals/LUDecomposition.tex} 
+\section{写像}
+\input{LAFundamentals/Projection.tex} 
+\section{固有ベクトルの幾何学的意味}
+\input{LAFundamentals/Eigenvectors.tex} 
+\section{行列式の幾何学的意味}
+\input{LAFundamentals/Determinant.tex} 
+\section{行列式が0の写像}
+\input{LAFundamentals/ImageKernel.tex} 
+\section{全単射}
+\input{LAFundamentals/Bijection.tex} 
+\section{課題}
+\input{LAFundamentals/Problem.tex} 
+
+
+\chapter{線形代数--逆行列(LAMatrixInverse)}
+\section{行列計算の概要}
+\input{LAMatrixInverse/abstract.tex} 
+\section{ガウス消去法による連立一次方程式の解}
+\input{LAMatrixInverse/GaussianElimination.tex} 
+\section{MapleによるLU分解}
+\input{LAMatrixInverse/LUDecomposition.tex} 
+\section{LU分解のコード}
+\input{LAMatrixInverse/LUDecompositionCode.tex} 
+\section{ピボット操作}
+\input{LAMatrixInverse/Pivot.tex} 
+\section{反復法による連立方程式の解}
+\input{LAMatrixInverse/JacobiGaussSeidel.tex} 
+\section{課題}
+\input{LAMatrixInverse/Problem.tex} 
+\section{解答例}
+\input{LAMatrixInverse/Answer.tex} 
+
+
+
+\chapter{線形代数--固有値(LAEigen)}
+\section{固有値}
+\input{LAEigenvectors/Eigenvectors.tex} 
+\section{固有値の幾何学的意味}
+\input{LAEigenvectors/GeometricalMeaning.tex} 
+\section{Googleのページランク}
+\input{LAEigenvectors/GooglePageRank.tex} 
+\section{累乗(べき乗)法により最大固有値が求まる原理}
+\input{LAEigenvectors/GooglePageRankPrinciples.tex} 
+\section{Jacobi回転による固有値の求め方}
+\input{LAEigenvectors/JacobiRotation.tex} 
+\section{Jacobi法による固有値を求めるCコード}
+\input{LAEigenvectors/JacobiRotationCode.tex} 
+\section{数値計算ライブラリーについて}
+\input{LAEigenvectors/LAPACK.tex} 
+\section{課題}
+\input{LAEigenvectors/Problem.tex} 
+
+\chapter{補間(interpolation)と数値積分(Integral)}
+\section{概要:補間と近似}
+\input{InterpolationIntegral/abstract.tex} 
+\section{多項式補間(polynomial interpolation)}
+\input{InterpolationIntegral/PolynomialInterpolation.tex} 
+\section{Lagrange(ラグランジュ) の内挿公式}
+\input{InterpolationIntegral/Lagrange.tex} 
+\section{Newton(ニュートン) の差分商公式}
+\input{InterpolationIntegral/Newton.tex} 
+\section{数値積分 (Numerical integration)}
+\input{InterpolationIntegral/Integral.tex} 
+\section{数値積分のコード}
+\input{InterpolationIntegral/IntegralCode.tex} 
+\section{課題}
+\input{InterpolationIntegral/Problem.tex} 
+
+\chapter{線形最小2乗法(LeastSquareFit)}
+\section{Mapleによる最小2乗法}
+\input{LeastSquareFit/LeastSquare.tex} 
+\section{最小2乗法の原理}
+\input{LeastSquareFit/Principle.tex} 
+\section{$\chi^2$の極小値から(2変数の例)}
+\input{LeastSquareFit/ChiSquare.tex} 
+\section{正規方程式(Normal Equations)による解}
+\input{LeastSquareFit/NormalEquations.tex} 
+\section{特異値分解(Singular Value Decomposition)による解}
+\input{LeastSquareFit/SingularValueDecomposition.tex} 
+\section{2次元曲面へのフィット}
+\input{LeastSquareFit/SurfaceFit.tex} 
+\section{課題}
+\input{LeastSquareFit/Problem.tex} 
+
+
+\chapter{非線形最小2乗法(NonLinearFit)}
+\section{非線形最小2乗法の原理}
+\input{NonLinearFit/Principle.tex} 
+\section{具体的な手順}
+\input{NonLinearFit/Procedures.tex} 
+\section{Mapleによる解法の指針}
+\input{NonLinearFit/MapleCode.tex} 
+\section{Gauss-Newton法に関するメモ}
+\input{NonLinearFit/MemoGaussNewton.tex} 
+\section{課題}
+\input{NonLinearFit/Problem.tex} 
+\section{解答例}
+\input{NonLinearFit/Ans.tex} 
+
+\chapter{FFT(Fast Fourier Transformation)}
+\section{FFTの応用}
+\input{FFT/Applications.tex} 
+\section{FFTの動作原理}
+\input{FFT/Outline.tex} 
+\section{関数内挿としてのFourier関数系}
+\input{FFT/Fourier.tex} 
+\section{直交関係からの積分による係数決定}
+\input{FFT/Orthogonal.tex} 
+\section{直接積分によるフーリエ係数}
+\input{FFT/DirectIntegration.tex} 
+\section{選点直交性による計算の簡素化}
+\input{FFT/DiscreteOrthogonal.tex} 
+\section{高速フーリエ変換アルゴリズムによる高速化}
+\input{FFT/TukeyAlgorithm.tex} 
+\section{FFT関数を用いた結果}
+\input{FFT/FFTFunction.tex} 
+
+\end{document}

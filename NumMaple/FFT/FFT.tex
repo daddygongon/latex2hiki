@@ -1,0 +1,72 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\begin{gather}
+}{%
+    \end{gather}
+}
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+\begin{document}
+\chapter{FFT(Fast Fourier Transformation)}
+\section{FFTの応用}
+\input{Applications.tex}
+\section{FFTの動作原理}
+\input{Outline.tex}
+\section{関数内挿としてのFourier関数系}
+\input{Fourier.tex}
+\section{直交関係からの積分による係数決定}
+\input{Orthogonal.tex}
+\section{直接積分によるフーリエ係数}
+\input{DirectIntegration.tex}
+\section{選点直交性による計算の簡素化}
+\input{DiscreteOrthogonal.tex}
+\section{高速フーリエ変換アルゴリズムによる高速化}
+\input{TukeyAlgorithm.tex}
+\section{FFT関数を用いた結果}
+\input{FFTFunction.tex}
+
+
+
+
+
+
+
+
+\end{document}

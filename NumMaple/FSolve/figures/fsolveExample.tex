@@ -1,0 +1,160 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: fsolveExample.mw
+%% Generated: Sun Aug 05 10:47:34 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+Digits:=40;
+func:=unapply(exp(-x)-x\symbol{94}2,x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Digits := 40}{\[\displaystyle \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{func := proc (x) options operator, arrow; exp(-x)-x^2 end proc}{\[\displaystyle {\it func}\, := \,x\mapsto {{\rm e}^{-x}}-{x}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot(func(x),x=-5..5,y=-10..10);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{fsolveExampleplot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x0:=fsolve(func(x)=0,x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x0 := .7034674224983916520498186018599021303429}{\[\displaystyle {\it x0}\, := \, 0.7034674224983916520498186018599021303429\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x1:=0: x2:=0.8: 
+res1:=[]:
+  f1:=func(x1): f2:=func(x2): 
+  for i from 1 to 20 do 
+    x:=(x1+x2)/2;
+    f:=func(x); 
+    if f*f1>=0.0 then 
+      x1:=x; f1:=f; 
+    else 
+      x2:=x; f2:=f; 
+    end if;
+    printf("%20.15f, %20.15f\symbol{92}n",x,f); 
+    res1:=[op(res1),[i,abs(x-x0)]]:
+  end do:
+}{}
+\end{mapleinput}
+\mapleresult
+0.400000000000000,    0.5103200460356390.600000000000000,    0.1888116360940260.700000000000000,    0.0065853037914100.750000000000000,   -0.0901334472589850.725000000000000,   -0.0413004310446380.712500000000000,   -0.0172396279240940.706250000000000,   -0.0052977381001470.703125000000000,    0.0006511313011990.704687500000000,   -0.0023214653417450.703906250000000,   -0.0008347076237050.703515625000000,   -0.0000916733268540.703320312500000,    0.0002797576939280.703417968750000,    0.0000940493604560.703466796875000,    0.0000011898110600.703491210937500,   -0.0000452413093290.703479003906250,   -0.0000220256369930.703472900390625,   -0.0000104178849310.703469848632812,   -0.0000046140299270.703468322753906,   -0.0000017121076810.703467559814453,   -0.000000261147873
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{with(plots):
+l1:=logplot(res1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{l1 := PLOT(`...`)}{\[\displaystyle {\it l1}\, := \,{\it PLOT} \left( \mbox {{\tt `...`}} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{dfunc:=unapply(diff(func(z),z),z);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{dfunc := proc (z) options operator, arrow; -exp(-z)-2*z end proc}{\[\displaystyle {\it dfunc}\, := \,z\mapsto -{{\rm e}^{-z}}-2\,z\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x0;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{.7034674224983916520498186018599021303429}{\[\displaystyle  0.7034674224983916520498186018599021303429\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x:=1.0: f:=func(x):
+printf("%15.10f, %+24.25f\symbol{92}n",x,f); 
+res2:=[[1,abs(x-x0)]]:
+for i from 2 to 5 do
+    x:=x-f/dfunc(x); 
+    f:=func(x); 
+    printf("%15.10f, %+24.25f\symbol{92}n",x,f); 
+    res2:=[op(res2),[i,abs(x-x0)]]:
+  end do:
+}{}
+\end{mapleinput}
+\mapleresult
+1.0000000000, -0.63212055882855767840447620.7330436052, -0.05690844800402540746845760.7038077863, -0.00064739153874650147619730.7034674683, -0.00000008716603056242310970.7034674225, -0.0000000000000015809178420
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{l2:=logplot(res2);}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{l2 := PLOT(`...`)}{\[\displaystyle {\it l2}\, := \,{\it PLOT} \left( \mbox {{\tt `...`}} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{display(l1,l2);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{fsolveExampleplot2d2.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{res1[1];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, .3034674224983916520498186018599021303429]}{\[\displaystyle [1, 0.3034674224983916520498186018599021303429\\
+\mbox{}]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

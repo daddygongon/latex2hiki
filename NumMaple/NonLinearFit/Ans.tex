@@ -1,0 +1,77 @@
+2. ふた山ピークへのフィット．
+\begin{MapleInput}
+> restart; with(plots): with(LinearAlgebra):
+> f1:=t->subs({a=10,b=40000,c=380,d=128},a+b/(c+(t-d)^2) );
+> f2:=t->subs({a=10,b=40000,c=380,e=90},a+b/(c+(t-e)^2) );
+> T:=[seq((f1(i)+f2(i))*(0.6+0.2*evalf(rand()/10^12)),i=1..256)]:
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it f1}\, := \,t\mapsto 10+40000\, \left( 380+ \left( t-128 \right) ^{2} \right) ^{-1} \notag \\
+{\it f2}\, := \,t\mapsto 10+40000\, \left( 380+ \left( t-90 \right) ^{2} \right) ^{-1} \notag
+\end{MapleOutputGather}
+\begin{MapleInput}
+> l1:=listplot(T):
+> f:=t->a1+a2/(a3+(t-a4)^2)+a2/(a3+(t-a5)^2); 
+  nparam:=5:
+\end{MapleInput}
+\begin{MapleOutput}
+f\, := \,t\mapsto {\it a1}+{\frac {{\it a2}}{{\it a3}+ \left( t-{\it a4} \right) ^{2}}}+{\frac {{\it a2}}{{\it a3}+ \left( t-{\it a5} \right) ^{2}}}
+\end{MapleOutput}
+\begin{MapleInput}
+> for i from 1 to nparam do 
+    dfda||i:=unapply(diff(f(x),a||i),x); 
+  end do;
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it dfda1}\, := \,x\mapsto 1 \notag \\
+{\it dfda2}\, := \,x\mapsto  \left( {\it a3}+ \left( x-{\it a4} \right) ^{2} \right) ^{-1}+ \left( {\it a3}+ \left( x-{\it a5} \right) ^{2} \right) ^{-1} \notag \\
+{\it dfda3}\, := \,x\mapsto -{\frac {{\it a2}}{ \left( {\it a3}+ \left( x-{\it a4} \right) ^{2} \right) ^{2}}}-{\frac {{\it a2}}{ \left( {\it a3}+ \left( x-{\it a5} \right) ^{2} \right) ^{2}}} \notag \\
+{\it dfda4}\, := \,x\mapsto -{\frac {{\it a2}\, \left( -2\,x+2\,{\it a4} \right) }{ \left( {\it a3}+ \left( x-{\it a4} \right) ^{2} \right) ^{2}}} \notag \\
+{\it dfda5}\, := \,x\mapsto -{\frac {{\it a2}\, \left( -2\,x+2\,{\it a5} \right) }{ \left( {\it a3}+ \left( x-{\it a5} \right) ^{2} \right) ^{2}}} \notag
+\end{MapleOutputGather}
+
+\begin{MapleInput}
+> g1:=Vector([10,1200,10,125,90]);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it g1}\, := \, \left[ \begin {array}{c} 10\\ 1200\\ 10\\ 125\\ 90\end {array} \right] 
+\end{MapleOutput}
+\begin{MapleInput}
+> guess1:={seq(a||i=g1[i],i=1..nparam)};
+\end{MapleInput}
+\begin{MapleOutput}
+guess1 := \{a1 = 10, a2 = 1200, a3 = 10, a4 = 125, a5 = 90\}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> p1:=plot(subs(guess1,f(x)),x=1..256): 
+  display(l1);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/C9_NonLinearFitplot2d9.eps}
+
+\begin{MapleInput}
+> df:=Vector([seq(subs(guess1,T[i]-f(i)),i=1..256)]):
+  Jac:=Matrix(1..256,1..nparam,sparse):
+  for i from 1 to 256 do 
+    for j from 1 to nparam do
+      Jac[i,j]:=evalf(subs(guess1,dfda||j(i))); 
+    end do:
+  end do:
+  tJac:=(MatrixInverse(Transpose(Jac).Jac)).Transpose(Jac):
+  g2:=tJac.df; g1:=g1+g2;
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it g2}\, := \, \left[ \begin {array}{c} - 0.390553882992161205\\  1584.55290636967129\\  24.9577909601538366\\ - 0.0472041829705451138\\ - 0.00719532042503852940\end {array} \right]  \notag \\
+{\it g1}\, := \, \left[ \begin {array}{c}  13.6348019182603064\\  29567.3667677707381\\  410.545681677467769\\  128.512734548828887\\  90.9223109918718678\end {array} \right] \notag
+\end{MapleOutputGather}
+
+\begin{MapleInput}
+> guess1:={seq(a||i=g1[i],i=1..nparam)};
+  p1:=plot(subs(guess1,f(x)),x=1..256):
+  display(l1,p1);
+\end{MapleInput}
+\begin{MapleOutput}
+guess1 := \{a1 = 30.251, a2 = 3854.136, a3 = 39.571, a4 = 124.800, a5 = 89.960\}
+\end{MapleOutput}
+\MaplePlot{50mm}{./figures/C9_NonLinearFitplot2d10.eps}
+何回か繰り返せば，データ点に近づいてくるはず．

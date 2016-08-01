@@ -13,6 +13,9 @@ class Latex < String
     @text.gsub!(/\\%/,'%')
     @text.gsub!("。","．")
     @text.gsub!("、","，")
+#    @text.gsub!(/\{\{(.+?)\}\}/,"\{#{$1}\}")
+#    @text.gsub!(/\{\{\{(.+?)\}\}\}/){|text| "\{#{$1}\}" }
+#    @text.gsub!(/\{\{(.+?)\}\}/){|text| "\{#{$1}\}" }
   end
 
   def strip_hiki
@@ -163,7 +166,7 @@ class Latex < String
         if is_quote then
           output << "\"\"\$\$\n"
         else
-          output << "\$\$\n"
+          output << "\n\$\$\n"
         end
       when /\\end\{equation\*\}/ 
         is_quote_eq = false

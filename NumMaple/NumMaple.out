@@ -1,0 +1,76 @@
+\BOOKMARK [0][-]{chapter.1}{代数方程式\(fsolve\)}{}% 1
+\BOOKMARK [1][-]{section.1.1}{概要}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Mapleでの解}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{二分法とNewton法の原理}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{二分法とNewton法のコード}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{収束性と安定性}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{収束判定条件}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{2変数関数の場合}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{例題:二分法とNewton法の収束性}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{課題}{chapter.1}% 10
+\BOOKMARK [0][-]{chapter.2}{誤差\(Error\)}{}% 11
+\BOOKMARK [1][-]{section.2.1}{打ち切り誤差と丸め誤差\(Truncation and round off errors\)}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.2}{有効桁数\(Significant digits\)}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.3}{浮動小数点演算による過ち\(FloatingPointArithmetic\)}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.4}{機械精度\(Machine epsilon\)}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.5}{桁落ち，情報落ち，積み残し\(Cancellation\)}{chapter.2}% 16
+\BOOKMARK [1][-]{section.2.6}{課題}{chapter.2}% 17
+\BOOKMARK [0][-]{chapter.3}{線形代数\205写像\(LAFundamentals\)}{}% 18
+\BOOKMARK [1][-]{section.3.1}{行列と連立方程式}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.2}{掃き出し}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{写像}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.4}{固有ベクトルの幾何学的意味}{chapter.3}% 22
+\BOOKMARK [1][-]{section.3.5}{行列式の幾何学的意味}{chapter.3}% 23
+\BOOKMARK [1][-]{section.3.6}{行列式が0の写像}{chapter.3}% 24
+\BOOKMARK [1][-]{section.3.7}{全単射}{chapter.3}% 25
+\BOOKMARK [1][-]{section.3.8}{課題}{chapter.3}% 26
+\BOOKMARK [0][-]{chapter.4}{線形代数\205逆行列\(LAMatrixInverse\)}{}% 27
+\BOOKMARK [1][-]{section.4.1}{行列計算の概要}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.2}{ガウス消去法による連立一次方程式の解}{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.3}{MapleによるLU分解}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.4}{LU分解のコード}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.5}{ピボット操作}{chapter.4}% 32
+\BOOKMARK [1][-]{section.4.6}{反復法による連立方程式の解}{chapter.4}% 33
+\BOOKMARK [1][-]{section.4.7}{課題}{chapter.4}% 34
+\BOOKMARK [1][-]{section.4.8}{解答例}{chapter.4}% 35
+\BOOKMARK [0][-]{chapter.5}{線形代数\205固有値\(LAEigen\)}{}% 36
+\BOOKMARK [1][-]{section.5.1}{固有値}{chapter.5}% 37
+\BOOKMARK [1][-]{section.5.2}{固有値の幾何学的意味}{chapter.5}% 38
+\BOOKMARK [1][-]{section.5.3}{Googleのページランク}{chapter.5}% 39
+\BOOKMARK [1][-]{section.5.4}{累乗\(べき乗\)法により最大固有値が求まる原理}{chapter.5}% 40
+\BOOKMARK [1][-]{section.5.5}{Jacobi回転による固有値の求め方}{chapter.5}% 41
+\BOOKMARK [1][-]{section.5.6}{Jacobi法による固有値を求めるCコード}{chapter.5}% 42
+\BOOKMARK [1][-]{section.5.7}{数値計算ライブラリーについて}{chapter.5}% 43
+\BOOKMARK [1][-]{section.5.8}{課題}{chapter.5}% 44
+\BOOKMARK [0][-]{chapter.6}{補間\(interpolation\)と数値積分\(Integral\)}{}% 45
+\BOOKMARK [1][-]{section.6.1}{概要:補間と近似}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.2}{多項式補間\(polynomial interpolation\)}{chapter.6}% 47
+\BOOKMARK [1][-]{section.6.3}{Lagrange\(ラグランジュ\) の内挿公式}{chapter.6}% 48
+\BOOKMARK [1][-]{section.6.4}{Newton\(ニュートン\) の差分商公式}{chapter.6}% 49
+\BOOKMARK [1][-]{section.6.5}{数値積分 \(Numerical integration\)}{chapter.6}% 50
+\BOOKMARK [1][-]{section.6.6}{数値積分のコード}{chapter.6}% 51
+\BOOKMARK [1][-]{section.6.7}{課題}{chapter.6}% 52
+\BOOKMARK [0][-]{chapter.7}{線形最小2乗法\(LeastSquareFit\)}{}% 53
+\BOOKMARK [1][-]{section.7.1}{Mapleによる最小2乗法}{chapter.7}% 54
+\BOOKMARK [1][-]{section.7.2}{最小2乗法の原理}{chapter.7}% 55
+\BOOKMARK [1][-]{section.7.3}{2の極小値から\(2変数の例\)}{chapter.7}% 56
+\BOOKMARK [1][-]{section.7.4}{正規方程式\(Normal Equations\)による解}{chapter.7}% 57
+\BOOKMARK [1][-]{section.7.5}{特異値分解\(Singular Value Decomposition\)による解}{chapter.7}% 58
+\BOOKMARK [1][-]{section.7.6}{2次元曲面へのフィット}{chapter.7}% 59
+\BOOKMARK [1][-]{section.7.7}{課題}{chapter.7}% 60
+\BOOKMARK [0][-]{chapter.8}{非線形最小2乗法\(NonLinearFit\)}{}% 61
+\BOOKMARK [1][-]{section.8.1}{非線形最小2乗法の原理}{chapter.8}% 62
+\BOOKMARK [1][-]{section.8.2}{具体的な手順}{chapter.8}% 63
+\BOOKMARK [1][-]{section.8.3}{Mapleによる解法の指針}{chapter.8}% 64
+\BOOKMARK [1][-]{section.8.4}{Gauss-Newton法に関するメモ}{chapter.8}% 65
+\BOOKMARK [1][-]{section.8.5}{課題}{chapter.8}% 66
+\BOOKMARK [1][-]{section.8.6}{解答例}{chapter.8}% 67
+\BOOKMARK [0][-]{chapter.9}{FFT\(Fast Fourier Transformation\)}{}% 68
+\BOOKMARK [1][-]{section.9.1}{FFTの応用}{chapter.9}% 69
+\BOOKMARK [1][-]{section.9.2}{FFTの動作原理}{chapter.9}% 70
+\BOOKMARK [1][-]{section.9.3}{関数内挿としてのFourier関数系}{chapter.9}% 71
+\BOOKMARK [1][-]{section.9.4}{直交関係からの積分による係数決定}{chapter.9}% 72
+\BOOKMARK [1][-]{section.9.5}{直接積分によるフーリエ係数}{chapter.9}% 73
+\BOOKMARK [1][-]{section.9.6}{選点直交性による計算の簡素化}{chapter.9}% 74
+\BOOKMARK [1][-]{section.9.7}{高速フーリエ変換アルゴリズムによる高速化}{chapter.9}% 75
+\BOOKMARK [1][-]{section.9.8}{FFT関数を用いた結果}{chapter.9}% 76

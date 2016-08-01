@@ -1,0 +1,57 @@
+大学の理系で必修なのは微積分と線形代数です．線形代数というと逆行列と固有値の計算がすぐに思い浮かぶでしょう．計算がややこしくてそれだけでいやになります．でも，行列の計算法は一連の手順で記述できるので，Mapleでは微積分とおなじように一個のコマンドで片が付きます．それが3x3以上でも同じです．問題はその意味です．ここでは，線形代数の計算がMapleを使えばどれほど簡単にできるかを示すと共に，線形代数の基本となる概念についてスクリプトと描画を使って，直観的に理解することを目的とします．
+
+先ずは連立方程式から入っていきます．中学の時に
+\begin{equation*}
+4x = 2
+\end{equation*}
+というのを解きますよね．一般的には
+\begin{equation*}
+\begin {array}{rl}
+ax &= b \\
+x &= b/a
+\end {array}
+\end{equation*}
+と書けるというのは皆さんご存知のはず．これと同じようにして連立方程式を書こうというのが逆行列の基本．つまり
+\begin{equation*}
+\begin {array}{rrl}
+2x\, + &5y &=7 \\
+4x\, + &y &=5
+\end {array}
+\end{equation*}
+という連立方程式は，係数から作られる2x2行列を係数行列$A$，左辺の値で作るベクトルを$b$として，
+\begin{equation*}
+\begin {array}{rll}
+Ax &= b & \\
+x &= b/A &= A^{-1}b
+\end {array}
+\end{equation*}
+としたいわけです．
+
+実際にMapleでやってみましょう．行列は英語でMatrixです．
+\begin{MapleInput}
+> restart: A:=Matrix([[2,5],[4,1]]); 
+\end{MapleInput}
+\begin{MapleOutput}
+A\, := \, \left[ \begin {array}{cc} 2&5\\ 4&1\end {array} \right]
+\end{MapleOutput}
+こうして行列を作ります．
+
+\begin{MapleInput}
+> b:=Vector([7,5]); #(2)ベクトルは英語でVectorです．これで縦ベクトルができます．
+\end{MapleInput}
+\begin{MapleOutput}
+b\, := \, \left[ \begin {array}{c} 7\\ 5\end {array} \right]
+\end{MapleOutput}
+線形代数はlinear algebraと言います．withでLinearAlgebraというライブラリーパッケージを読み込んでおきます．
+\begin{MapleInput}
+> with(LinearAlgebra): 
+\end{MapleInput}
+逆行列はmatrix inverseと言います．
+\begin{MapleInput}
+> x0:=MatrixInverse(A).b;
+\end{MapleInput}
+行列AのMatrixInverseを求めて，ベクトルbに掛けています．
+\begin{MapleOutput}
+{\it x0}\, := \, \left[ \begin {array}{c} 1\\ 1\end {array} \right] 
+\end{MapleOutput}
+と簡単に求めることができます．

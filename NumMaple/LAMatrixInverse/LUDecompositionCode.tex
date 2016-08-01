@@ -1,0 +1,61 @@
+LU分解すれば線形方程式の解が容易に求まることは理解できると思う．具体的に$A$をLU分解する行列(消去行列と称す)T1,T2の係数は次のようにして求められる．
+\begin{MapleInput}
+> A0:=Matrix([[1,1,-2],[1,-2,1],[2,-2,-1]]): 
+  b0:=Vector([-4,5,2]):
+  A:=Matrix(A0): B:=Vector(b0): n:=3: 
+  L:=Matrix(array(1..n,1..n,identity)): 
+  for i from 1 to n do #i行目
+    T[i]:=Matrix(array(1..n,1..n,identity)): 
+                            #i番目の消去行列を作る
+    for j from i+1 to n do 
+      am:=A[j,i]/A[i,i];    #i行の要素を使って，i+1行目の先頭を消す係数を求める
+      T[i][j,i]:=-am;       #i番目の消去行列に要素を入れる
+      L[j,i]:=am;           #LTMの要素
+      for k from 1 to n do
+        A[j,k]:=A[j,k]-am*A[i,k]; #もとの行列をUTMにしていく
+      end do; 
+      B[j]:=B[j]-B[i]*am;   #数値ベクトルも操作
+    end do; 
+  end do:
+\end{MapleInput}
+\begin{MapleOutput}
+\end{MapleOutput}
+
+上のコードによって得られた消去行列．
+\begin{MapleInput}
+> T[1]; T[2];
+\end{MapleInput}
+\begin{MapleOutputGather}
+\left[ \begin {array}{ccc} 1&0&0\\ -1&1&0\\ -2&0&1\end {array} \right] \notag \\
+\left[ \begin {array}{ccc} 1&0&0\\ 0&1&0\\ 0&-4/3&1\end {array} \right] \notag 
+\end{MapleOutputGather}
+これを実際に元の行列$A0$に作用させると，UTMが求められる．
+\begin{MapleInput}
+> U:=T[2].T[1].A0;
+\end{MapleInput}
+\begin{MapleOutput}
+U\, := \, \left[ \begin {array}{ccc} 1&1&-2\\ 0&-3&3\\ 0&0&-1\end {array} \right]
+\end{MapleOutput}
+求められたLTM, UTMを掛けると
+\begin{MapleInput}
+> L.U;
+\end{MapleInput}
+\begin{MapleOutput}
+\left[ \begin {array}{ccc} 1&1&-2\\ 1&-2&1\\ 2&-2&-1\end {array} \right]
+\end{MapleOutput}
+元の行列を得られる．L,Aに求めたい行列が入っていることを確認．
+\begin{MapleInput}
+> L;A;
+\end{MapleInput}
+\begin{MapleOutputGather}
+\left[ \begin {array}{ccc} 1&0&0\\ 1&1&0\\ 2&4/3&1\end {array} \right] \notag \\
+\left[ \begin {array}{ccc} 1&1&-2\\ 0&-3&3\\ 0&0&-1\end {array} \right]  \notag 
+\end{MapleOutputGather}
+数値ベクトルも期待通り変換されている．
+\begin{MapleInput}
+> B;
+\end{MapleInput}
+\begin{MapleOutput}
+\left[ \begin {array}{c} -4\\ 9\\ -2\end {array} \right]
+\end{MapleOutput}
+

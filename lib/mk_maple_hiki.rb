@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'optparse'
 require "latex2hiki/version"
-require "latex2hiki/latex2hiki"
+require "maple/latex2hiki"
 #require "latex2hiki/latex2hiki_new"
 require 'fileutils'
 require 'yaml'
@@ -60,19 +60,16 @@ module MkMapleHiki
     def make_hiki(name)
       if name=='./'
         toc_file = './'+File.basename(Dir.pwd())+'.tex'
+        hiki_file = File.join(@src[:local_site],'text',File.basename(Dir.pwd))
       else
         toc_file = File.join(name,"#{File.basename(name)}.tex")
+        hiki_file = File.join(@src[:local_site],'text',File.basename(name))
       end
 
       if File.exists?(toc_file) then
         toc=toc_file_base_proc(toc_file)
       else
 #        dir_base_proc
-      end
-      if name=='./'
-        hiki_file = File.join(@src[:local_site],'text',File.basename(Dir.pwd))
-      else
-        hiki_file = File.join(@src[:local_site],'text',File.basename(name))
       end
 
       File.write(hiki_file, toc)
@@ -84,7 +81,7 @@ module MkMapleHiki
       parser=[]
       str_started=false
       lines.each{|line|
-        elements=line.match(/^\\(\w+){([\w\/\.\(\):ぁ-んァ-ヴ一-龠ーｱ-ﾝﾟﾞ・ｰｬｭｮｧ-ｫｯ]+)}/u)
+        elements=line.match(/^\\(.+){(.+)}/u)
         next unless elements
         if !str_started
           if elements[2]!='document'
@@ -95,7 +92,7 @@ module MkMapleHiki
         end
         parser << [elements[1],elements[2]]
       }
-#      p parser
+      p parser
       converts = @src[:convert_specific_def]
       level = @src[:level]
       text="{{toc}}\n"
@@ -104,6 +101,7 @@ module MkMapleHiki
         case elements[0]
         when 'chapter'
           level.times{ tt << '!' }
+          p [tt,elements[1]]
           text << "\n#{tt}#{elements[1]}\n"
         when 'section'
           (level+1).times{ tt << '!' }
@@ -118,7 +116,6 @@ module MkMapleHiki
           converts.each_pair{|key,val|
 #            latex_txt.gsub!(key,val)
           }
-#          hiki_txt = NKF.nkf("-w",Latex.new(latex_txt,:level=>level).to_hiki)
           hiki_txt = NKF.nkf("-w",Latex.new(latex_txt).to_hiki)
           text << "\n#{hiki_txt}\n"
         end

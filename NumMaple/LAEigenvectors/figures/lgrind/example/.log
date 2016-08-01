@@ -1,0 +1,25 @@
+This is pTeX, Version 3.14159-p3.1.3 (sjis) (Web2C 7.4.5) (format=platex-sjis 2004.3.10)  10 NOV 2005 10:33
+**C5-2
+(/usr/local/share/texmf/tex/latex/tools/.tex
+! Interruption.
+l.1 
+    %%
+? q
+OK, entering \batchmode...
+pLaTeX2e <2001/09/04>+0 (based on LaTeX2e <2001/06/01> patch level 0)
+ File ignored)
+! Emergency stop.
+<*> C5-2
+        
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 5 strings out of 95599
+ 133 string characters out of 1192088
+ 46504 words of memory out of 1000001
+ 3201 multiletter control sequences out of 10000+50000
+ 7519 words of font info for 31 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 4i,0n,1p,84b,7s stack positions out of 1500i,500n,5000p,200000b,5000s
+No pages of output.
