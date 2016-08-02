@@ -1,0 +1,17 @@
+\subsection{級数展開(series)}
+Taylor級数は以下のようにして，中心点(x=a)，次数(4次)を指定する．
+\begin{MapleInput}
+> t1:=series(sin(x),x=a,4);
+\end{MapleInput}
+\begin{MapleOutput}
+t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3+O((x-a)^4)
+\end{MapleOutput}
+誤差の次数を示す$O((x-a)^4)$があるため，このままでは関数として使えない．unapplyで定義関数として使うためには，convertを使って多項式(polynomial)に変換しておく．\begin{MapleInput}
+> e1:=convert(t1,polynom);
+> f1:=unapply(e1,x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3 \notag \\
+ {\it f1}\, := \,x\mapsto 
+ \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3 \notag
+\end{MapleOutputGather}

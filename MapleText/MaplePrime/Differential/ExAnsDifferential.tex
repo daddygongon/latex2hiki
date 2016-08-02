@@ -1,0 +1,94 @@
+\subsubsection{Diff}
+\begin{enumerate}
+\item 
+\begin{MapleInput}
+> diff(x*log(x),x);
+> diff(1/(1 + x)^3,x);
+> diff(sqrt(4*x + 3),x);
+>diff(1/(a^2+(x-x0)^2),x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+\ln  \left( x \right) +1 \notag \\
+-3\, \left( 1+x \right) ^{-4} \notag \\
+ 2\, \left(  \sqrt{4\,x+3} \right) ^{-1} \notag \\
+ -{\frac {2\,x-2\,{\it x0}}{ \left( {a}^{2}+ \left( x-{\it x0} \right) ^{2} \right) ^{2}}} \notag
+\end{MapleOutputGather}
+
+\item
+\begin{MapleInput}
+> diff(sin(x)^2,x);
+> diff(sin(x)^2,x$2);
+\end{MapleInput}
+
+\begin{MapleOutputGather}
+2\,\sin \left( x \right) \cos \left( x \right) \notag \\
+ 2\, \left( \cos \left( x \right)  \right) ^{2}-2\, \left( \sin \left( x \right)  \right) ^{2}\notag
+\end{MapleOutputGather}
+\begin{MapleError}
+以下略
+\end{MapleError}
+
+
+\item
+先ず与関数をf0と定義
+\begin{MapleInput}
+> f0:=unapply(sin(x),x);
+\end{MapleInput}
+\begin{MapleOutput}
+ {\it f0}\, := \,x\mapsto \sin \left( x \right)
+\end{MapleOutput}
+テイラー展開した結果をeq1とする．関数として定義するためにeq1を多項式に変換し(convert)，unapplyをかける．
+\begin{MapleInput}
+> eq1:=series(f0(x),x=0,3);
+> f1:=unapply(convert(eq1,polynom),x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it eq1}\, := \,x+O \left( {x}^{3} \right) \notag \\
+{\it f1}\, := \,x\mapsto x \notag
+\end{MapleOutputGather}
+５次についても同様
+\begin{MapleInput}
+> eq2:=series(f0(x),x=0,5);
+> f2:=unapply(convert(eq2,polynom),x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+ {\it eq2}\, := \,x-1/6\,{x}^{3}+O \left( {x}^{5} \right) \notag \\
+ {\it f2}\, := \,x\mapsto x-1/6\,{x}^{3} \notag
+\end{MapleOutputGather}
+3つの関数を同時プロット
+\begin{MapleInput}
+> plot([f0(x),f1(x),f2(x)],x=-Pi..Pi);
+\end{MapleInput}
+\MaplePlot{40mm}{./figures/Diffplot2d3.eps}
+
+\begin{MapleInput}
+> series(f0(x),x=Pi/2,3)
+\end{MapleInput}
+以外は前問とおなじ．
+
+\item
+\begin{MapleInput}
+f:=unapply(exp(x)*log(1+y),(x,y));
+\end{MapleInput}
+\begin{MapleOutput}
+f\, := \,( {x,y} )\mapsto \exp(x)\ln  \left( 1+y \right)
+\end{MapleOutput}
+\begin{MapleInput}
+eq1:=series(series(f(x,y),x=0,3),y=0,3);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq1}\, := \,O \left( {x}^{3} \right) + \left( 1+1/2\,{x}^{2}+x \right) y+ \left( -1/2\,x-1/2-1/4\,{x}^{2} \right) {y}^{2}\\
+\mbox{}+O \left( {y}^{3} \right)
+\end{MapleOutput}
+
+\begin{MapleInput}
+> g:=unapply(convert(convert(eq1,polynom),polynom),(x,y));
+\end{MapleInput}
+\begin{MapleOutput}
+g\, := \,( {x,y} )\mapsto  \left( 1+1/2\,{x}^{2}+x \right) y+ \left( -1/2\,x-1/2-1/4\,{x}^{2} \right) {y}^{2}
+\end{MapleOutput}
+\begin{MapleInput}
+> plot3d([f(x,y),g(x,y)],x=-1..1,y=-1..1,axes=box);
+\end{MapleInput}
+\MaplePlot{60mm}{./figures/Diffplot3d4.eps}
+\end{enumerate}

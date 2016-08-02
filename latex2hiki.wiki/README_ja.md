@@ -7,9 +7,11 @@ latex文書をhiki構造に変換するCUI.
 
 |options|操作|DIR_NAME/.latex2hiki_rcの初期値|
 |:----|:----|:----|
-|--init [DIR_NAME]| ベースとなるlatexサイトを構築する|
-|--figures [DIR_NAME]| 下部のdirectoriesから画像ファイルを集める |fig_extension='.eps'|
-|--contents| text, figuresをサイトに構築する | site = '/hoge/hoge'|
+|--init [DIR_NAME]| ベースとなるlatexサイトを構築する，Rakefile, figures, .latex2hiki_rcを作成|
+|--figures [DIR_NAME]| 下部のdirectoriesから画像ファイルを集め，pngに変換してhiki/cache/attachへ入れる． |:fig_extension: ".eps"|
+|--scale [VAL]% |figuresをhikiに変換するときのscale|デフォルトは80%|
+|--level [VAL] |head(!や!!)をどのlevelから始めるか．| :level: 0|
+|--hiki| text, figuresをサイトに構築する | :local_site: "/hoge/hoge"|
 
 
 ## Installation
@@ -46,6 +48,36 @@ $ gem install latex2hiki
 |mk_maple_hiki|lib/mk_maple_hiki.rb|directoryからhikiへの自動変換|
 |rake maple|Rakefile|固有変換を自動化するサンプル|
 
+
+## 具体的な使用例
+### 一括して作る場合
+```tcsh
+bob% cd MapleText/
+bob% mk_maple_hiki --init
+bob% mk_maple_hiki --figures NumMaple
+```
+```tcsh
+[bob:~/Ruby/latex2hiki/MapleText] bob% mk_maple_hiki --hiki NumMaple/
+[["begin", "document"], ["title", "Mapleで理解する数値計算の基礎"], ["author", "西谷@関西学院大・理工"], ["date", "\\today"], ["chapter", "代数方程式(fsolve)"], ["section", "概要"], ["input", "FSolve/abs.tex"], ["section", "Mapleでの解"], ["input", "FSolve/s
+...
+["!!", "高速フーリエ変換アルゴリズムによる高速化"]
+"FFT/TukeyAlgorithm.tex"
+["!!", "FFT関数を用いた結果"]
+"FFT/FFTFunction.tex"
+chmod 666 /Users/bob/Sites/new_ist_data/maple_hiki_data/text/NumMaple
+```
+
+### sectionを分割して作る場合
+```tch
+bob% ls
+Error/                 LAEigenvectors/        NonLinearFit/          NumMapleCont.tex       figures/
+FFT/                   LAFundamentals/        NumMaple.out           NumMaple_140130.pdf
+FSolve/                LAMatrixInverse/       NumMaple.tex           NumMaple_160802.pdf
+InterpolationIntegral/ LeastSquareFit/        NumMaple.toc           Rakefile
+bob% rake maple
+"./Error"
+[["begin", "document"], ["chapter", "誤差(Error)"], ["section", "打ち切り誤差と丸め誤差(Truncation and round off errors)"], ["input", "TruncationRoundoff.tex"], ["s
+```
 
 ## Development
 

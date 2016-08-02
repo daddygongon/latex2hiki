@@ -1,0 +1,25 @@
+次に，固有値の幾何学的な意味を2次元行列で確認しておこう．ある点$x_0$に対称正方行列$A$を作用すると，$x_1$に移動する．これを原点を中心とする円上の点に次々に作用させ，移動前後の点を結ぶ．
+
+\begin{MapleInput}
+> restart;
+  with(LinearAlgebra):with(plots):with(plottools):
+  A:=Matrix(1..2,1..2,[[3,2/3],[2/3,2]]):
+\end{MapleInput}
+
+
+\begin{MapleInput}
+> N:=30:p1:=[]:l1:=[]:
+for k from 0 to N-1 do
+  x0:=Vector([sin(2*Pi*k/N),cos(2*Pi*k/N)]);
+  x1:=MatrixVectorMultiply(A,x0);
+  p1:=[op(p1),pointplot({x0,x1})];
+  l1:=[op(l1),line( evalf(convert(x0,list)),evalf(convert(x1,list)) )];
+end do:
+
+> n:=4;
+  display(p1,l1,view=[-n..n,-n..n]);
+\end{MapleInput}
+\MaplePlot{70mm}{./figures/EigenVectors3plot1.eps}
+
+真ん中の円状の領域が，外側の楕円状の領域に写像されている様子が示されている．この図の中に固有ベクトル，固有値が隠れている．どこかわかる？
+

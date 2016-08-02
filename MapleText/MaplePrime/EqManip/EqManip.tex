@@ -1,0 +1,96 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}
+} }
+
+\begin{document}
+\chapter{式変形}
+\section{数式処理コマンドの分類(EquationManipulationTable)}
+\ChartElementTwo{解説}
+\input{EqManipTable.tex} 
+
+\pagebreak
+\section{式の変形に関連したコマンド(Simplify)}
+\ChartElementTwo{解説}
+\input{Simplify.tex} 
+\ChartElementTwo{課題}
+\input{ExSimplify.tex} 
+\ChartElementTwo{解答例}
+\input{ExAnsSimplify.tex} 
+
+\pagebreak
+\section{式の分割抽出(convert)}
+\ChartElementTwo{解説}
+\input{Convert.tex} 
+\ChartElementTwo{課題}
+\input{ExConvert.tex} 
+\ChartElementTwo{解答例}
+\input{ExAnsConvert.tex} 
+
+\pagebreak
+\section{代入，置換，仮定に関連したコマンド(assume, subs)}
+\ChartElementTwo{解説}
+\input{Assume.tex} 
+
+\pagebreak
+\section{式の変形の基本(BottomLine)}
+\ChartElementTwo{解説}
+\input{BottomLine.tex} 
+
+\pagebreak
+\section{センター試験I(CenterExamI)}
+\ChartElement{解説}
+\input{CenterExamI.tex} 
+\ChartElementTwo{例題}
+\input{ExampleCenterExamI.tex} 
+\ChartElementTwo{課題}
+\input{ExCenterExamI.tex} 
+\ChartElementTwo{解答例}
+\input{ExAnsCenterExamI.tex} 
+
+\end{document}

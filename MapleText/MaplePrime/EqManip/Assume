@@ -1,0 +1,188 @@
+
+!!!一時的代入(subs) 
+関係式(x=2)を式(exp1)に一時的に代入した結果を表示．
+<<<maple
+> exp1:=x^2-4*x*y+4; subs(x=2,exp1);
+>>>
+{{dmath ' {\it exp1}\, := \,{x}^{2}-4\,xy+4  '}}
+{{dmath ' 8-8\,y  '}}
+{{dmath '  '}}
+<<<maple
+> subs({x=a+2,y=sin(x)},exp1);
+>>>
+{{dmath ' \left( a+2 \right) ^{2}-4\, \left( a+2 \right) \sin \left( x \right) +4
+ '}}
+
+
+!!!仮定(assume) 
+変数になにかの条件を仮定するときに使う．たとえば，根を開くときに，与式が正と仮定すると開かれる．
+<<<maple
+> sqrt(b^2); 
+> assume(a>0); sqrt(a^2);
+>>>
+{{dmath ' \sqrt{{b}^{2}}  '}}
+{{dmath ' a\sim  '}}
+{{dmath '  '}}
+
+
+!!!一時的仮定(assuming) 
+assumeと同じだが，一時的に仮定するときに使われる．
+<<<maple
+> exp1:=x^2-4*x+4; 
+> sqrt(exp1);
+>>>
+{{dmath ' {\it exp1}\, := \,{x}^{2}-4\,x+4  '}}
+{{dmath ' \sqrt{ \left( -2+x \right) ^{2}}  '}}
+{{dmath '  '}}
+
+<<<maple
+> sqrt(exp1) assuming x>2;
+>>>
+{{dmath ' -2+x
+ '}}
+
+assumeに加えての仮定にadditionallyがある．
+
+
+!!!solveで求めた値の確定(assign) 
+解を求めるsolveをして
+<<<maple
+> x:='x':y:='y': 
+> s1:=solve({x-y+1=0,x+y-2=0},{x,y}); 
+>>>
+{{dmath ' {\it s1}\, := \, \left\{ x=\frac{1}{2},y=\frac{3}{2} \right\}
+ '}}
+このまま，x,yの中身を見ても，
+<<<maple
+> x,y;
+>>>
+{{dmath ' x,\,y
+ '}}
+代入されていない．s1をassign(確定)すると，
+<<<maple
+> assign(s1);
+> x,y;
+>>>
+{{dmath ' \frac{1}{2},\frac{3}{2}
+ '}}
+と代入される．一時的代入subsと使い分ける．
+
+
+!!!assumeで仮定した内容の確認(about) 
+<<<maple
+> about(a);
+>>>
+<<<maple
+Originally a, renamed a~:
+  is assumed to be: RealRange(Open(0),infinity)
+>>>
+
+
+!!!ユーザが定義した変数の確認(anames('user')) 
+<<<maple
+> anames('user');
+>>>
+{{dmath ' {\it s1},\,y,\,x,\,a
+ '}}
+
+
+!!!値の初期化(restart,a:='a') 
+
+!!!連結作用素({{math '||'}}) 
+前後の変数をくっつけて新たな変数とする．
+<<<maple
+> a||1; #res: a1
+> a||b; #res: ab
+>>>
+プログラムの中で使うとより便利．
+<<<maple
+> for i from 1 to 3 do
+    a||i:=i^2; 
+  end do;
+>>>
+{{dmath ' a1:=1  '}}
+{{dmath ' a2:=4  '}}
+{{dmath ' a3:=9  '}}
+{{dmath '  '}}
+
+
+!!!for-loopの簡略表記(seq) 
+数列を意味するsequenceの略．
+<<<maple
+> seq(k,k=4..7);
+>>>
+{{dmath ' 4,\,5,\,6,\,7
+ '}}
+
+
+!!!リスト要素への関数の一括適用(map) 
+<<<maple
+> f:=x->exp(-x); 
+> map(f,[0,1,2,3]);
+>>>
+{{dmath ' f\, := \,x\mapsto \exp(-x)   '}}
+{{dmath ' [1,\exp(-1),\exp(-2),\exp(-3)]  '}}
+{{dmath '  '}}
+
+上記の３つを組み合わせると，効率的に式を扱うことができる．
+<<<maple
+> map(sin,[seq(theta||i,i=0..3)]);
+>>>
+{{dmath ' [\sin \left( {\it \theta0} \right) ,\sin \left( {\it \theta1} \right) ,\sin \left( {\it \theta2}\\
+\mbox{} \right) ,\sin \left( {\it \theta3} \right) ]
+ '}}
+
+
+!!!単純な和，積(add,mul) 
+<<<maple
+> add(x^i,i=0..3);
+>>>
+{{dmath ' 1+x+{x}^{2}+{x}^{3}
+ '}}
+
+<<<maple
+> mul(x^i,i=0..3);
+>>>
+{{dmath ' {x}^{6}
+ '}}
+
+
+!!!数式にも対応した和，積(sum,product) 
+<<<maple
+> add(x^i,i=0..n);
+>>>
+<<<maple
+Error, unable to execute add
+>>>
+<<<maple
+> sum(x^i,i=0..n);
+>>>
+{{dmath ' {\frac {{x}^{n+1}}{x-1}}- \frac{1}{x-1}
+ '}}
+
+<<<maple
+> product(x^i,i=0..n);
+>>>
+{{dmath ' {x}^{\frac{1}{2}\, \left( n+1 \right) ^{2}-\frac{1}{2}\,n-\frac{1}{2}}
+ '}}
+
+
+!!!極限(limit) 
+<<<maple
+> limit(exp(-x),x=infinity); #res: 0
+>>>
+
+<<<maple
+> limit(tan(x),x=Pi/2);
+>>>
+{{dmath ' {\it undefined}
+ '}}
+
+<<<maple
+> limit(tan(x),x=Pi/2,left); 
+> limit(tan(x),x=Pi/2,complex);
+>>>
+{{dmath ' \infty  '}}
+{{dmath ' -\infty +\infty \, I '}}
+{{dmath '  '}}
+

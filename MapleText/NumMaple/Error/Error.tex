@@ -1,0 +1,61 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newif\ifHIKI
+
+\begin{document}
+\chapter{誤差(Error)}
+\section{打ち切り誤差と丸め誤差(Truncation and round off errors)}
+\input{TruncationRoundoff.tex}
+\section{有効桁数(Significant digits)}
+\input{SignificantDigits.tex}
+\section{浮動小数点演算による過ち(FloatingPointArithmetic)}
+\input{FloatingPointArithmetic.tex}
+\section{機械精度(Machine epsilon)}
+\input{MachineEpsilon.tex}
+\section{桁落ち，情報落ち，積み残し(Cancellation)}
+\input{Cancellation.tex}
+\section{課題}
+\input{Problems.tex}
+
+
+
+\end{document}

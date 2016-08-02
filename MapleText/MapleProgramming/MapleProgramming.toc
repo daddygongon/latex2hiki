@@ -1,0 +1,75 @@
+\contentsline {chapter}{\numberline {第1章}基本操作}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}最初の一葉(FirstLeaf):文法とヘルプとプロット}{5}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}入力領域と注意点(ShiftEnter)}{5}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}命令コマンドの基本形(command();)}{5}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}ヘルプ(?)}{6}{subsection.1.1.3}
+\contentsline {section}{\numberline {1.2}初等関数とそのほかの関数(Functions)}{6}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}初等関数(ElementaryFunctions)}{6}{subsection.1.2.1}
+\contentsline {paragraph}{四則演算とevalf}{6}{section*.2}
+\contentsline {paragraph}{多項式関数(polynom)}{6}{section*.3}
+\contentsline {paragraph}{平方根(sqrt)}{6}{section*.4}
+\contentsline {paragraph}{三角関数(trigonal)}{7}{section*.5}
+\contentsline {paragraph}{その他の関数(inifnc)}{7}{section*.6}
+\contentsline {subsection}{\numberline {1.2.2}ユーザー定義関数(unapply)}{7}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}packageの呼び出し(with)}{8}{subsection.1.2.3}
+\contentsline {section}{\numberline {1.3}等号(Equals)}{8}{section.1.3}
+\contentsline {paragraph}{等号の意味}{8}{section*.7}
+\contentsline {subsection}{\numberline {1.3.1}変数への代入:= (colonequal)}{8}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}変数の初期化(restart)}{8}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}方程式の解(solve)}{9}{subsection.1.3.3}
+\contentsline {paragraph}{方程式の数値解(fsolve)}{9}{section*.8}
+\contentsline {subsection}{\numberline {1.3.4}恒等式(Identity)}{9}{subsection.1.3.4}
+\contentsline {chapter}{\numberline {第2章}Programming}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}代入と出力(Variables, printf)}{11}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}値の変数への代入(:=)}{11}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}整数と浮動小数点数}{11}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}出力(print, printf)}{12}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}ループ(Loop)}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}for-loop}{13}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}二重ループ}{13}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}配列(List)}{17}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}基本}{17}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}for-loopの省略形}{17}{subsection.2.3.2}
+\contentsline {paragraph}{配列の生成(seq)}{18}{section*.9}
+\contentsline {paragraph}{配列の和(sum)}{18}{section*.10}
+\contentsline {subsection}{\numberline {2.3.3}リストへの付け足し(append, prepend)}{18}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}2つの要素の入れ替え}{19}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}2次元配列(listlist)}{19}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}listの表示(listplot)}{19}{subsection.2.3.6}
+\contentsline {section}{\numberline {2.4}交通整理(If)}{22}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}if}{22}{subsection.2.4.1}
+\contentsline {paragraph}{条件文に使える式と意味}{22}{section*.11}
+\contentsline {subsection}{\numberline {2.4.2}nextとbreak}{23}{subsection.2.4.2}
+\contentsline {section}{\numberline {2.5}手続き関数(Procedure)}{27}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}基本}{27}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}戻り値}{27}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}グローバル(大域)，ローカル(局所)変数}{27}{subsection.2.5.3}
+\contentsline {chapter}{\numberline {第3章}その他(Etcetra)}{31}{chapter.3}
+\contentsline {section}{\numberline {3.1}ファイルの入出力(InputOutput)}{31}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}ファイル名の取得}{31}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}簡単なデータのやりとり}{31}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}少し高度なデータのやりとり}{32}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}animationの出力}{33}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Mapleのフィルターとしての利用法}{33}{subsection.3.1.5}
+\contentsline {section}{\numberline {3.2}for-loopの基本技(for-loop2)}{34}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}ランダムな配列の生成}{34}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}要素数の取り出し}{34}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}すべての要素の表示}{34}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}和}{35}{subsection.3.2.4}
+\contentsline {paragraph}{課題：積を求めよ．}{35}{section*.12}
+\contentsline {subsection}{\numberline {3.2.5}値の代入}{35}{subsection.3.2.5}
+\contentsline {paragraph}{課題：先の和と組み合わせて，全要素の和が1になるように規格化せよ．}{35}{section*.13}
+\contentsline {paragraph}{課題：配列Bへ逆順に代入せよ．}{35}{section*.14}
+\contentsline {subsection}{\numberline {3.2.6}一桁の整数5個から5桁の整数を作る}{36}{subsection.3.2.6}
+\contentsline {paragraph}{課題：上記と同様にして，10桁の2進数を10進数へ変換せよ}{36}{section*.15}
+\contentsline {subsection}{\numberline {3.2.7}255以下の10進数をランダムに生成して，8桁の2進数へ変換せよ．}{36}{subsection.3.2.7}
+\contentsline {paragraph}{課題：8桁の整数のそれぞれの桁の値を配列に格納せよ．}{37}{section*.16}
+\contentsline {subsection}{\numberline {3.2.8}小数点以下8桁のそれぞれの桁の数を配列に格納せよ}{37}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}最大数}{37}{subsection.3.2.9}
+\contentsline {paragraph}{課題：最小値を求めよ．}{37}{section*.17}
+\contentsline {subsection}{\numberline {3.2.10}ある値の上下で分けた個数}{38}{subsection.3.2.10}
+\contentsline {subsection}{\numberline {3.2.11}素数かどうかの判定}{38}{subsection.3.2.11}
+\contentsline {subsection}{\numberline {3.2.12}2つの要素の入れ替え}{38}{subsection.3.2.12}
+\contentsline {subsection}{\numberline {3.2.13}コインの表向きの枚数}{39}{subsection.3.2.13}
+\contentsline {paragraph}{課題：1..6のサイコロを20回振って，出た目を記録せよ．}{39}{section*.18}
+\contentsline {subsection}{\numberline {3.2.14}2次元配列}{39}{subsection.3.2.14}

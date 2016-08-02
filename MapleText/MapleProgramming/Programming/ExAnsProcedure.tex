@@ -1,0 +1,106 @@
+\begin{enumerate}
+\item
+\begin{MapleInput}
+> area:=proc(base,height) 
+    base*height/2; 
+  end proc:
+\end{MapleInput}
+\begin{MapleInput}
+> area(3,4); #res: 6
+\end{MapleInput}
+
+\item
+\begin{MapleInput}
+> restart; 
+  n:=19: 
+  banpei:=0; 
+  for i from 2 to n-1 do 
+    amari:=irem(n,i);
+    print(amari): 
+    if amari=0 then 
+      banpei:=1; 
+      break;
+    end if; 
+  end do: 
+  if banpei=1 then 
+    print(n," is not prime number."); 
+  else 
+    print(n," is prime number."); 
+  end if;
+\end{MapleInput}
+\begin{MapleOutputGather}
+0 \notag \\
+1 \notag \\
+1 \notag \\
+1 \notag \\
+19, "\, is\, prime\, number." \notag
+\end{MapleOutputGather}
+
+\begin{MapleInput}
+> MyIsprime:=proc(n) 
+    local i,amari; 
+    for i from 2 to evalf(sqrt(n)) do
+      amari:=irem(n,i); 
+      if amari=0 then 
+        return false; 
+      end if; 
+    end do:
+    return true;
+  end proc:
+\end{MapleInput}
+
+\begin{MapleInput}
+> MyIsprime(104729);
+\end{MapleInput}
+\begin{MapleOutput}
+true
+\end{MapleOutput}
+
+\item 
+\begin{MapleInput}
+> restart; x1:=[0.0, 0.0]: x2:=[1.0, 1.0]:
+\end{MapleInput}
+
+\begin{MapleInput}
+> MyDistance:=proc(x1,x2) 
+    local dx,dy; 
+    dx:=(x1[1]-x2[1]); 
+    dy:=(x1[2]-x2[2]);
+    sqrt(dx^2+dy^2); 
+  end proc:
+\end{MapleInput}
+\begin{MapleInput}
+> MyDistance(x1,x2);
+\end{MapleInput}
+\begin{MapleOutput}
+1.414213562
+\end{MapleOutput}
+\begin{MapleInput}
+> x[1]:=[0.0, 0.0]: x[2]:=[1.0, 1.0]: x[3]:=[1.0, 0.0]: x[4]:=[0.0, 1.0]: x[5]:=x[1]: 
+  sum(MyDistance(x[i],x[i+1]),i=1..4);
+\end{MapleInput}
+\begin{MapleOutput}
+4.828427124
+\end{MapleOutput}
+
+\item
+\begin{MapleInput}
+> MyMax:=proc(A) 
+    local imax,i; 
+    imax:=0; 
+    for i from 1 to nops(A) do 
+      if A[i]>imax then 
+          imax:=A[i];
+      end if 
+    end do; 
+    return imax; 
+  end proc:
+\end{MapleInput}
+\begin{MapleInput}
+> MyMax(A);
+\end{MapleInput}
+\begin{MapleOutput}
+100
+\end{MapleOutput}
+
+\end{enumerate}

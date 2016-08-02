@@ -1,0 +1,33 @@
+\subsection{単純な積分(int)}
+単純な不定積分．
+\begin{MapleInput}
+> int(ln(x),x);	#res: x ln(x) - x
+\end{MapleInput}
+定積分を実行するには，積分変数の範囲を指定する．
+\begin{MapleInput}
+> int(sin(x),x=-Pi..0);	#res: -2
+\end{MapleInput}
+特異点をもつ場合にも適切に積分結果を求めてくれる．
+\begin{MapleInput}
+> int(1/sqrt(x*(2-x)),x=0..2); #res: pi
+\end{MapleInput}
+無限区間(infinity)における定積分も同様に計算してくれる．
+\begin{MapleInput}
+> int(1/(x^2+4),x=-infinity..infinity); #res: 1/2 pi
+\end{MapleInput}
+部分積分法や置換積分法を用いる必要のある複雑な積分も一発で求まる．
+\begin{MapleInput}
+> eq:=sqrt(4-x^2);int(eq,x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+ {\it eq}\, := \, \sqrt{4-{x}^{2}} \notag \\
+ \frac{1}{2}\,x \sqrt{4-{x}^{2}}+2\,\arcsin \left( 1/2\,x \right) \notag
+\end{MapleOutputGather}
+数学の公式集に載っているような積分も同じコマンドで求まる．
+\begin{MapleInput}
+> eq2:=exp(-x^2);int(eq2,x=0..zz);
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it eq2}\, := \,\exp({-{x}^{2}}) \notag \\
+\frac{1}{2}\, \sqrt{\pi }\, \mbox{erf} \left(zz\right) \notag
+\end{MapleOutputGather}

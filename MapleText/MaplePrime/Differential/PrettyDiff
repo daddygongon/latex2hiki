@@ -1,0 +1,13 @@
+
+!!!!きれいな表示 
+
+以下のようにすると表示がきれい．
+<<<maple
+> f:=unapply(x^4*exp(-y^2),(x,y));
+> d:=Diff(f(x,y),x);
+> d=value(d);
+>>>
+{{dmath ' f\, := \,( {x,y} )\mapsto {x}^{4}\exp(-{y}^{2})  '}}
+{{dmath ' d\, := \,{\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right)  '}}
+{{dmath ' {\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right) =4\,{x}^{3}\exp(-{y}^{2}) '}}
+{{dmath '  '}}

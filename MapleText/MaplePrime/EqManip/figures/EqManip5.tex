@@ -1,0 +1,253 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: EqManip5.mw
+%% Generated: Tue Jul 24 21:40:12 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{式の変形(IV, 基本と奥の手)}}
+\subsection{\textbf{解説}}
+\begin{maplelatex}どうしても解かなければならない課題を前にコマンドリファレンスのあちこちを参照しながら解いていくのが数式処理を修得する最速法である．とびかかる前にちょっとした共通のコツがある．それをここでは示す．数式処理ソフトでの数式処理とは，数式処理ソフトが『自動的にやって』くれるのではなく，実際に紙と鉛筆で解いていく手順を数式処理ソフトに『やらせる』ことであることを肝に銘じよ．\end{maplelatex}
+\subsubsection{\textbf{鉄則}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Mapleをはじめとする数式処理ソフトの習得にあたって初心者がつまづく共通の過ちを回避する鉄則がある．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則０：restart をかける}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+続けて入力すると前の入力が生きている．違う問題へ移るときや，もう一度入力をし直すときには，restart;を入力して初期状態からはじめる．入力した順番が狂っている場合もある．頭から順にreturnをやり直す．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則１：出力してみる}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+多くのテキストではページ数の関係で出力を抑止しているが，初心者が問題を解いていく段階ではデータやグラフをできるだけ多く出力する．最後のコロンをセミコロンに変える，あるいは途中にprint文を入れる．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則２：関数に値を代入してみる}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+数値が返ってくるべき時に変数があればどこかで入力をミスっている．plotで以下のようなエラーが出た場合にチェック．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot(f(x),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\underline{}Warning, unable to evaluate the function to numeric values in the region; see the plotting command's help page to ensure the calling sequence is correct\underline{}\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則３：内側から順に入力する}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+長い入力やfor-loopを頭から打ち込んではいけない！！　内側から順に何をしているか解読・確認しながら打ち込む．括弧が合わなかったり，読み飛ばしていたりというエラーが回避できる．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{具体例：無限積分}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+以下に示す積分を実行せよ．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{int(x*e^(-`&beta;c`*x^2)*(1+`&beta;g`*x^3), x = -infinity .. infinity)}{\[\displaystyle \int _{-\infty }^{\infty }\!x{e}^{-\beta c\,{x}^{2}} \left( 1+\beta g\,{x}^{3} \right) {dx}\]}
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+最新版のMapleでは改良が施されていて，このような複雑な積分も一発で求まる．}\end{Maple Normal}
+
+\textbf{f1:=unapply(x*exp(-beta*c*x\symbol{94}2)*(1+beta*g*x\symbol{94}3),x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f1 := proc (x) options operator, arrow; x*exp(-c*beta*x^2)*(1+beta*g*x^3) end proc}{\[\displaystyle {\it f1}\, := \,x\mapsto x{{\rm e}^{-c\beta\,{x}^{2}}} \left( 1+\beta\,g{x}^{3} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{int(f1(x),x=-infinity..infinity);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{piecewise(csgn(c*beta) = 1, (3/4)*g*sqrt(Pi)/(beta*c^2*sqrt(c*beta)), infinity)}{\[\displaystyle \cases{3/4\,{\frac {g \sqrt{\pi }}{\beta\,{c}^{2} \sqrt{c\beta}}}&${\it csgn} \left( c\beta \right) =1$\cr \infty &otherwise\cr}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ここでは，beta,cが正の場合(csgn(beta c)=1)とそれ以外の場合(otherwise)に分けて答えを返している．しかしこのような意図したきれいな結果をいつもMapleが返してくれるとは限らない．これだけしか知らないと，なにかうまくいかないときにお手上げになってしまう．このようなきれいで簡単な結果に行き着く前の，裏でおこなういくつかの予備計算を省略せずに示そう．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+先ず鉄則０にしたがってrestartをかけ，関数を定義する．}\end{Maple Normal}
+
+\textbf{restart;}\textbf{f1:=unapply(x*exp(-beta*c*x\symbol{94}2)*(1+beta*g*x\symbol{94}3),x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f1 := proc (x) options operator, arrow; x*exp(-c*beta*x^2)*(1+beta*g*x^3) end proc}{\[\displaystyle {\it f1}\, := \,x\mapsto x{{\rm e}^{-c\beta\,{x}^{2}}} \left( 1+\beta\,g{x}^{3} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+次には鉄則１にしたがって積分する前にどのような関数かプロットしてみる．そのままplotへ投げると怒られる．}\end{Maple Normal}
+
+\textbf{plot(f1(x),x=-10..10);}\mapleresult
+\underline{}Warning, unable to evaluate the function to numeric values in the region; see the plotting command's help page to ensure the calling sequence is correct\underline{}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これは鉄則２にあるとおり，数値を代入すれば，beta,c,gなどのパラメータの値が入っていないためとわかる．}\end{Maple Normal}
+
+\textbf{f1(10);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{10*exp(-100*c*beta)*(1+1000*beta*g)}{\[\displaystyle 10\,{{\rm e}^{-100\,c\beta}} \left( 1+1000\,\beta\,g \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+適当に値を代入する．}\end{Maple Normal}
+
+\textbf{c:=1; g:=0.01; beta:=0.1;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c := 1}{\[\displaystyle c\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{g := 0.1e-1}{\[\displaystyle g\, := \, 0.01\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{beta := .1}{\[\displaystyle \beta\, := \, 0.1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+再度プロットを試みる．}\end{Maple Normal}
+
+\textbf{plot(f1(x),x=-10..10);}\mapleresult
+\mapleplot{EqManip5plot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+実際に積分してみる．ここでは，鉄則３にしたがって，式を頭から打ち込むのではなく内側からみていくことが肝要である．これは問題を解いていく時に，思考が必ずたどるであろう順番に相当する．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+先ず変数に入れた数値をクリアする．}\end{Maple Normal}
+
+\textbf{c:='c': g:='g':beta:='beta':}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+不定積分でこの関数が積分できることを確認する．}\end{Maple Normal}
+
+\textbf{int(f1(x),x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-1/(2*exp(c*beta*x^2)*beta*c)+beta*g*(-(1/2)*x^3*exp(-c*beta*x^2)/(c*beta)+(3/2)*(-(1/2)*x*exp(-c*beta*x^2)/(c*beta)+(1/4)*sqrt(Pi)*erf(sqrt(c*beta)*x)/(c*beta*sqrt(c*beta)))/(c*beta))}{\[\displaystyle -1/2\,{\frac {1}{{{\rm e}^{c\beta\,{x}^{2}}}\beta\,c}}+\beta\,g \left( -1/2\,{\frac {{x}^{3}{{\rm e}^{-c\beta\,{x}^{2}}}}{c\beta}}+3/2\, \left( -1/2\,{\frac {x{{\rm e}^{-c\beta\,{x}^{2}}}}{c\beta}}+1/4\,{\frac { \sqrt{\pi }{{\rm erf}\left( \sqrt{c\beta}x\right)}}{c\beta\, \sqrt{c\beta}}} \right) {c}^{-1}{\beta}^{-1} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+次にx=-alpha..alphaの定積分を実行する．これは上記のコマンドに付け足すようにしていく．}\end{Maple Normal}
+
+\textbf{int(f1(x),x=-alpha..alpha);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/4)*g*(4*alpha^3*exp(-c*beta*alpha^2)*beta*c*sqrt(c*beta)+6*alpha*exp(-c*beta*alpha^2)*sqrt(c*beta)-3*sqrt(Pi)*erf(sqrt(c*beta)*alpha))/(beta*c^2*sqrt(c*beta))}{\[\displaystyle -1/4\,{\frac {g \left( 4\,{\alpha}^{3}{{\rm e}^{-c\beta\,{\alpha}^{2}}}\beta\,c \sqrt{c\beta}+6\,\alpha\,{{\rm e}^{-c\beta\,{\alpha}^{2}}} \sqrt{c\beta}-3\, \sqrt{\pi }{{\rm erf}\left( \sqrt{c\beta}\alpha\right)}\\
+\mbox{} \right) }{\beta\,{c}^{2} \sqrt{c\beta}}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+さらにα⇒∞としてみる．}\end{Maple Normal}
+
+\textbf{limit(int(f1(x),x=-alpha..alpha),alpha=infinity);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{limit(-(1/4)*g*(4*alpha^3*exp(-c*beta*alpha^2)*beta*c*sqrt(c*beta)+6*alpha*exp(-c*beta*alpha^2)*sqrt(c*beta)-3*sqrt(Pi)*erf(sqrt(c*beta)*alpha))/(beta*c^2*sqrt(c*beta)), alpha = infinity)}{\[\displaystyle \lim _{\alpha\rightarrow \infty }-1/4\,{\frac {g \left( 4\,{\alpha}^{3}{{\rm e}^{-c\beta\,{\alpha}^{2}}}\beta\,c \sqrt{c\beta}+6\,\alpha\,{{\rm e}^{-c\beta\,{\alpha}^{2}}} \sqrt{c\beta}-3\, \sqrt{\pi }{{\rm erf}\left( \sqrt{c\beta}\alpha\right)} \right) \\
+\mbox{}}{\beta\,{c}^{2} \sqrt{c\beta}}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ところがこれでは答えを返してくれない．積分した後のそれぞれの項を見るとβ*c>0を仮定すれば簡単になることが分る．assumeを使って，このような変数の仮定おこなう．}\end{Maple Normal}
+
+\textbf{assume(beta*c>0);}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+結果として最初に出した解答を得る．}\end{Maple Normal}
+
+\textbf{limit(int(f1(x),x=-alpha..alpha),alpha=infinity);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(3/4)*sqrt(Pi)*g/(`&beta;`*c^2*sqrt(`&beta;`*c))}{\[\displaystyle 3/4\,{\frac { \sqrt{\pi }g}{\beta \,{c}^{2} \sqrt{\beta \,c}}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{式のフォローのデフォルト}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Mapleで実際に数式をいじる状況というのは，ほとんどの場合が既知の数式変形のフォローだろう．例えば，論文で「(1)式から(2)式への変形は自明である」とかいう文章で済ましている変形が本当にあっているのかを確かめたい時．一番単純なやり方は自明と言われた前後の式が一致していることを確かめるだけで十分である．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+最も単純な確認法は以下の通り，変形の前後の式を手入力してその差をexpandした結果が0か否かでする．}\end{Maple Normal}
+
+\textbf{ex1:=(x-3)\symbol{94}4;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ex1 := (x-3)^4}{\[\displaystyle {\it ex1}\, := \, \left( x-3 \right) ^{4}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{ex2:=x\symbol{94}4-12*x\symbol{94}3+54*x\symbol{94}2-108*x+81;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ex2 := x^4-12*x^3+54*x^2-108*x+81}{\[\displaystyle {\it ex2}\, := \,{x}^{4}-12\,{x}^{3}+54\,{x}^{2}-108\,x+81\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand(ex1-ex2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{0}{\[\displaystyle 0\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+0ならば式の変形は保証されているので，その導出が間違いでなく誤植などもないことが確認できる．ただ，これだけでは変形の哲学や技法が身に付くわけではない．あくまでも苦し紛れのデフォルトであることは心に留めておくように．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+論理値として確かめたいときには，evalbを使う．}\end{Maple Normal}
+
+\textbf{evalb(expand(ex1-ex2)=0);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{true}{\[\displaystyle {\it true}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

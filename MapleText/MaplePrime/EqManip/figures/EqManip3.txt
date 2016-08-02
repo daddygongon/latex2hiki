@@ -1,0 +1,137 @@
+式の変形(II, convert, 分割抽出)
+解説
+式の変換
+convert(exp1,opt):形式の変換
+opt, 意味
+polynom,級数を多項式(polynomial)に
+trig,三角関数(trigonal)に
+sincos,tanを含まない，sin,cosに
+exp,指数関数形式に
+parfrac,部分分数(partial fraction)に
+rational,浮動小数点数を有理数形式に
+
+> s1:=series(sin(x),x,4); convert(s1,polynom);
+                                   1  3    / 4\
+                               x - - x  + O\x /
+                                   6           
+                                       1  3
+                                   x - - x 
+                                       6   
+> convert(sin(x),exp);
+                          1                         
+                         -- I (exp(I x) - exp(-I x))
+                          2                         
+> convert(sinh(x),exp);
+                             1          1        
+                             - exp(x) - - exp(-x)
+                             2          2        
+> convert(tan(x),sincos);
+                                    sin(x)
+                                    ------
+                                    cos(x)
+> convert(exp(I*x),trig);
+                              cos(x) + I sin(x)
+> convert(1/(x-1)/(x+3),parfrac);
+                                 1           1    
+                           - --------- + ---------
+                             4 (x + 3)   4 (x - 1)
+> convert(3.14,rational);
+                                     157
+                                     ---
+                                     50 
+式の分割・抽出に関連したコマンド
+lhs(exp1), rhs:左辺，右辺
+> lhs(sin(x)^2=1-1/x); rhs(sin(x)^2=1-1/x);
+                                         2
+                                   sin(x) 
+                                        1
+                                    1 - -
+                                        x
+numer(exp1),denom:分子，分母
+> numer(a*x/(x+y)^3); denom(a*x/(x+y)^3);
+                                     a x
+                                          3
+                                   (x + y) 
+coeff(exp1,x^2):係数
+> coeff(4*a*x^2-3*y^2/x+6*b*x*y+3*c*y+2*y^2,y^2);
+                                     3    
+                                   - - + 2
+                                     x    
+op(exp1), nops(exp1):要素の取りだし，要素数
+op, nopsはlist配列から要素や要素数を取り出すのに便利だが，より一般的な構造に対しても作用させることができる．
+> op(4*a*x^2-3*y^2/x+6*b*x*y+3*c*y+2*y^2);
+                                  2                      
+                          2    3 y                      2
+                     4 a x , - ----, 6 b x y, 3 c y, 2 y 
+                                x                        
+> nops(4*a*x^2-3*y^2/x+6*b*x*y+3*c*y+2*y^2);
+                                      5
+演習
+"1. 以下の関数をx0まわりで３次までテイラー展開し，得られた関数ともとの関数をプロットせよ．さらに高次まで展開した場合はどう変化するか． i)
+y=cos(x), x0=0,ii) y=ln(x), x0=1,iii) y=exp(-x), x0=0"
+2."(x+1)/((x-1)(x^(2)+1)^(2))を部分分数に展開せよ．"
+3./(1-x^4) = a/(x^2+1)+b/(x+1)+c*が常に成立するa/(x-1), b, `cを定めよ．`
+4.*(8/(3-sqrt(5)))-2*`を簡単化せよ．`/(2+sqrt(5))
+5.*x^2+2*kx+5-k=0が重根をもつように`kを定めよ．`
+> convert(series(cos(x),x),polynom);
+                                   1  2   1   4
+                               1 - - x  + -- x 
+                                   2      24   
+> plot([convert(series(cos(x),x),polynom),cos(x)],x=-Pi..Pi);
+
+> convert(series(ln(x),x=1),polynom);
+                  1        2   1        3   1        4   1        5
+          x - 1 - - (x - 1)  + - (x - 1)  - - (x - 1)  + - (x - 1) 
+                  2            3            4            5         
+> plot([convert(series(ln(x),x=1),polynom),ln(x)],x=0..2);
+
+> convert(series(exp(-x),x),polynom);
+                             1  2   1  3   1   4    1   5
+                     1 - x + - x  - - x  + -- x  - --- x 
+                             2      6      24      120   
+> plot([convert(series(exp(-x),x),polynom),exp(-x)],x=0..2);
+
+> restart; eq1:=(x+1)/((x-1)*(x^2+1)^2);
+                                    x + 1      
+                              -----------------
+                                              2
+                                      / 2    \ 
+                              (x - 1) \x  + 1/ 
+> convert(eq1,parfrac);
+                          1           x         -x - 1  
+                      --------- - --------- + ----------
+                      2 (x - 1)           2     / 2    \
+                                  / 2    \    2 \x  + 1/
+                                  \x  + 1/              
+> convert(1/(1-x^4),parfrac);
+                           1           1           1     
+                     - --------- + --------- + ----------
+                       4 (x - 1)   4 (x + 1)     / 2    \
+                                               2 \x  + 1/
+> eq2:=8/(3-sqrt(5))-2/(2+sqrt(5));
+                               8            2     
+                           ---------- - ----------
+                                (1/2)        (1/2)
+                           3 - 5        2 + 5     
+> simplify(eq2);
+                                      10
+> eq3:=x^2+2*k*x+(5-k);
+                               2                
+                              x  + 2 k x + 5 - k
+> sol1:=solve(eq3=0,x);
+                                 (1/2)                   (1/2)
+                     / 2        \            / 2        \     
+                -k + \k  - 5 + k/     , -k - \k  - 5 + k/     
+> solve(sol1[1]=sol1[2],k);
+                         1   1   (1/2)    1   1   (1/2)
+                       - - + - 21     , - - - - 21     
+                         2   2            2   2        
+> aa:=coeff(eq3,x^2); bb:=coeff(eq3,x); cc:=coeff(eq3,x,0);
+                                      1
+                                     2 k
+                                    5 - k
+> solve(bb^2-4*aa*cc,k);
+                         1   1   (1/2)    1   1   (1/2)
+                       - - + - 21     , - - - - 21     
+                         2   2            2   2        
+> 

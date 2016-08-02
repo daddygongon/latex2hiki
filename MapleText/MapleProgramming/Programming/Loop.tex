@@ -1,0 +1,63 @@
+\subsection{for-loop}
+繰り返す操作はloopでおこなう．もっとも単純なfor-loop．
+\begin{MapleInput}
+> for i from 1 to 3 do 
+    i; 
+  end do;
+\end{MapleInput}
+\begin{MapleOutputGather}
+1 \notag \\
+2 \notag \\
+3 \notag
+\end{MapleOutputGather}
+初期値や増減を調整したfor-loop
+\begin{MapleInput}
+> for i from 10 by -2 to 0 do
+    i; 
+  end do;
+\end{MapleInput}
+\begin{MapleOutputGather}
+10 \notag \\
+8 \notag \\
+6 \notag \\
+4 \notag \\
+2 \notag \\
+0 \notag
+\end{MapleOutputGather}
+loop回数が少ないときは，loopの中身も出力される．これを止めるには，end do;の最後のセミコロンをコロンに変える．
+
+\subsection{二重ループ}
+i,jという二つの変数を使って2重化したループ．
+\begin{MapleInput}
+> for i from 1 to 3 do 
+    for j from 1 to 3 do 
+      print(i,j); 
+    end do; 
+  end do;
+\end{MapleInput}
+\begin{MapleOutputGather}
+1, 1 \notag \\
+1, 2 \notag \\
+1, 3 \notag \\
+2, 1 \notag \\
+2, 2 \notag \\
+2, 3 \notag \\
+3, 1 \notag \\
+3, 2 \notag \\
+3, 3 \notag
+\end{MapleOutputGather}
+while-loop も同じように使える.
+\begin{MapleInput}
+> i:=0; 
+  while i<5 do 
+    i:=i+1;
+  end do;
+\end{MapleInput}
+\begin{MapleOutputGather}
+0 \notag \\
+1 \notag \\
+2 \notag \\
+3 \notag \\
+4 \notag \\
+5 \notag
+\end{MapleOutputGather}

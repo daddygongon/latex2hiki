@@ -1,0 +1,67 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+f\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\begin{document}
+\chapter{’Èù’ÀÑ’Ê¬}
+\section{’Èù’Ê¬(Diff)-I}
+\ChartElement{’²ò’Àâ}
+\input{Diff.tex} 
+\ChartElement{’Îã’Âê}
+\input{ExampleDiff.tex} 
+\input{ExampleTangent.tex} 
+\pagebreak
+\section{’Èù’Ê¬(Diff)-II}
+\ChartElement{’²ò’Àâ}
+\input{Series.tex} 
+\input{TotalDiff.tex} 
+\input{ComplexDiff.tex} 
+\ChartElement{’²Ý’Âê}
+\input{ExDifferential.tex} 
+\ChartElement{’²ò’Åú’Îã}
+\input{ExAnsDifferential.tex} 
+\input{PrettyDiff.tex} 
+
+\end{document}

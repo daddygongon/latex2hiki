@@ -1,0 +1,72 @@
+
+1. 
+
+i). 
+<<<maple
+> Matrix([3,3,3],[3,3,3]]);
+> Matrix(<3,3|3,3|3,3>);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 3&3&3\\ 3&3&3\end {array} \right]
+ '}}
+そのまま直打ちしてもいいが，少し賢い生成法も記しておく．詳しくはヘルプ参照．
+<<<maple
+> Matrix(2,3,3);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 3&3&3\\ 3&3&3\end {array} \right]
+ '}}
+
+
+ii). 
+<<<maple
+> Matrix(2,3,shape=identity);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&0&0\\ 0&1&0\end {array} \right]
+ '}}
+
+
+iii). 
+<<<maple
+> Vector[row]([1,2,3]);
+> Vector(<1|2|3>):
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\end {array} \right]
+ '}}
+
+
+iv). 
+<<<maple
+> with(LinearAlgebra):
+> V:=Vector[row]([1,2,3]);
+> DiagonalMatrix(V);
+>>>
+{{dmath '  V\, := \, \left[ \begin {array}{ccc} 1&2&3\end {array} \right]  '}}
+{{dmath '   \left[ \begin {array}{ccc} 1&0&0\\ 0&2&0\\ 0&0&3\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+v). 
+<<<maple
+> f:= (i,j) -> x^(i+j-1):
+> Matrix(2,f);
+>>>
+{{dmath '   \left[ \begin {array}{cc} x&{x}^{2}\\ {x}^{2}&{x}^{3}\end {array} \right] 
+ '}}
+
+
+
+vi). 
+<<<maple
+> Matrix(3,[seq(i,i=1..9)]);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]
+ '}}
+
+<<<maple
+> n:=3:
+> f:=(i,j)->(i-1)*n+j;
+> Matrix(3,3,f);
+>>>
+{{dmath '  f\, := \,( {i,j} )\mapsto  \left( i-1 \right) n+j   '}}
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]  '}}
+{{dmath '  '}}
+

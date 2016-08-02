@@ -1,0 +1,260 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: FirstLeaf.mw
+%% Generated: Thu May 31 11:17:35 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{最初の一葉(FirstLeaf):文法とヘルプとプロット}}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+Copyright @2010 by Shigeto R. Nishitani}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{入力領域(>)}}}
+\begin{maplelatex}\begin{Maple Normal}{
+Mapleを起動すると赤いプロンプトがともっている．ここに命令（コマンド）を打ち込んでMapleの計算部に『こちらの意志』を伝えて動作させる．例えば，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot(sin(x),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{FirstLeafplot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+と入力し，enterを入力してみよ．sin関数がプロットされる．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{入力の注意点(ShiftEnter)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+１．赤い領域のどこにカーソルがあってもenterを入れれば，そのブロックごとMapleに命令として渡される．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+２．テキストの修正は普通のワープロソフトと同じ．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+３．命令の入力ではなく，改行だけをいれたいときはshift+enterを入れる．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+４．命令は，enterを入れた順に解釈されるのであって，テキストの上下とは関係ない．}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{コマンドの基本形(command();)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+コマンドは全て次のような構文を取る．}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+command(引数1,引数2,...);}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+あるいは}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+command(引数1,オプション1,オプション2,...);}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+となる．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+()の中の引数やオプションの間はコンマで区切る．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+最後の;（セミコロン）は次のコマンドとの区切り記号．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+セミコロン(;)をコロン(:)に替えるとMapleからの返答が出力されなくなるが，Mapleへの入力は行われている．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+C言語などの手続き型プログラミング言語の標準的なフォーマットと同じ．}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{ヘルプ(?)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ヘルプは少し違った構文で，例えば先程のコマンドplotのヘルプを参照するときには，}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{?plot;
+\begin{Maple Normal}{
+である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+ヘルプ画面は，左側に操作アイコン，検索ウィンドウ，関連リストが表示され，右側にヘルプの本文がある．本文は，簡単な意味と使い方，説明，例，参照で構成される．ほとんどが日本語に訳されているが，古いテキストやあまり使わないコマンドは英語のまま．英語が分からなくても例を参考にすればだいたい予測できる．と言うより，日本語訳を読んでも初めはチンプンカンプン．Mapleコマンドのコンセプトに慣れるまでは使用例をまねるのが一番の早道でしょう．}\end{Maple Normal}
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{間違い(Error)}}}
+\begin{maplelatex}\begin{Maple Normal}{
+いくつかの典型的な間違い.}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{Maple Normal}{
+先ずは,左右の括弧の数が合ってないとき．}\end{Maple Normal}
+
+\textbf{plot(sin(x,x=-Pi..Pi);}\mapleresult
+\underline{}Error, `;` unexpected\underline{}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+正しくは,}\end{Maple Normal}
+
+\textbf{plot(sin(x),x=-Pi..Pi);}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+関数の中に変数が残ったままplotしようとしたとき．}\end{Maple Normal}
+
+\textbf{plot(sin(a*x),x=-Pi..Pi);}\mapleresult
+\underline{}Warning, unable to evaluate the function to numeric values in the region; see the plotting command's help page to ensure the calling sequence is correct\underline{}\mapleresult
+\mapleplot{FirstLeafplot2d2.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+何も表示されない．xに0を代入しても，sin(a*x)からは数値ではなく記号で答えが返って来ている．plotは関数が数値を返したときしか表示できない．以下のように，変数aのかわりに数値を入れる．}\end{Maple Normal}
+
+\textbf{plot(sin(2*x),x=-Pi..Pi);}\mapleresult
+\mapleplot{FirstLeafplot2d3.eps}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{1. plotに関する以下の作業を行え．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i) plotに関するhelpを開けよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ii) 例をいくつかcopyして実行せよ．円をパラメータプロットする方法を確認せよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iii) 2つの関数，sin(x)とcos(x)，をx=-Pi..Piで同時にプロットせよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iv) 上記の２つの関数の表示で，オプションにcolor=[red,blue]およびstyle=[point,line]を加えて，結果を観察せよ．plot[options]に関するhelpを開け，そのほかのオプションを試してみよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2. plot3d}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i) x,yの２次元平面を定義域とする関数のプロットには，3次元で表示するコマンドplot3dが必要となる．２変数関数sin(x)*cos(y)をx=-Pi..Pi,y=-Pi..Piでプロットせよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ii) プロットをつまんでメニューバーにある表面あるいは軸のアイコンを操作して，等高線にしたり，軸を変更してみよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iii) プロットをつまんで回してみよ．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsection{\textbf{解答例}}
+\subsubsection{\textbf{\textit{1.}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i)}\end{Maple Normal}
+
+\textbf{?plot;}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ii)}\end{Maple Normal}
+
+\textbf{plot(cos(x)+sin(x), x = 0 .. Pi);}\mapleresult
+\mapleplot{FirstLeafplot2d4.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot([sin(t), cos(t), t = -Pi .. Pi]);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{FirstLeafplot2d5.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iii)}\end{Maple Normal}
+
+\textbf{plot([sin(x),cos(x)],x=-Pi..Pi);}\mapleresult
+\mapleplot{FirstLeafplot2d6.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iv)}\end{Maple Normal}
+
+\textbf{plot([sin(x),cos(x)],x=-Pi..Pi,color=[red,blue],style=[point,line]);}\mapleresult
+\mapleplot{FirstLeafplot2d7.eps}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2.}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i)}\end{Maple Normal}
+
+\textbf{plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi);}\mapleresult
+\mapleplot{FirstLeafplot3d8.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ii)}\end{Maple Normal}
+
+\begin{Maple Normal}{
+等高線は}\end{Maple Normal}
+
+\textbf{plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,style=contour);}\mapleresult
+\mapleplot{FirstLeafplot3d9.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+軸の変更は}\end{Maple Normal}
+
+\textbf{plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,axes=boxed);}\mapleresult
+\mapleplot{FirstLeafplot3d10.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+詳しくは?plot3d[option];を参照．}\end{Maple Normal}
+
+\textbf{}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iii)}\end{Maple Normal}
+
+\begin{Maple Normal}{
+デフォルトの角度をplot3dのoptionで変更することが可能です．}\end{Maple Normal}
+
+\textbf{plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,orientation=[45,80]);}\mapleresult
+\mapleplot{FirstLeafplot3d11.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

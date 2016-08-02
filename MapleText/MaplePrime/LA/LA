@@ -1,0 +1,810 @@
+{{toc}}
+
+!線形代数
+
+!行列・ベクトル生成(MatrixVector)
+
+!解説
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!ベクトルの生成(Vector) 
+ベクトルの生成は，
+<<<maple
+> v1 := Vector([x, y]);
+>>>
+{{dmath '  {\it v1}\, := \, \left[ \begin {array}{c} x\\ y\end {array} \right] 
+ '}}
+通常の方法では，縦（列）ベクトル(column)ができることに注意．横（行）ベクトル(row)を作るには，明示する必要あり．
+<<<maple
+> v2 := (Vector[row])([x, y, z]);
+>>>
+{{dmath '  {\it v2}\, := \, \left[ \begin {array}{ccc} x&y&z\end {array} \right] 
+ '}}
+新聞の囲み記事(列）がcolumn，劇場の座席（行）はrow.
+
+
+!!!行列の生成(Matrix) 
+標準的な行列(Matrix)の生成は，
+<<<maple
+> A0 := Matrix([[1, 2, 3], [4, 5, 6]]); #res: 省略
+>>>
+リストリストからの変換は，
+<<<maple
+> LL1 := [[1, 2], [3, 4]]:
+> A1 := Matrix(LL1);
+>>>
+{{dmath '  {\it A1}\, := \, \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right] 
+ '}}
+単位行列の生成は，
+<<<maple
+> E := IdentityMatrix(2);
+>>>
+{{dmath '  E\, := \, \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right]
+ '}}
+対角行列を生成するDiagonalMatrixもある．同じことは以下のようにしても生成が可能．
+<<<maple
+> Matrix(2,2,shape=identity);
+>>>
+{{dmath '   \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right] 
+ '}}
+
+
+!!!縦横ベクトル・行列の簡易作成法(MVShortcut) 
+かぎかっこ({{math '<\cdots>'}})を使って，ベクトルあるいは行列を直感的に作ることが可能．カンマで区切ると縦に積み，縦棒で区切ると横に積む．セミコロンで区切るとそこで次の行へ．
+<<<maple
+> v1:=<x,y>; #縦ベクトル，列
+> v2:=<x|y|z>; #横ベクトル，行
+> A1:=<1,2;3,4>; #2x2行列
+> <A1|v1>; #2x3行列(拡大係数行列などの作成)
+> ?MVShortcut; #res:参照
+>>>
+{{dmath '  {\it v1}\, := \, \left[ \begin {array}{c} x\\ y\end {array} \right]  '}}
+{{dmath '  {\it v2}\, := \, \left[ \begin {array}{ccc} x&y&z\end {array} \right]  '}}
+{{dmath '  {\it A1}\, := \, \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]   '}}
+{{dmath '   \left[ \begin {array}{ccc} 1&2&x\\ 3&4&y\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+!!!行列，ベクトルの成分の抽出(MVextraction) 
+行列A1の1行2列の成分を取り出すには，
+<<<maple
+> A1[1,2]; #res: 2
+>>>
+行列の一部を行列として取り出すには
+<<<maple
+> A1[1..2,1..2];
+>>>
+{{dmath '   \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]
+ '}}
+2x2行列の2列目(行の長さに関係なく)でつくるベクトルは
+<<<maple
+> A1[..,2..2];
+>>>
+{{dmath '   \left[ \begin {array}{c} 2\\ 4\end {array} \right] 
+ '}}
+同じことが，行(Row)あるいは列(Column)抽出関数でもできる．使い方は次の通り．
+<<<maple
+> Column(A1,2);
+>>>
+{{dmath '   \left[ \begin {array}{c} 2\\ 4\end {array} \right]
+ '}}
+
+!課題
+
+1.  次の行列，ベクトルを作れ．
+
+(a){{math '  \left[ \begin {array}{ccc} 3&3&3\\ 3&3&3\end {array} \right] '}},
+(b){{math '  \left[ \begin {array}{ccc} 1&0&0\\ 0&1&0\end {array} \right] '}},
+(c){{math '  \left[ \begin {array}{ccc} 1&2&3\end {array} \right] '}},
+(d){{math '  \left[ \begin {array}{ccc} 1&0&0\\ 0&2&0\\ 0&0&3\end {array} \right] '}},
+(e){{math '  \left[ \begin {array}{cc} x&{x}^{2}\\ {x}^{2}&{x}^{3}\end {array} \right] '}},
+(f){{math '  \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right] '}}
+
+
+!解答例
+
+1. 
+
+i). 
+<<<maple
+> Matrix([3,3,3],[3,3,3]]);
+> Matrix(<3,3|3,3|3,3>);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 3&3&3\\ 3&3&3\end {array} \right]
+ '}}
+そのまま直打ちしてもいいが，少し賢い生成法も記しておく．詳しくはヘルプ参照．
+<<<maple
+> Matrix(2,3,3);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 3&3&3\\ 3&3&3\end {array} \right]
+ '}}
+
+
+ii). 
+<<<maple
+> Matrix(2,3,shape=identity);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&0&0\\ 0&1&0\end {array} \right]
+ '}}
+
+
+iii). 
+<<<maple
+> Vector[row]([1,2,3]);
+> Vector(<1|2|3>):
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\end {array} \right]
+ '}}
+
+
+iv). 
+<<<maple
+> with(LinearAlgebra):
+> V:=Vector[row]([1,2,3]);
+> DiagonalMatrix(V);
+>>>
+{{dmath '  V\, := \, \left[ \begin {array}{ccc} 1&2&3\end {array} \right]  '}}
+{{dmath '   \left[ \begin {array}{ccc} 1&0&0\\ 0&2&0\\ 0&0&3\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+v). 
+<<<maple
+> f:= (i,j) -> x^(i+j-1):
+> Matrix(2,f);
+>>>
+{{dmath '   \left[ \begin {array}{cc} x&{x}^{2}\\ {x}^{2}&{x}^{3}\end {array} \right] 
+ '}}
+
+
+
+vi). 
+<<<maple
+> Matrix(3,[seq(i,i=1..9)]);
+>>>
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]
+ '}}
+
+<<<maple
+> n:=3:
+> f:=(i,j)->(i-1)*n+j;
+> Matrix(3,3,f);
+>>>
+{{dmath '  f\, := \,( {i,j} )\mapsto  \left( i-1 \right) n+j   '}}
+{{dmath '   \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+!内積外積(DotProduct,CrossProduct)
+
+!解説
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!スカラーとのかけ算 
+
+<<<maple
+> v1:=Vector([x, y]): 3*v1;
+>>>
+{{dmath ' \left[ \begin {array}{c} 3\,x\\ 3\,y\end {array} \right]
+ '}}
+
+
+!!!行列,ベクトルの足し算，引き算 
+<<<maple
+> LL1 := [[1, 2], [3, 4]]: A1 := Matrix(LL1): A2 := Matrix([[x, x], [y, y]]):
+> 3*A1-4*A2;
+>>>
+{{dmath ' \left[ \begin {array}{cc} 3-4\,x&6-4\,x\\ 9-4\,y&12-4\,y\end {array} \right] 
+ '}}
+
+
+!!!内積(DotProduct, `.`) 
+<<<maple
+> v1:=Vector([1,1,3]): v2:=Vector([1,2,-1]): v1.v2;
+>>>
+{{dmath '                                       0
+ '}}
+
+!!!外積(CrossProduct, `\&x`) 
+<<<maple
+> CrossProduct(v1, v2); v1 &x v2:
+>>>
+{{dmath ' \left[ \begin {array}{c} -7\\ 4\\ 1\end {array} \right] 
+ '}}
+
+
+!!!スカラー3重積 
+<<<maple
+> v3 := Vector([-1,2,1]); CrossProduct(v1,v2).v3;
+>>>
+{{dmath ' {\it v3}\, := \, \left[ \begin {array}{c} -1\\ 2\\ 1\end {array} \right]  '}}
+{{dmath ' 16  '}}
+{{dmath '  '}}
+
+
+!!!転置(Transpose, `\&T`) 
+<<<maple
+> Transpose(A1);
+>>>
+{{dmath ' \left[ \begin {array}{cc} 1&3\\ 2&4\end {array} \right]
+ '}}
+また横ベクトルを縦ベクトル(あるいはその逆)にするのも同じ．
+<<<maple
+> Transpose(v1);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&1&3\end {array} \right]
+ '}}
+
+!課題
+
+1.  
+行列{{math 'A= \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]'}},
+{{math 'B= \left[ \begin {array}{cc} 2&3\\ 4&5\end {array} \right]'}}，
+およびベクトル{{math 'v= \left[ \begin {array}{c} 1\\ 2\end {array} \right] '}}を作り，
+以下の計算を行い結果を観察せよ．
+
+i) {{math 'A+3B'}}, 
+ii) {{math 'A-B'}}, 
+iii) {{math 'A+E'}}, 
+iv) {{math 'A.B'}}, 
+v) {{math 'B.A'}}, 
+vi) {{math 'A.v'}}, 
+vii) {{math 'v.A'}},
+viii) {{math 'v'}}の転置(Transpose)を
+{{math 'A'}}に左側から掛けよ, 
+ix) {{math 'A^3'}}
+
+
+2.  2次元平面上で原点の周りの角度tの回転行列は
+<<<maple
+> Ar:=t->Matrix([[cos(t),-sin(t)],[sin(t),cos(t)]]);
+>>>
+で定義できる．
+
+i) Pi/6 回転させる行列を作り，単位ベクトル(1,0),(0,1)がどの点に移動するか確認せよ．
+
+ii) Pi/6 回転させた後，続けてPi/4 回転させる操作を続けて行う回転行列を求めよ．また，角度を直接入力して要素を比較せよ．
+
+
+3. 
+行列{{math 'A= \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]'}}
+について
+{{math 'A+A^t'}}, 
+{{math 'A-A^t'}}
+を求めて交代行列，対称行列を作れ．
+
+!解答例
+
+1. 
+
+<<<maple
+> with(LinearAlgebra): A:=Matrix([[1,2],[3,4]]); B:=Matrix([[2,3],[4,5]]);
+> v:=Vector([1,2]); E:=IdentityMatrix(2);
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]  '}}
+{{dmath ' B\, := \, \left[ \begin {array}{cc} 2&3\\ 4&5\end {array} \right]  '}}
+{{dmath ' v\, := \, \left[ \begin {array}{c} 1\\ 2\end {array} \right]  '}}
+{{dmath ' E\, := \, \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right]  '}}
+{{dmath '  '}}
+i)--vi)
+<<<maple
+> A+3*B; A-B; A+E; A.B; B.A; A.v;
+>>>
+{{dmath ' \left[ \begin {array}{cc} 7&11\\ 15&19\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{cc} -1&-1\\ -1&-1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{cc} 2&2\\ 3&5\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{cc} 10&13\\ 22&29\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{cc} 11&16\\ 19&28\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} 5\\ 11\end {array} \right]  '}}
+{{dmath '  '}}
+vii)
+<<<maple
+> v.A;
+>>>
+<<<maple
+Error, (in LinearAlgebra:-VectorMatrixMultiply) invalid input:
+LinearAlgebra:-VectorMatrixMultiply expects its 1st argument, v, to be of type
+Vector[row] but received Vector(2, {(1) = 1, (2) = 2})
+>>>
+v.Aは次元が合わないので計算できない．次元を合わすためには，vに転置(Transpose)をかけて横ベクトルにしておく必要がある．
+
+viii)
+<<<maple
+> Transpose(v).A;
+>>>
+{{dmath ' \left[ \begin {array}{cc} 7&10\end {array} \right]
+ '}}
+
+ix)
+<<<maple
+> A^3;
+>>>
+{{dmath ' \left[ \begin {array}{cc} 37&54\\ 81&118\end {array} \right] 
+ '}}
+
+2. 
+i)
+<<<maple
+> with(LinearAlgebra): e1:=Vector([1,0]); e2:=Vector([0,1]);
+> Ar:=t->Matrix([[cos(t),-sin(t)],[sin(t),cos(t)]]); Ar(Pi/6).e1; Ar(Pi/6).e2;
+>>>
+{{dmath ' {\it e1}\, := \, \left[ \begin {array}{c} 1\\ 0\end {array} \right]  '}}
+{{dmath ' {\it e2}\, := \, \left[ \begin {array}{c} 0\\ 1\end {array} \right]   '}}
+{{dmath ' {\it Ar}\, := \,t\mapsto  \left[ \begin {array}{cc} \cos \left( t \right) &-\sin \left( t \right) \\ \sin \left( t \right) &\cos \left( t \right) \end {array} \right]   '}}
+{{dmath ' \left[ \begin {array}{c} 1/2\,\sqrt {3}\\ 1/2\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} -1/2\\ 1/2\,\sqrt {3}\end {array} \right]   '}}
+{{dmath '  '}}
+
+ii.) 2つの関数を別々に計算．
+<<<maple
+> Ar(Pi/4).Ar(Pi/6); 
+> Ar(Pi/6+Pi/4);
+>>>
+{{dmath ' \left[ \begin {array}{cc} 1/4\,\sqrt {2}\sqrt {3}-1/4\,\sqrt {2}&-1/4\,\sqrt {2}-1/4\,\sqrt {2}\sqrt {3}\\ 1/4\,\sqrt {2}\sqrt {3}+1/4\,\sqrt {2}&1/4\,\sqrt {2}\sqrt {3}-1/4\,\sqrt {2}\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{cc} \cos \left( {\frac {5}{12}}\,\pi  \right) &-\sin \left( {\frac {5}{12}}\,\pi  \right) \\ \sin \left( {\frac {5}{12}}\,\pi  \right) &\cos \left( {\frac {5}{12}}\,\pi  \right) \end {array} \right]  '}}
+{{dmath '  '}}
+
+2つの操作の差のevalfをとるとほぼ0,つまり一致していることが確認できる．
+<<<maple
+> evalf(Ar(Pi/6+Pi/4)-Ar(Pi/6).Ar(Pi/4));
+>>>
+{{dmath ' \left[ \begin {array}{cc} - 0.0000000002000000000& 0.0\\  0.0&- 0.0000000002000000000\end {array} \right]
+ '}}
+
+
+3. 
+
+<<<maple
+> A:=Matrix([[1,2,3],[4,5,6],[7,8,9]]); As:=A+Transpose(A); Aa:=A-Transpose(A);
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&2&3\\ 4&5&6\\ 7&8&9\end {array} \right]  '}}
+{{dmath ' {\it As}\, := \, \left[ \begin {array}{ccc} 2&6&10\\ 6&10&14\\ 10&14&18\end {array} \right]  '}}
+{{dmath ' {\it Aa}\, := \, \left[ \begin {array}{ccc} 0&-2&-4\\ 2&0&-2\\ 4&2&0\end {array} \right]  '}}
+{{dmath '  '}}
+
+!行列の基本操作，掃き出し(LUDecomposition)
+
+!解説
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!行列の基本操作 
+行列の掃き出しに必要となる行列の基本操作はRowOperation, ColumnOperationを参照．
+
+
+!!!掃き出し法，LU分解(LUDecomposition) 
+掃き出し法の計算は，LUDecompositionでおこなう．まず拡大係数行列を作る．
+<<<maple
+> A1:=<1,2;3,4>; b:=<2,3>; <A1|b>;
+>>>
+{{dmath ' {\it A1}\, := \, \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]  '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\ 3\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{ccc} 1&2&2\\ 3&4&3\end {array} \right]   '}}
+{{dmath '  '}}
+これにLU分解をかける．それぞれP(permutation，置換), L(lower triangle，下三角), U(upper
+triangle，上三角)行列に代入している．
+<<<maple
+> P,L,U:=LUDecomposition(<A1|b>);
+>>>
+{{dmath ' P,\,L,\,U\, := \, \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right] ,\, \left[ \begin {array}{cc} 1&0\\ 3&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&2&2\\ 0&-2&-3\end {array} \right] 
+ '}}
+さらに被約階段行列(row reduced echelonmatrix;後退代入までおこなって，解まで求めた状態)を求めるには，output='R'を指定する．
+<<<maple
+> LUDecomposition(<A1|b>, output='R');
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&0&-1\\ 0&1&3/2\end {array} \right]
+ '}}
+
+
+!!!階数(Rank) 
+行列の性質の中でも特に重要な階数(Rank)は次のコマンドで求められる．
+<<<maple
+> Rank(A1);
+>>>
+{{dmath ' 2
+ '}}
+
+!課題
+
+1.  行列{{math 'A= \left[ \begin {array}{ccc} 1&2&3\\  4&5&6\\  7&8&9\end {array} \right]'}}について，
+RowOperationのヘルプを参照して，次の行基本操作をおこない，階数を求め，コマンドLUDecomposition, Rankの結果と比べよ．
+
+i) ２行目から１行目の４倍を引く．
+
+ii) 3行目から１行目の７倍を引く．
+
+iii) 2行目を-1/3倍する．
+
+iv) 3行目に２行目の６倍を足す．
+
+RowOperationのコツは，最初はinplace=falseでやってみて，うまくいけばtrueにかえる．
+
+
+2.  
+次の連立方程式の解を掃き出し法で求めよ．GenerateMatrixを使えば連立方程式から拡大係数行列を直接生成することも可能．
+
+(i)
+{{dmath ' \left\{
+\begin{array}{cc}x +y -z &=2 \\
+2 x -3 y +z &=4  \\
+4 x -y +3 z &=1  
+\end{array} \right.
+ '}}
+
+(ii)
+{{dmath ' \left\{
+\begin{array}{cl}2 x +4 y -3 z &=1   \\
+3 x -8 y +6 z &=58   \\
+x -2 y -9 z &=23   \\
+\end{array} \right.
+ '}}
+
+(iii)
+{{dmath ' \left\{
+\begin{array}{cl}
+1 x -10 y -3 z -7 u &=2   \\
+2 x -4 y +3 z +4 u &=-3   \\
+x -2 y +6 z +5 u &=-1   \\
+x +8 y +9 z +3 u &=5
+\end{array} \right.
+ '}}
+(iv)
+{{dmath ' \left\{\begin{array}{cl}x +y +z &=a +b +c    \\
+ax+by+cz &=ab +bc +ca   \\
+bc\,x +ca\,y + ab\,z &=3\,abc 
+\end{array} \right.
+ '}}
+
+
+3.  
+次の連立方程式 
+{{dmath ' \left\{
+\begin{array}{cc}
+x _{1}+2 x _{2}-x _{3} & =0\\
+x _{1}+x _{2}+3 x _{4}&=0    \\
+x _{1}+5 x _{2}-2 x _{3}+3 x _{4}&=0  \\
+x _{1}+3 x _{2}-2 x _{3}- 3 x _{4}&=0 
+\end{array}
+ \right.
+ '}}
+をsolveを使って，{{math 'x_1, x_2, x_3, x_4'}}について解け．
+次にGenerateMatrixを使って，拡大係数行列にした後，LUDecompositionを用いて掃き出しを行い結果を比較せよ．
+
+!解答例
+
+1. 
+<<<maple
+> A:=Matrix([[1,2,3],[4,5,6],[7,8,9]]); with(LinearAlgebra): ?RowOperation;
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&2&3\\  4&5&6\\  7&8&9\end {array} \right]
+ '}}
+ヘルプに書かれてある例を見本にして，コマンドを記述．
+<<<maple
+> RowOperation(A,[2,1],-4);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  7&8&9\end {array} \right]
+ '}}
+結果を最初の引数(A)に上書きするoption(inplace=true)をつける．最初からではなく，うまくいったのを確認してからつけるのがコツ．
+<<<maple
+> RowOperation(A,[3,1],-7,inplace=true);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  0&-6&-12\end {array} \right] 
+ '}}
+<<<maple
+> RowOperation(A,2,-1/3,inplace=true);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&1&2\\  0&-6&-12\end {array} \right]
+ '}}
+<<<maple
+> RowOperation(A,[3,2],6);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&1&2\\  0&0&0\end {array} \right]
+ '}}
+LUDecompositionによる結果と見比べる．
+<<<maple
+> A0:=Matrix([[1,2,3],[4,5,6],[7,8,9]]):
+> LUDecomposition(A0);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&0&0\\  0&1&0\\  0&0&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&0&0\\  4&1&0\\  7&2&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  0&0&0\end {array} \right] 
+ '}}
+最後の行がすべて0になっているので，階数は2となる．Rankにより確認．
+<<<maple
+> Rank(A);
+>>>
+{{dmath ' 2
+ '}}
+
+
+2. 
+i) GenerateMatrixによる係数行列と右辺のベクトルを生成する方法は以下のとおり．
+<<<maple
+> eqs:={x+y-z=2,2*x-3*y+z=4,4*x-y+3*z=1}; GenerateMatrix(eqs,{x,y,z});
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ x+y-z=2,2\,x-3\,y+z=4,4\,x-y+3\,z=1 \right\}  '}}
+{{dmath ' \left[ \begin {array}{ccc} 1&1&-1\\  2&-3&1\\  4&-1&3\end {array} \right] ,\, \left[ \begin {array}{c} 2\\  4\\  1\end {array} \right]  '}}
+{{dmath '  '}}
+
+i)
+<<<maple
+> A:= Matrix([[1,1,-1],[2,-3,1],[4,-1,3]]); b:=<2,4,1>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&1&-1\\  2&-3&1\\  4&-1&3\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\  4\\  1\end {array} \right]   '}}
+{{dmath ' \left[ \begin {array}{cccc} 1&0&0&{\frac {13}{10}}\\  0&1&0&-{\frac {21}{20}}\\  0&0&1&-7/4\end {array} \right]   '}}
+{{dmath '  '}}
+
+ii)
+<<<maple
+> A:= Matrix([[2,4,-3],[3,-8,6],[8,-2,-9]]); b:=<1,5,-23>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 2&4&-3\\  3&-8&6\\  8&-2&-9\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 1\\  5\\  -23\end {array} \right]   '}}
+{{dmath ' \left[ \begin {array}{cccc} 1&0&0&1\\  0&1&0&2\\  0&0&1&3\end {array} \right]   '}}
+{{dmath '  '}}
+
+iii)
+<<<maple
+> A:= Matrix([[1,-10,-3,-7],[2,-4,3,4],[3,-2,6,5],[1,8,9,3]]); b:=<2,-3,-1,5>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{cccc} 1&-10&-3&-7\\  2&-4&3&4\\  3&-2&6&5\\  1&8&9&3\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\  -3\\  -1\\  5\end {array} \right]    '}}
+{{dmath ' \left[ \begin {array}{ccccc} 1&0&0&0&1\\  0&1&0&0&1/2\\  0&0&1&0&1/3\\  0&0&0&1&-1\end {array} \right]   '}}
+{{dmath '  '}}
+
+iv)
+<<<maple
+> restart; with(LinearAlgebra): A:= Matrix([[1,1,1],[a,b,c],[b*c,c*a,a*b]]);
+> bb:=<a+b+c,a*b+b*c+c*a,3*a*b*c>; RR:=LUDecomposition(<A|bb>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&1&1\\  a&b&c\\  bc&ca&ab\end {array} \right]    '}}
+{{dmath ' {\it bb}\, := \, \left[ \begin {array}{c} a+b+c\\  ab+bc+ca\\  3\,abc\end {array} \right]    '}}
+{{dmath ' {\it RR}\, := \, \left[ \begin {array}{cccc} 1&0&0&-{\frac {a \left( {b}^{2}-2\,bc+{c}^{2} \right) }{ \left( a-b \right)  \left( a-c \right) }}\\  0&1&0&{\frac { \left( {a}^{2}-2\,ca+{c}^{2} \right) b}{ \left( b-c \right)  \left( a-b \right) }}\\  0&0&1&-{\frac {c \left( -2\,ab+{b}^{2}+{a}^{2} \right) }{ab-bc+{c}^{2}-ca}}\end {array} \right]    '}}
+{{dmath '  '}}
+
+<<<maple
+> factor(Column(RR,4)[1]);
+>>>
+などとすればさらに見やすく，変形される
+{{dmath ' -{\frac {a \left( b-c \right) ^{2}}{ \left( a-b \right)  \left( a-c \right) }}
+ '}}
+3.
+<<<maple
+> eqs:={x1+2*x2-x3=0,x1+x2+3*x4=0,3*x1+5*x2-2*x3+3*x4=0,x1+3*x2-2*x3-3*x4=0};
+> solve(eqs,{x1,x2,x3,x4}); 
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ {\it x1}+{\it x2}+3\,{\it x4}=0,{\it x1}+2\,{\it x2}-{\it x3}=0, \right.  '}}
+{{dmath ' \left. {\it x1}+3\,{\it x2}-2\,{\it x3}-3\,{\it x4}=0,3\,{\it x1}+5\,{\it x2}-2\,{\it x3}+3\,{\it x4}=0 \right\}  '}}
+{{dmath ' \left\{ {\it x1}=-6\,{\it x4}-{\it x3},{\it x2}=3\,{\it x4}+{\it x3},{\it x3}={\it x3},{\it x4}={\it x4} \right\}  '}}
+{{dmath '  '}}
+
+<<<maple
+> A1,b:=GenerateMatrix(eqs,[x1,x2,x3,x4]);
+> LUDecomposition(<A1|b>,output='R');
+>>>
+{{dmath ' {\it A1},\,b\, := \, \left[ \begin {array}{cccc} 1&1&0&3\\  1&2&-1&0\\  1&3&-2&-3\\  3&5&-2&3\end {array} \right] ,\, \left[ \begin {array}{c} 0\\  0\\  0\\  0\end {array} \right]    '}}
+{{dmath ' \left[ \begin {array}{ccccc} 1&0&1&6&0\\  0&1&-1&-3&0\\  0&0&0&0&0\\  0&0&0&0&0\end {array} \right]    '}}
+{{dmath '  '}}
+
+!逆行列(MatrixInverse)
+
+!解説
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!行列式(Determinant) 
+<<<maple
+> A0 := Matrix([[x,y],[z,u]]); Determinant(A0);
+>>>
+{{dmath ' {\it A0}\, := \, \left[ \begin {array}{cc} x&y\\  z&u\end {array} \right]  '}}
+{{dmath ' xu-yz  '}}
+{{dmath '  '}}
+
+
+!!!逆行列(MatrixInverse) 
+<<<maple
+> A2:=MatrixInverse(A0); simplify(A0.A2);
+>>>
+{{dmath ' {\it A2}\, := \, \left[ \begin {array}{cc} {\frac {u}{xu-yz}}&-{\frac {y}{xu-yz}}\\  -{\frac {z}{xu-yz}}&{\frac {x}{xu-yz}}\end {array} \right] '}}
+{{dmath ' \left[ \begin {array}{cc} 1&0\\  0&1\end {array} \right] '}}
+{{dmath '  '}}
+
+
+!!!その他の演算 
+随伴(Adjoint)などもコマンドだけで求まる．詳しくはヘルプ参照．
+
+!課題
+
+1. 
+次の連立方程式の係数行列の行列式を求めよ．
+
+(i)
+{{dmath ' \left\{
+\begin{array}{cc}x +y -z &=2 \\
+2 x -3 y +z &=4  \\
+4 x -y +3 z &=1  
+\end{array} \right.
+ '}}
+
+(ii)
+{{dmath ' \left\{
+\begin{array}{cl}2 x +4 y -3 z &=1   \\
+3 x -8 y +6 z &=58   \\
+x -2 y -9 z &=23   \\
+\end{array} \right.
+ '}}
+
+(iii)
+{{dmath ' \left\{
+\begin{array}{cl}
+1 x -10 y -3 z -7 u &=2   \\
+2 x -4 y +3 z +4 u &=-3   \\
+x -2 y +6 z +5 u &=-1   \\
+x +8 y +9 z +3 u &=5
+\end{array} \right.
+ '}}
+(iv)
+{{dmath ' \left\{\begin{array}{cl}x +y +z &=a +b +c    \\
+ax+by+cz &=ab +bc +ca   \\
+bc\,x +ca\,y + ab\,z &=3\,abc 
+\end{array} \right.
+ '}}
+
+
+2. 
+上の連立方程式の係数行列の逆行列を求めよ．またベクトルbに作用して解を求めよ．
+
+!解答例
+
+1. 
+<<<maple
+> with(LinearAlgebra): eqs:={x+y-z=2,2*x-3*y+z=4,4*x-y+3*z=1};
+> A,b:=GenerateMatrix(eqs,{x,y,z}); Determinant(A);
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ x+y-z=2,2\,x-3\,y+z=4,4\,x-y+3\,z=1 \right\}   '}}
+{{dmath ' A,\,b\, := \, \left[ \begin {array}{ccc} 1&1&-1\\  2&-3&1\\  4&-1&3\end {array} \right] ,\, \left[ \begin {array}{c} 2\\  4\\  1\end {array} \right] '}}
+{{dmath ' -20 '}}
+{{dmath '  '}}
+
+
+2. 
+<<<maple
+> MatrixInverse(A); simplify(MatrixInverse(A).b);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 2/5&1/10&1/10\\  1/10&-{\frac {7}{20}}&{\frac {3}{20}}\\  -1/2&-1/4&1/4\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} {\frac {13}{10}}\\  -{\frac {21}{20}}\\  -7/4\end {array} \right] '}}
+{{dmath '  '}}
+
+!固有値(EigenVectors)
+
+!解説
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!固有値(EigenVectors) 
+固有値(Eigenvalues)と固有ベクトルを共に求めるにはEigenvectorsを使う．下の例では，固有値と固有ベクトルを変数l,vに代入している．
+<<<maple
+> A0 := Matrix(2, 2, [[1,2], [2,1]]); l,v:=Eigenvectors(A0);
+>>>
+{{dmath ' {\it A0}\, := \, \left[ \begin {array}{cc} 1&2\\  2&1\end {array} \right]  '}}
+{{dmath ' l,\,v\, := \, \left[ \begin {array}{c} -1\\  3\end {array} \right] ,\, \left[ \begin {array}{cc} -1&1\\  1&1\end {array} \right]  '}}
+{{dmath '  '}}
+
+!!!固有ベクトルの取り出し(Column) 
+行列の列を要素とするベクトル生成Columnを使って，一番目の固有値に対応する固有ベクトルを取り出す．
+<<<maple
+> Column(v,1);
+>>>
+{{dmath ' \left[ \begin {array}{c} -1\\  1\end {array} \right]
+ '}}
+これを使って，固有値(l)と固有ベクトル(v)の関係
+{{dmath ' A_0.v=\lambda.v
+ '}}
+が確認できる．
+<<<maple
+> A0.Column(v,1); l[1]*Column(v,1);
+>>>
+{{dmath ' \left[ \begin {array}{c} 1\\  -1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} 1\\  -1\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+!!!固有ベクトルの規格化(Normalize) 
+用意されているコマンドが確かめられる．
+<<<maple
+> ?Normalize;
+>>>
+一般的な内積を使って長さを規格化するには，以下のコマンドを使う．
+<<<maple
+> Normalize(Column(v,1),Euclidean);
+>>>
+{{dmath ' \left[ \begin {array}{c} -1/2\,\sqrt {2}\\  1/2\,\sqrt {2}\end {array} \right] 
+ '}}
+
+
+!!!対角化 
+固有ベクトルを用いて，次のとおり行列は対角化される．
+<<<maple
+> MatrixInverse(v).A0.v;
+>>>
+{{dmath ' \left[ \begin {array}{cc} -1&0\\  0&3\end {array} \right]
+ '}}
+一見対角化されてない場合でも，simplifyを掛けて整理すると対角化されているのが確認できる．
+
+
+!!!その他の演算 
+対角和(Trace)，ジョルダン標準形(JordanForm)などもコマンドだけで求まる．詳しくはヘルプ参照．
+
+!課題
+
+1. 
+行列
+{{dmath ' A= \left[ \begin {array}{ccc} 1&-2&1\\  -1&2&1\\  1&2&1\end {array} \right]
+ '}}
+の固有値を固有方程式
+{{dmath ' \left| A-\lambda E \right| =0
+ '}}
+を解いて求めよ．EigenVectorsを用いて固有値と固有ベクトルを求めよ．固有値，固有ベクトルの関係
+{{dmath ' A.v  =\lambda v
+ '}}
+を確認せよ．さらに，固有ベクトルを長さ1に規格化せよ．
+
+
+2. 
+行列
+{{dmath ' A= \left[ \begin {array}{ccc} 2&0&1\\  0&3&0\\  1&0&2\end {array} \right]
+ '}}
+を対角化する変換行列Pを求め，対角化せよ．
+
+!解答例
+
+1. 
+<<<maple
+> A:=Matrix([[1,-2,1],[-1,2,1],[1,2,1]]); E:=Matrix(3,3,shape=identity):
+> eq:=Determinant(A-x*E); solve(eq,x);
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&-2&1\\  -1&2&1\\  1&2&1\end {array} \right]  '}}
+{{dmath ' {\it eq}\, := \,4\,{x}^{2}-{x}^{3}-8  '}}
+{{dmath ' 2,\,1+ \sqrt{5},\,1- \sqrt{5}  '}}
+{{dmath '  '}}
+<<<maple
+> l,v:=Eigenvectors(A); v1:=Column(v,3); evalf(A.v1); evalf(l[3].v1);
+> Normalize(v1,Euclidean); evalf(Normalize(v1,Euclidean));
+>>>
+{{dmath ' l,\,v\, := \, \left[ \begin {array}{c} \sqrt {5}+1\\  1-\sqrt {5}\\  2\end {array} \right] ,\, \left[ \begin {array}{ccc} {\frac { \left( \sqrt {5}-3 \right) \sqrt {5}}{-5+3\,\sqrt {5}}}&-{\frac { \left( -3-\sqrt {5} \right) \sqrt {5}}{-5-3\,\sqrt {5}}}&1\\  -{\frac {-5+\sqrt {5}}{-5+3\,\sqrt {5}}}&-{\frac {-5-\sqrt {5}}{-5-3\,\sqrt {5}}}&0\\  1&1&1\end {array} \right]  '}}
+{{dmath ' {\it v1}\, := \, \left[ \begin {array}{c} 1\\  0\\  1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  2.0\\   0.0\\   2.0\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  2.0\\   0.0\\   2.0\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} 1/2\,\sqrt {2}\\  0\\  1/2\,\sqrt {2}\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  0.7071067810\\   0.0\\   0.7071067810\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+2. 
+<<<maple
+> A:=Matrix([[2,0,1],[0,3,0],[1,0,2]]); l,v:=Eigenvectors(A);
+> MatrixInverse(v).A.v;
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 2&0&1\\  0&3&0\\  1&0&2\end {array} \right]  '}}
+{{dmath ' l,\,v\, := \, \left[ \begin {array}{c} 3\\  3\\  1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&0&-1\\  0&1&0\\  1&0&1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{ccc} 3&0&0\\  0&3&0\\  0&0&1\end {array} \right]  '}}
+{{dmath '  '}}

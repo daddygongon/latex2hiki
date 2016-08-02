@@ -1,0 +1,96 @@
+\begin{enumerate}
+\item
+$P$を$x$の関数として定義，
+\begin{MapleInput}
+> restart:
+> P:=unapply(x*(x+3)*(2*x-3),x);
+\end{MapleInput}
+\begin{MapleOutput}
+P\, := \,x\mapsto x \left( x+3 \right)  \left( 2\,x-3 \right)
+\end{MapleOutput}
+$P(a+1)$および$P(a)$を形式的に出してみる．
+\begin{MapleInput}
+> expand(P(a+1)), expand(P(a));
+\end{MapleInput}
+\begin{MapleOutput}
+2\,{a}^{3}+9\,{a}^{2}+3\,a-4,\,2\,{a}^{3}+3\,{a}^{2}-9\,a
+\end{MapleOutput}
+2式を差し引く．
+\begin{MapleInput}
+> eq1:=(expand(P(a+1))-expand(P(a)))/2;
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq1}\, := \,3\,{a}^{2}+6\,a-2
+\end{MapleOutput}
+出題にそろえるため2で割っている．その式をeq1として代入し，eq1=0をxについて解く(solve).
+\begin{MapleInput}
+> sol1:=solve(eq1=0,a);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it sol1}\, := \,-1+\frac{1}{3}\, \sqrt{15},\,-1-\frac{1}{3}\, \sqrt{15}
+\end{MapleOutput}
+
+\item
+例題のeq3,eq4までを確認
+%(あるいは，ここまでは[[EqManip_ExampleCenterExamI]]を打ち込む．)
+\begin{MapleInput}
+> eq3, eq4;
+\end{MapleInput}
+\begin{MapleOutput}
+{\it x0}=\frac{1}{2}\,{\frac {2-a}{a}},\, -\frac{1}{4}\,{\frac { \left( 2-a \right) ^{2}}{a}}-2\,a+2
+\end{MapleOutput}
+eq4が頂点の$y$座標の値なので，これから$-2$を引いて展開．
+\begin{MapleInput}
+expand((eq4-(-2)));
+\end{MapleInput}
+\begin{MapleOutput}
+-\frac{1}{a}+5-\frac{9}{4}\,a
+\end{MapleOutput}
+これではわかりにくいので，出題にそう形にするため，$-4a$を掛け，eq5とする．
+\begin{MapleInput}
+> eq5:=expand((eq4+2)*(-4)*a);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq5}\, := \,4-20\,a+9\,{a}^{2}
+\end{MapleOutput}
+これを$a$について解いて(solve)
+\begin{MapleInput}
+> solve(eq5=0,a);
+\end{MapleInput}
+\begin{MapleOutput}
+2,\,\frac{2}{9}
+\end{MapleOutput}
+$a=2/9$をeq3に代入して，頂点の$x$座標を出す．
+\begin{MapleInput}
+> subs(a=2/9,eq3);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it x0}=4
+\end{MapleOutput}
+$a,b$を$f(x)$に代入して，
+\begin{MapleInput}
+> eq6:=subs({a=2/9,b=2-2/9},f(x));
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq6}\, := \,\frac{2}{9}\,{x}^{2}-{\frac {16}{9}}\,x+{\frac {14}{9}}
+\end{MapleOutput}
+これを解いて，$x$座標の交点を求める．
+\begin{MapleInput}
+> solve(eq6=0,x);
+\end{MapleInput}
+\begin{MapleOutput}
+7,\,1
+\end{MapleOutput}
+最大値，最小値を求めるために，今まで求めたパラメータを代入して，plotしてみる．
+\begin{MapleInput}
+> plot(subs({a=2/9,b=2-2/9},f(x)),x=0..9);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/EqManip1plot2d1.eps}
+目視で分かるとおり，最小値$x=4$,最大値$x=9$で
+\begin{MapleInput}
+> subs({a=2/9,b=2-2/9},f(4)), subs({a=2/9,b=2-2/9},f(9));
+\end{MapleInput}
+\begin{MapleOutput}
+-2,\,\frac{32}{9}
+\end{MapleOutput}
+\end{enumerate}

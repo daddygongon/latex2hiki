@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Layout alignment="centred" bullet="none" linespacing="0.5" name="Maple Output"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" name="Maple Input" opaque="false" size="12"/><Font background="[0,0,0]" family="Monospaced" foreground="[0,0,255]" name="Line Printed Output" opaque="false" readonly="true" size="12"/><Font background="[0,0,0]" family="Times New Roman" foreground="[0,0,255]" name="2D Output" opaque="false" readonly="true" size="12"/></Styles><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;
+with(LinearAlgebra):
+n:=4;
+A0:=Matrix([[5,4,1,1],[4,5,1,1],[1,1,4,2],[1,1,2,4]]);</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSJuRzYiIiIl</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSNBMEc2Ii1JJ1JUQUJMRUdGJTYlIidvJjQkLUknTUFUUklYR0YlNiM3JjcmIiImIiIlIiIiRjE3JkYwRi9GMUYxNyZGMUYxRjAiIiM3JkYxRjFGNEYwSSdNYXRyaXhHNiRJKnByb3RlY3RlZEdGOEkoX3N5c2xpYkdGJQ==</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">PrintMatrix:=proc(AA)
+local i,j;
+global n;
+for i from 1 to n do
+  for j from 1 to n do
+    printf("%+6.2f ",AA[i,j]);
+  end do;
+  printf("\n");
+end do;
+end proc:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A:=Matrix(A0);
+V:=Matrix(Matrix(n,n,shape=identity)):
+for p from 1 to n-1 do
+  for q from p+1 to n do
+  U:=Matrix(Matrix(n,n,shape=identity)):
+  div:=A[p,p]-A[q,q];
+  if (div&lt;&gt;0) then
+    theta:=evalf(1/2*arctan(2*A[p,q]/div));
+  else
+    theta:=evalf(Pi/4);
+  end if;
+  s:=sin(theta);
+  c:=cos(theta);
+  U[p,p]:=c;
+  U[q,q]:=c;
+  U[p,q]:=-s;
+  U[q,p]:=s;
+  printf("%3d-%3d\n",p,q);
+  A:=Transpose(U).A.U:
+  V:=V.U;
+  PrintMatrix(A);
+  end do;
+end do:
+</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSJBRzYiLUknUlRBQkxFR0YlNiUiJ0coPSQtSSdNQVRSSVhHRiU2IzcmNyYiIiYiIiUiIiJGMTcmRjBGL0YxRjE3JkYxRjFGMCIiIzcmRjFGMUY0RjBJJ01hdHJpeEc2JEkqcHJvdGVjdGVkR0Y4SShfc3lzbGliR0Yl</Equation></Text-field><Text-field layout="Normal" style="Line Printed Output">  1-  2
+ +9.00  -0.00  +1.41  +1.41 
+ -0.00  +1.00  -0.00  -0.00 
+ +1.41  -0.00  +4.00  +2.00 
+ +1.41  -0.00  +2.00  +4.00 
+  1-  3
+ +9.37  -0.00  -0.00  +1.88 
+ -0.00  +1.00  +0.00  -0.00 
+ -0.00  +0.00  +3.63  +1.57 
+ +1.88  -0.00  +1.57  +4.00 
+  1-  4
+ +9.96  -0.00  +0.47  +0.00 
+ -0.00  +1.00  +0.00  +0.00 
+ +0.47  +0.00  +3.63  +1.50 
+ +0.00  +0.00  +1.50  +3.41 
+  2-  3
+ +9.96  -0.00  +0.47  +0.00 
+ -0.00  +1.00  +0.00  +0.00 
+ +0.47  -0.00  +3.63  +1.50 
+ +0.00  +0.00  +1.50  +3.41 
+  2-  4
+ +9.96  -0.00  +0.47  +0.00 
+ -0.00  +1.00  -0.00  +0.00 
+ +0.47  -0.00  +3.63  +1.50 
+ +0.00  -0.00  +1.50  +3.41 
+  3-  4</Text-field></Output><Output><Text-field layout="Normal" style="Line Printed Output"> +9.96  -0.00  +0.35  -0.32 
+ -0.00  +1.00  -0.00  +0.00 
+ +0.35  -0.00  +5.02  +0.00 
+ -0.32  +0.00  +0.00  +2.01 </Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">PrintMatrix(V);</Text-field></Input><Output><Text-field layout="Normal" style="Line Printed Output"> +0.65  -0.71  -0.27  -0.03 
+ +0.65  +0.71  -0.27  -0.03 
+ +0.24  -0.00  +0.66  -0.71 
+ +0.30  -0.00  +0.65  +0.70 </Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A:=Matrix(A0);
+eps:=0.0000001;
+i_max:=20;
+V:=Matrix(Matrix(n,n,shape=identity)):
+for iter from 1 to i_max do
+count:=0:
+for p from 1 to n-1 do
+  for q from p+1 to n do
+
+  if (abs(A[p,q])&lt;eps) then next;
+  else count:=count+1;
+  end if;
+
+  U:=Matrix(Matrix(n,n,shape=identity)):
+  div:=A[p,p]-A[q,q];
+  if (div&lt;&gt;0) then
+    theta:=evalf(1/2*arctan(2*A[p,q]/div));
+  else
+    theta:=evalf(Pi/4);
+  end if;
+  s:=sin(theta);
+  c:=cos(theta);
+  for j from 1 to n do 
+    apj:=A[p,j];aqj:=A[q,j];
+    A[p,j]:=apj*c+aqj*s;
+    A[q,j]:=-apj*s+aqj*c;
+  end do;
+  for i from 1 to n do 
+    aip:=A[i,p];aiq:=A[i,q];
+    A[i,p]:=aip*c+aiq*s;
+    A[i,q]:=-aip*s+aiq*c;
+    vip:=V[i,p];viq:=V[i,q];
+    V[i,p]:=vip*c+viq*s;
+    V[i,q]:=-vip*s+viq*c;
+  end do;
+
+  printf("Iteration %3d:%3d-%3d\n",iter,p,q);
+  PrintMatrix(A);
+  end do;
+end do:
+if (count=0) then break; end if;
+end do:
+</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSJBRzYiLUknUlRBQkxFR0YlNiUiJyVlQCQtSSdNQVRSSVhHRiU2IzcmNyYiIiYiIiUiIiJGMTcmRjBGL0YxRjE3JkYxRjFGMCIiIzcmRjFGMUY0RjBJJ01hdHJpeEc2JEkqcHJvdGVjdGVkR0Y4SShfc3lzbGliR0Yl</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSRlcHNHNiIkIiIiISIo</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiM+SSZpX21heEc2IiIjPw==</Equation></Text-field></Output><Output><Text-field layout="Normal" style="Line Printed Output">Iteration   1:  1-  2
+ +9.00  -0.00  +1.41  +1.41 
+ -0.00  +1.00  -0.00  -0.00 
+ +1.41  -0.00  +4.00  +2.00 
+ +1.41  -0.00  +2.00  +4.00 
+Iteration   1:  1-  3
+ +9.37  -0.00  -0.00  +1.88 
+ -0.00  +1.00  -0.00  -0.00 
+ -0.00  +0.00  +3.63  +1.57 
+ +1.88  -0.00  +1.57  +4.00 
+Iteration   1:  1-  4
+ +9.96  -0.00  +0.47  +0.00 
+ -0.00  +1.00  -0.00  -0.00 
+ +0.47  +0.00  +3.63  +1.50 
+ +0.00  +0.00  +1.50  +3.41 
+Iteration   1:  3-  4
+ +9.96  -0.00  +0.35  -0.32 
+ -0.00  +1.00  -0.00  +0.00 
+ +0.35  +0.00  +5.02  +0.00 
+ -0.32  +0.00  +0.00  +2.01 
+Iteration   2:  1-  3
+ +9.99  -0.00  +0.00  -0.32 
+ -0.00  +1.00  +0.00  +0.00 
+ +0.00  +0.00  +5.00  +0.02 
+ -0.32  +0.00  +0.02  +2.01 
+Iteration   2:  1-  4
++10.00  -0.00  -0.00  -0.00 
+ -0.00  +1.00  +0.00  +0.00 
+ -0.00  +0.00  +5.00  +0.02 
+ +0.00  +0.00  +0.02  +2.00 
+Iteration   2:  3-  4
++10.00  -0.00  -0.00  +0.00 
+ -0.00  +1.00  +0.00  -0.00 
+ -0.00  +0.00  +5.00  -0.00 
+ +0.00  -0.00  -0.00  +2.00 
+Iteration   3:  1-  3
++10.00  -0.00  +0.00  +0.00 
+ -0.00  +1.00  +0.00  -0.00 
+ +0.00  +0.00  +5.00  +0.00 
+ +0.00  -0.00  +0.00  +2.00 
+Iteration   3:  1-  4
++10.00  -0.00  +0.00  +0.00 
+ -0.00  +1.00  +0.00  +0.00 
+ +0.00  +0.00  +5.00  +0.00 
+ +0.00  +0.00  +0.00  +2.00 </Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">PrintMatrix(V);</Text-field></Input><Output><Text-field layout="Normal" style="Line Printed Output"> +0.63  -0.71  -0.32  -0.00 
+ +0.63  +0.71  -0.32  -0.00 
+ +0.32  +0.00  +0.63  -0.71 
+ +0.32  +0.00  +0.63  +0.71 </Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Eigenvectors(A0);</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation style="2D Output">NiQtSSdSVEFCTEVHNiI2JSImP2QoLUknTUFUUklYR0YlNiM3JjcjIiM1NyMiIiY3IyIiIzcjIiIiJkknVmVjdG9yRzYkSSpwcm90ZWN0ZWRHRjdJKF9zeXNsaWJHRiU2I0knY29sdW1uR0YlLUYkNiUiJ29JTC1GKTYjNyY3JkYxIyEiIkYxIiIhRkM3JkYxRkJGREYzNyZGM0YzRkNGRDcmRjNGM0YzRkRJJ01hdHJpeEdGNg==</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field/><Text-field/><Text-field/><RTable handle="309568" >TTdSMApJM1JUQUJMRV9TQVZFLzMwOTU2OFgsJSlhbnl0aGluZ0c2IjYiW2dsISIlISEhIzEiJSIlIiImIiIlIiIiRilGKEYnRilGKUYpRilGKCIiCiNGKUYpRipGKDYiCg==</RTable><RTable handle="318728" >TTdSMApJM1JUQUJMRV9TQVZFLzMxODcyOFgsJSlhbnl0aGluZ0c2IjYiW2dsISIlISEhIzEiJSIlIiImIiIlIiIiRilGKEYnRilGKUYpRilGKCIiCiNGKUYpRipGKDYiCg==</RTable><RTable handle="321584" >TTdSMApJM1JUQUJMRV9TQVZFLzMyMTU4NFgsJSlhbnl0aGluZ0c2IjYiW2dsISIlISEhIzEiJSIlJCIrKysrKzUhIikkISs1VVpKbSEjPiQiKzgrCixBSUYsJCInb3hdISM6JCErKVtYYCI+ISM9JEYoISIqJCIrdyhcV1QnRiwkIidrVzwhI0MkIitpb2YlZiohI0QkIitQV2ZNOiEjPyQiKyoKKioqKioqKlxGNiQiKyNIKT1YNkY0JCIiIkYxJCInQiQpUUY+JCIrWG40Jj4iRjQkIisrKysrP0Y2NiIK</RTable><RTable handle="75720" >TTdSMApJMlJUQUJMRV9TQVZFLzc1NzIwWColKmFsZ2VicmFpY0c2IjYiW2dsISMlISEhIiUiJSIjNSIiJiIiIyIiIjYiCg==</RTable><RTable handle="333068" >TTdSMApJM1JUQUJMRV9TQVZFLzMzMzA2OFgsJSphbGdlYnJhaWNHNiI2IltnbCEiJSEhISMxIiUiJSIiI0YnIiIiRigjISIiRidGKUYoRigiIiFGCitGKkYoRipGKEYrRis2Igo=</RTable></Worksheet>

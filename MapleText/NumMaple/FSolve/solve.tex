@@ -1,0 +1,52 @@
+Mapleでは代数方程式の解は，fsolveで求まる．
+\begin{equation*}
+x^2-4x+1 = 0
+\end{equation*}
+の解を考える．未知の問題では時として異常な振る舞いをする関数を相手にすることがあるので，先ずは関数の概形を見ることを常に心がけるべき．
+\begin{MapleInput}
+> restart;
+> func:=x->x^2-4*x+1;
+\end{MapleInput}
+\begin{MapleOutput}
+{\it func}\, := \,x\mapsto {x}^{2}-4\,x+1
+\end{MapleOutput}
+\begin{MapleInput}
+> plot(func(z),z=-1..7);
+\end{MapleInput}
+\MaplePlot{60mm}{./figures/C2_fsolveplot2d1.eps}
+
+もし，解析解が容易に求まるなら，その結果を使うほうがよい．Maple scriptの解析解を求めるsolveでは，
+
+\begin{MapleInput}
+> solve(func(x)=0,x);
+\end{MapleInput}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+　　　　　　　　 & 　　　　　　　　 \\ 
+　　　　　　　　 & 　　　　　　　　 \\ 
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+と即座に求めてくれる．数値解は以下の通り求められる．
+\begin{MapleInput}
+> fsolve(func(x)=0,x);
+\end{MapleInput}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+　　　　　　　　 & 　　　　　　　　 \\ 
+　　　　　　　　 & 　　　　　　　　 \\ 
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+

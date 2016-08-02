@@ -1,0 +1,1663 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: MapleProgramming.mw
+%% Generated: Tue Jul 31 11:31:05 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{Programming(I) 変数への代入と出力}}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+Copyright @2010 by Shigeto R. Nishitani}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{値の変数への代入(:=)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Mapleは変数の初期設定で型宣言をする必要がない．数式処理の章で示したとおり，変数への代入は:=を使う．変数a,bにそれぞれ10,3を代入し，a+bの結果をcに代入するというプログラムは以下の通り．}\end{Maple Normal}
+
+\textbf{a:=10;}\textbf{b:=3;}\textbf{c:=a+b;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a := 10}{\[\displaystyle a\, := \,10\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{b := 3}{\[\displaystyle b\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c := 13}{\[\displaystyle c\, := \,13\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{整数と浮動小数点数（省略）}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+浮動小数点数から整数に直すにはいくつかの関数がある.}\end{Maple Normal}
+
+trunc：数値から数直線で 0 に向って最も近い整数
+round：数値の四捨五入
+floor：数値より小さな最も大きな整数
+ceil：数値より大きな最も小さな整数
+負の値の時に floor と trunc は違った値を返す.\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\raisebox{2.013888888888889in}{\includegraphics[keepaspectratio,totalheight=4.027777777777778in,angle=-90]{MapleProgrammingimage0.eps}}}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+小数点以下を取りだすにはfrac が用意されている.}\end{Maple Normal}
+
+\textbf{frac(1.7);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{.7}{\[\displaystyle  0.7\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+整数の割り算は irem(余り) と iquo(商).}\end{Maple Normal}
+
+\textbf{irem(7,3);}\textbf{iquo(7,3);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{出力(print, printf)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Mapleではデフォルトで結果が出力される．これを抑えるには行末の”；”を”：”に変える必要がある．出力を明示的におこなうにはprintを使う．デバッグの時に便利．}\end{Maple Normal}
+
+\textbf{x:=1:}\textbf{print(x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+さらに，出力を整えるのに便利なprintf関数がある．これはC言語と同じ構文で，}\end{Maple Normal}
+
+\textbf{printf("Hello world!!\symbol{92}n");}\mapleresult
+Hello world!!
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+と打ち込んでenterを押せば，出力が即座に表示される．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+値を表示するときには，}\end{Maple Normal}
+
+\textbf{i:=3:}\textbf{printf("\%3d\symbol{92}n",i);}\mapleresult
+3
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+となる．これは}\end{Maple Normal}
+
+\begin{Maple Normal}{
+「変数iに入っている値を，3桁の整数形式で打ち出した後，改行せよ」}\end{Maple Normal}
+
+\begin{Maple Normal}{
+と言う意味．\%3dが出力の形式，\symbol{92}nが改行を意味する．OSによっては，\symbol{92}は￥と画面あるいはキーボードで表示されているかもしれない．実数の出力指定は\%10.5fで，全部で10桁，小数点以下5桁で浮動小数点数を表示．複数の変数の出力はprintf("\%3d : \%10.5f \symbol{92}n",i,a);などとなる．}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{printfの書式指定}}}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%指定}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+意味}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%o}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+整数を8進数で表示．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%d}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+整数を10進数で表示．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%x, \%X}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+整数を16進数で表示．xは小文字，Xは大文字を使用．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%f}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+浮動小数点数として表示．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%e, \%E}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+指数形式で表示．eは小文字，Eは大文字を使用．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+\%s}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+文字列を出力．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{Programming(II) for-loop}}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+Copyright @2010 by Shigeto R. Nishitani}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{do-loop}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+もっとも単純なfor-loop．}\end{Maple Normal}
+
+\textbf{for i from 1 to 3 do}\textbf{i;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+初期値や増減を調整したfor-loop}\end{Maple Normal}
+
+\textbf{for i from 10 by -2 to 0 do}\textbf{i;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{10}{\[\displaystyle 10\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{8}{\[\displaystyle 8\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6}{\[\displaystyle 6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{0}{\[\displaystyle 0\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+loop回数が少ないときは，loopの中身も出力される．これを止めるには，end do;の最後のセミコロンをコロンに変える．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+二重ループ}\end{Maple Normal}
+
+\textbf{for i from 1 to 3 do}\textbf{for j from 1 to 3 do}\textbf{print(i,j);}\textbf{end do;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 1}{\[\displaystyle 1,\,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 2}{\[\displaystyle 1,\,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 3}{\[\displaystyle 1,\,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 1}{\[\displaystyle 2,\,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 2}{\[\displaystyle 2,\,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 3}{\[\displaystyle 2,\,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 1}{\[\displaystyle 3,\,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 2}{\[\displaystyle 3,\,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 3}{\[\displaystyle 3,\,3\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+while-loop も同じように使える.}\end{Maple Normal}
+
+\textbf{i:=0;}\textbf{while i<5 do}\textbf{i:=i+1;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 0}{\[\displaystyle i\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 1}{\[\displaystyle i\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 2}{\[\displaystyle i\, := \,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 3}{\[\displaystyle i\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 4}{\[\displaystyle i\, := \,4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 5}{\[\displaystyle i\, := \,5\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{1. printfを使って次のように表示せよ．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i) Hello world.  ii) 1+1=2}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2. 次の数を順に表示せよ．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i) 1から5までの整数．ii) 5から1までの整数 ．iii) 1から10にある偶数．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{3. 9x9表を作れ．}}}
+\subsubsection{\textbf{\textit{4. 1 から 5 までの和を求めよ.}}}
+\subsubsection{\textbf{\textit{5. nを5にして，n!=n×(n-1)×(n-2)××3×2×1を求めよ.}}}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\subsection{\textbf{解答例}}
+\subsubsection{\textbf{\textit{1.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{printf("Hello world!!\symbol{92}n");
+}{}
+\end{mapleinput}
+\mapleresult
+Hello world!!
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{i:=1;
+printf("%d+%d=%d\symbol{92}n",i,i,i+i);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{i := 1}{\[\displaystyle i\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+1+1=2
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i)}\end{Maple Normal}
+
+\textbf{for i from 1 to 5 do}\textbf{i;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ii)}\end{Maple Normal}
+
+\textbf{for i from 5 to 1 by -1 do}\textbf{i;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+iii)}\end{Maple Normal}
+
+\textbf{for i from 2 to 10 by 2 do}\textbf{i;}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6}{\[\displaystyle 6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{8}{\[\displaystyle 8\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{10}{\[\displaystyle 10\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{3}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to 9 do
+for j from 1 to 9 do
+  printf("%4d",i*j);
+end do;
+printf("\symbol{92}n");
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+1   2   3   4   5   6   7   8   92   4   6   8  10  12  14  16  183   6   9  12  15  18  21  24  274   8  12  16  20  24  28  32  365  10  15  20  25  30  35  40  456  12  18  24  30  36  42  48  547  14  21  28  35  42  49  56  638  16  24  32  40  48  56  64  729  18  27  36  45  54  63  72  81
+\end{maplegroup}
+\subsubsection{\textbf{\textit{4}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum1:=0;
+for i from 1 to 5 do
+  sum1:=sum1+i;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 0}{\[\displaystyle {\it sum1}\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 1}{\[\displaystyle {\it sum1}\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 3}{\[\displaystyle {\it sum1}\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 6}{\[\displaystyle {\it sum1}\, := \,6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 10}{\[\displaystyle {\it sum1}\, := \,10\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 15}{\[\displaystyle {\it sum1}\, := \,15\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{5.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=5;
+total1:=1;
+for i from 1 to n do
+  total1:=total1*i;
+end do;
+
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{n := 5}{\[\displaystyle n\, := \,5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 1}{\[\displaystyle {\it total1}\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 1}{\[\displaystyle {\it total1}\, := \,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 2}{\[\displaystyle {\it total1}\, := \,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 6}{\[\displaystyle {\it total1}\, := \,6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 24}{\[\displaystyle {\it total1}\, := \,24\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{total1 := 120}{\[\displaystyle {\it total1}\, := \,120\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{Programming(III) list}}
+\subsection{\textbf{解説}}
+\begin{maplelatex}\begin{Maple Normal}{
+配列は変数を入れる箱が沢山用意されていると考えればよい．配列を使うときは，箱を指す数(示数，index)をいじっているのか，箱の中身(要素)をいじっているのかを区別すれば，動作を理解しやすい．Mapleにはいくつかの配列構造が用意されている．もっとも，頻繁に使うlistを示す．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{基本}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+リスト構造は，中に入れる要素を[]でくくる．}\end{Maple Normal}
+
+\textbf{restart;}\textbf{list1:=[1,3,5,7];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{list1 := [1, 3, 5, 7]}{\[\displaystyle {\it list1}\, := \,[1,3,5,7]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+要素にアクセスするには，以下のようにインデックスを指定する．}\end{Maple Normal}
+
+\textbf{list1[2]; list1[-1]; list1[2..4];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7}{\[\displaystyle 7\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[3, 5, 7]}{\[\displaystyle [3,5,7]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+-1,-2等は後ろから1番目，2番目を指す．C言語と違い0番目はない．}\end{Maple Normal}
+
+\textbf{list1[-1];list1[0];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7}{\[\displaystyle 7\]}
+\end{maplelatex}
+\mapleresult
+\underline{}Error, invalid subscript selector\underline{}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ひとつの要素を書き換えるには，以下のようにする．}\end{Maple Normal}
+
+\textbf{list1[3]:=x: list1;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 3, x, 7]}{\[\displaystyle [1,3,x,7]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+要素の数，および要素の中身を取り出すには以下のようにする．}\end{Maple Normal}
+
+\textbf{nops(list1);}\textbf{op(list1);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 3, x, 7}{\[\displaystyle 1,\,3,\,x,\,7\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{for-loopとそれを省略するのによく使う手を二つ.( ”\# ”より後ろはコメント文です)}}}
+\subsubsection{\textit{配列の生成(seq)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{aa:=[]; #空で初期化 
+for i from 1 to 3 do
+  aa:=[op(aa),i]; #付け足していく
+end do:
+print(aa);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{aa := []}{\[\displaystyle {\it aa}\, := \,[]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 2, 3]}{\[\displaystyle [1,2,3]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+同じことをseqを使って短く書くことができる．}\end{Maple Normal}
+
+\textbf{aa :=[seq(i,i=1..3)];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{aa := [1, 2, 3]}{\[\displaystyle {\it aa}\, := \,[1,2,3]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{配列の和(sum)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=nops(aa):
+total:=0:
+for i from 1 to n do
+  total:=total+aa[i];
+end do:
+print(total):
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6}{\[\displaystyle 6\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+同じことをsumを使って短く書くことができる．}\end{Maple Normal}
+
+\textbf{sum(aa[i],i=1..nops(aa));}\mapleresult
+\underline{}Error, invalid subscript selector\underline{}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+sumやseqを使っているとおくこのようなエラーがでる．これは，for-loopをまわすときにiに値が代入されているため引っかかる．変数を換えるか，iを初期化すればよい．}\end{Maple Normal}
+
+\textbf{i;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum(aa[j],j=1..nops(aa));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6}{\[\displaystyle 6\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{リストへの付け足し(append, prepend)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+opを用いると，リストに新たな要素を前後，あるいは途中に付け足すことができる．}\end{Maple Normal}
+
+\textbf{list1:=[op(list1),9];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{list1 := [1, 3, x, 7, 9]}{\[\displaystyle {\it list1}\, := \,[1,3,x,7,9]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2つの要素の入れ替え}}}
+\begin{maplelatex}\begin{Maple Normal}{
+要素の３，４番目の入れ替えは以下の通り．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{tmp:=list1[3]:
+list1[3]:=list1[4]:
+list1[4]:=tmp:
+list1;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 3, 7, x, 9]}{\[\displaystyle [1,3,7,x,9]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2次元配列(}}\textbf{\textit{listlist}}\textbf{\textit{）}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+[ ] を二重化することで 2 次元の配列を作ることも可能で,リストのリスト (listlist) と呼ばれる.}\end{Maple Normal}
+
+\textbf{l2:=[[1,2,3,4],[1,3,5,7]];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{l2 := [[1, 2, 3, 4], [1, 3, 5, 7]]}{\[\displaystyle {\it l2}\, := \,[[1,2,3,4],[1,3,5,7]]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+要素へのアクセスは以下の通り．}\end{Maple Normal}
+
+\textbf{l2[2];}\textbf{l2[2,3];}\textbf{l2[2][3];}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 3, 5, 7]}{\[\displaystyle [1,3,5,7]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{listの表示(lisplot)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+listに入っている数値を視覚化するのにはlistplotが便利．}\end{Maple Normal}
+
+\textbf{la:=[1,2,3,4,3,2,1];}\textbf{with(plots):}\textbf{listplot(la);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{la := [1, 2, 3, 4, 3, 2, 1]}{\[\displaystyle {\it la}\, := \,[1,2,3,4,3,2,1]\]}
+\end{maplelatex}
+\mapleresult
+\mapleplot{MapleProgrammingplot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{1. 1から100までの整数のうち5個をランダムに含んだ配列を生成せよ．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+1から6までのランダムな数を生成する関数は，}\end{Maple Normal}
+
+\textbf{roll:=rand(1..6):}\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+として作ることができる．実行は次の通り．}\end{Maple Normal}
+
+\textbf{seq(roll(),i=1..10);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5, 2, 5, 6, 2, 3, 4, 4, 6, 5}{\[\displaystyle 5,\,2,\,5,\,6,\,2,\,3,\,4,\,4,\,6,\,5\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2.}}\textbf{\textit{さいころを１００回振って，出た目１から６が何回出たかを表示せよ．}}}
+\subsubsection{\textbf{\textit{3. コイン６枚を一度に投げて，表向きの枚数を数えるプログラムを書け．}}}
+\subsubsection{\textbf{\textit{4. 0から9までの整数5個から5桁の整数を作れ．（１桁目が０になっても気にするな）}}}
+\subsubsection{\textbf{\textit{5. 小数点以下8桁のそれぞれの桁の数を配列に格納せよ．8桁の少数は以下のようにして作られる．}}}
+\subsubsection{\textbf{\textit{6. 255以下の10進数をランダムに生成して，8桁の2進数へ変換せよ．}}}
+\begin{maplelatex}\begin{Maple Normal}{
+整数の割り算には irem(余り) と iquo(商) がある. 使用法は以下の通り．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{irem(7,3);
+iquo(7,3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{解答例}}
+\subsubsection{\textit{1.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+[seq(roll(),i=1..5)];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[27, 96, 17, 90, 34]}{\[\displaystyle [27,96,17,90,34]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{2.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..6):
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A:=[seq(0,i=1..6)];
+for i from 1 to 100 do
+  i1:=roll();
+  A[i1]:=A[i1]+1;
+end do:
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := [0, 0, 0, 0, 0, 0]}{\[\displaystyle A\, := \,[0,0,0,0,0,0]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[16, 18, 21, 18, 18, 9]}{\[\displaystyle [16,18,21,18,18,9]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{3.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{toss:=rand(0..1):
+n:=6:
+up:=0:
+for i from 1 to n do
+  up:=up+toss();
+end do:
+up;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{4.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(0..9):
+n:=5:
+A:=[seq(roll(),i=1..n)];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := [5, 7, 3, 7, 6]}{\[\displaystyle A\, := \,[5,7,3,7,6]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum1:=0;
+for i from 1 to n do
+  sum1:=sum1*10+A[i];
+end do:
+sum1;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 0}{\[\displaystyle {\it sum1}\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{57376}{\[\displaystyle 57376\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{5.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+n:=8;
+roll:=rand(10\symbol{94}(n-1)..10\symbol{94}n):
+B:=evalf(roll()/10\symbol{94}n,8);
+A:=[];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{n := 8}{\[\displaystyle n\, := \,8\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := .19550684}{\[\displaystyle B\, := \, 0.19550684\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := []}{\[\displaystyle A\, := \,[]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{B:=10*B;
+for i from 1 to n do
+  A:=[op(A),floor(B)];
+  B:=(B-A[i])*10;
+end do:
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := 1.95506840}{\[\displaystyle B\, := \, 1.95506840\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 9, 5, 5, 0, 6, 8, 4]}{\[\displaystyle [1,9,5,5,0,6,8,4]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{6.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=8:
+roll:=rand(0..2\symbol{94}n-1):
+B:=roll();
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := 246}{\[\displaystyle B\, := \,246\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A:=[seq(0,j=1..n)]:
+
+for i from 1 to n do
+  A[n-i+1]:=irem(B,2);
+  B:=iquo(B,2);
+end do:
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, 1, 1, 1, 0, 1, 1, 0]}{\[\displaystyle [1,1,1,1,0,1,1,0]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{Programming(IV) if}}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{if：交通整理}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+もっとも簡単なif文の例．}\end{Maple Normal}
+
+\textbf{x:=-4;}\textbf{if (x<0) then}\textbf{　　y:=-x;}\textbf{end if;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x := -4}{\[\displaystyle x\, := \,-4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`　　y` := 4}{\[\displaystyle \mbox {{\tt 　　y}}\, := \,4\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+例外付き．}\end{Maple Normal}
+
+\textbf{x:=3;}\textbf{if (x<0) then}\textbf{y:=-x;}\textbf{else}\textbf{y:=x;}\textbf{end if;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x := 3}{\[\displaystyle x\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{y := 3}{\[\displaystyle y\, := \,3\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+2個の条件がある例}\end{Maple Normal}
+
+\textbf{x:=3;}\textbf{if (x<0) then}\textbf{y:=-x;}\textbf{elif (x>5) then}\textbf{y:=x;}\textbf{else}\textbf{y:=2*x;}\textbf{end if;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x := 3}{\[\displaystyle x\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{y := 6}{\[\displaystyle y\, := \,6\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{条件文に使える式と意味}}}
+\begin{maplelatex}\begin{Maple Normal}{
+関係演算子は<, <=, >, >=, =, <>で表記される．論理演算子にはand, or, xor, implies, notがある．その他にもブール値を返す関数として evalb, type などいくつかあり，条件分岐に使える．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+xとyの値が一致}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+(x=y)}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+xとyの値が一致しない}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+(x<>y)}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+条件文を複数つなぐ}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+((x>0) and (x<4))}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+((x<0) or (x>4))}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+not (x=0)}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{nextとbreak}}}
+\begin{maplelatex}\begin{Maple Normal}{
+do-loopの途中で流れを変更するための命令．nextはdo-loop を一回スキップ．breakはそこで do-loop を一つ抜ける．以下のコードの出力結果を参照．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to 5 do
+ if (i=3) then
+   next;
+ end if;
+   print(i);
+end do:
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to 5 do
+  if (i=3) then
+    break;
+  end if;
+  print(i);
+end do:
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{1. 西暦を代入したら，明治，大正，昭和，平成で答えてくれるプログラムを作成せよ．西暦1868, 1912,1926,1989年をそれぞれの元年とする．}}}
+\subsubsection{\textbf{\textit{2. 整数を代入したら，それ以下の素数をすべて表示するプログラムを作れ．素数かどうかの判定はMapleコマンドのisprimeを用いよ．}}}
+\subsubsection{\textbf{\textit{3. pが素数でp+2も素数のとき，これらは双子の素数と呼ばれる．10以上，100以下の双子の素数を全部見つけて出力せよ．}}}
+\subsubsection{\textbf{\textit{4. 素数判定を原理から実現せよ．}}}
+\begin{maplelatex}\begin{Maple Normal}{
+ある数nが素数かどうか(自分自身の数nと1以外の数で割りきれないかどうか)を判定せよ．割り算の余り(剰余)はiremで求まる．例えば}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+> amari:=irem(9,2);}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+として変数residueをprintfしてみよ．番兵を置いておいて，n-1から2までの数でnを次々と割っていき，一度でも割り切れれば番兵にマークをつける．ループが終わった後に番兵のマークを見て素数(prime number)かどうかを判定すればよい．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{5. うるう年かどうかを表示するプログラムをかけ．}}}
+\begin{maplelatex}\begin{Maple Normal}{
+うるう年は4で割り切れる数の年．ただし，100で割り切れる年はうるう年でなく，400で割り切れる年はうるう年．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{6. ゴールドバッハの予想}}}
+\begin{maplelatex}\begin{Maple Normal}{
+「6以上の偶数は二つの素数の和として表わされる」という予想を100以下の偶数について検証せよ．あらかじめ100までの素数をリストアップしておいてそのなかから組み合わせを探すと便利．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{解答例}}
+\subsubsection{\textbf{\textit{1.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{year:=1890;
+if year<1868 then
+  printf("明治より前です．\symbol{92}n");
+elif year<1912 then
+  printf("明治%d年です．\symbol{92}n",year-1868+1);
+elif year<1926 then
+  printf("大正%d年です．\symbol{92}n",year-1912+1);
+elif year<1989 then
+  printf("昭和%d年です．\symbol{92}n",year-1926+1);
+elif year<2011 then
+  printf("平成%d年です．\symbol{92}n",year-1989+1);
+else
+  printf("今年より後です．\symbol{92}n");
+end;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{year := 1890}{\[\displaystyle {\it year}\, := \,1890\]}
+\end{maplelatex}
+\mapleresult
+明治23年です．
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=10;
+for i from 1 to n do
+  if (isprime(i)) then
+     print(i);
+  end if;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{n := 10}{\[\displaystyle n\, := \,10\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2}{\[\displaystyle 2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7}{\[\displaystyle 7\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{3.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 10 to 100-2 do
+  if (isprime(i) and isprime(i+2)) then
+    print(i,i+2);
+  end if;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{11, 13}{\[\displaystyle 11,\,13\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{17, 19}{\[\displaystyle 17,\,19\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{29, 31}{\[\displaystyle 29,\,31\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{41, 43}{\[\displaystyle 41,\,43\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{59, 61}{\[\displaystyle 59,\,61\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{71, 73}{\[\displaystyle 71,\,73\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{4.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=12:
+banpei:=0;
+for i from 2 to n-1 do 
+  amari:=irem(n,i);
+#  print(amari):
+  if amari=0 then
+    banpei:=1;
+    break;
+  end if;
+end do:
+if banpei=1 then
+  printf("%d is not prime number.\symbol{92}n",n);
+else
+  printf("%d is prime number.\symbol{92}n",n);
+end if;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{banpei := 0}{\[\displaystyle {\it banpei}\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+12 is not prime number.
+\end{maplegroup}
+\subsubsection{\textbf{\textit{5.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{year:=[2010,1984,2004,1800,1900,1600,2000]:
+for i from 1 to nops(year) do
+ if (irem(year[i],400)=0) then
+   printf("%d is a leap year.\symbol{92}n",year[i]);
+ elif (irem(year[i],4)=0) and (irem(year[i],100)<>0) then
+   printf("%d is a leap year.\symbol{92}n",year[i]);
+ else
+   printf("%d is not a leap year.\symbol{92}n",year[i]);
+ end if;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+2010 is not a leap year.1984 is a leap year.2004 is a leap year.1800 is not a leap year.1900 is not a leap year.1600 is a leap year.2000 is a leap year.
+\end{maplegroup}
+\subsubsection{\textit{別解}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to nops(year) do
+ if (irem(year[i],4)=0) and 
+    ((irem(year[i],100)<>0) or
+    (irem(year[i],400)=0)) then
+   printf("%d is a leap year.\symbol{92}n",year[i]);
+ else
+   printf("%d is not a leap year.\symbol{92}n",year[i]);
+ end if;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+2010 is not a leap year.1984 is a leap year.2004 is a leap year.1800 is not a leap year.1900 is not a leap year.1600 is a leap year.2000 is a leap year.
+\end{maplegroup}
+\subsubsection{\textbf{\textit{6.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{prime1:=[];
+for i from 1 to 100 do
+  if isprime(i) then
+    prime1:=[op(prime1),i];
+  end if;
+end do;
+prime1;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{prime1 := []}{\[\displaystyle {\it prime1}\, := \,[]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]}{\[\displaystyle [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61\\
+\mbox{},67,71,73,79,83,89,97]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{nops(prime1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{25}{\[\displaystyle 25\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 6 to 100 by 2 do
+  for j1 from 1 to nops(prime1) do
+    for j2 from 1 to nops(prime1) do
+      if i=(prime1[j1]+prime1[j2]) then
+        print(i,prime1[j1],prime1[j2]);
+        break;
+      end if
+    end do;
+    if j2<=nops(prime1) then
+      break;
+    end if;
+  end do;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6, 3, 3}{\[\displaystyle 6,\,3,\,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{100, 3, 97}{\[\displaystyle 100,\,3,\,97\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{Programming(V) proc}}
+\subsection{\textbf{解説}}
+\begin{maplelatex}\begin{Maple Normal}{
+複雑な手続きや，何度も繰り返すルーチンはprocで作る．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{基本}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+procは以下のようにして作る．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+ユーザ関数名:=proc(仮引数)}\end{Maple Normal}
+
+\begin{Maple Normal}{
+動作}\end{Maple Normal}
+
+\begin{Maple Normal}{
+end proc;}\end{Maple Normal}
+
+\textbf{test1:=proc(a)}\textbf{print(a);}\textbf{end proc;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{test1 := proc (a) print(a) end proc}{\[\displaystyle {\it test1}\, := \,\textbf{proc} (a) \\
+\mapleIndent{1} \mathit{print} (a)\\
+\textbf{end\ proc};\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+procの呼び出しは，以下のようになる．}\end{Maple Normal}
+
+\textbf{test1(13);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{13}{\[\displaystyle 13\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+仮引数としてはどんな型(変数や配列)でもよい．複数指定するときにはコンマで区切る．仮引数をprocの中で変更すると怒られる．下で示すglobalで取り込むか，local変数にコピーして使う．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{戻り値}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+procの戻り値はreturnで指定される．return文がないときは，最後の動作結果が戻り値となる．}\end{Maple Normal}
+
+\textbf{test2:=proc(a)}\textbf{print(a);}\textbf{return a+1;}\textbf{end proc;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{test2 := proc (a) print(a); return a+1 end proc}{\[\displaystyle {\it test2}\, := \,\textbf{proc} (a) \\
+\mapleIndent{1} \mathit{print} (a);\\
+\mapleIndent{1} \textbf{return}\,a + 1\\
+\textbf{end\ proc};\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{test2(13);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{13}{\[\displaystyle 13\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{14}{\[\displaystyle 14\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{グローバル(大域)，ローカル(局所)変数}}}
+\begin{maplelatex}\begin{Maple Normal}{
+procの内部だけで使われるのがlocal, 外部を参照するのがglobal．global,localを省略してもMapleが適当に判断してくれる．信用できないけど．宣言の仕方は以下の通り．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{Maple Normal}{
+変数名:=proc(引数)}\end{Maple Normal}
+
+\begin{Maple Normal}{
+local 変数;}\end{Maple Normal}
+
+\begin{Maple Normal}{
+global 変数;}\end{Maple Normal}
+
+\begin{Maple Normal}{
+動作の記述}\end{Maple Normal}
+
+\begin{Maple Normal}{
+end proc;}\end{Maple Normal}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{1. 三角形の面積}}}
+\begin{maplelatex}\begin{Maple Normal}{
+底辺と高さを引数として，面積を返す関数areaを作れ．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{2. my\_isprime}}}
+\begin{maplelatex}\begin{Maple Normal}{
+前章の課題４で求めた素数判定プログラムをprocにせよ．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{3. ルートの距離}}}
+\begin{maplelatex}\begin{Maple Normal}{
+二つの位置座標}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x1:=[0.0, 0.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x2:=[1.0, 1.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+から距離を求めるmy\_distance関数を作れ．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+次に，4つの位置座標}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x[1]=[0.0, 0.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x[2]=[1.0, 1.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x[3]=[1.0, 0.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+x[4]=[0.0, 1.0]}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+を読み込んで，座標順に[1,2,3,4,1]と巡る距離を求めよ．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{4. 最大数}}}
+\begin{maplelatex}\begin{Maple Normal}{
+ランダムな整数が格納されたリストを受け取り，そのリスト中の最大数を返す関数my\_maxを作れ．1から100までのランダムな整数のリストは次のようにして作れる．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+n:=50:
+A:=[seq(roll(),i=1..n)];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := [45, 96, 6, 98, 59, 44, 100, 38, 69, 27, 96, 17, 90, 34, 18, 52, 56, 43, 83, 25, 90, 93, 60, 93, 14, 50, 47, 8, 46, 44, 9, 77, 59, 16, 1, 70, 77, 39, 92, 71, 67, 78, 51, 53, 12, 19, 63, 40, 90, 3]}{\[\displaystyle A\, := \,[45,96,6,98,59,44,100,38,69,27,96,17,90,34,18,52\\
+\mbox{},56,43,83,25,90,93,60,93,14,50,47,8,46,44,9,77,59\\
+\mbox{},16,1,70,77,39,92,71,67,78,51,53,12,19,63,40,90,3\\
+\mbox{}]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{解答例}}
+\subsubsection{\textit{1.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{area:=proc(base,height)
+  base*height/2;
+end proc;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{area := proc (base, height) (1/2)*base*height end proc}{\[\displaystyle {\it area}\, := \,\textbf{proc} (baseheight) \\
+\mapleIndent{1} 1/2 \ast base \ast height\\
+\textbf{end\ proc};\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{area(3,4);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{6}{\[\displaystyle 6\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{2.}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+n:=19:
+banpei:=0;
+for i from 2 to n-1 do 
+  amari:=irem(n,i);
+  print(amari):
+  if amari=0 then
+    banpei:=1;
+    break;
+  end if;
+end do:
+if banpei=1 then
+  print(n," is not prime number.");
+else
+  print(n," is prime number.");
+end if;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{banpei := 0}{\[\displaystyle {\it banpei}\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1}{\[\displaystyle 1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{19, " is prime number."}{\[\displaystyle 19,\,`` is prime number.''\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_isprime:=proc(n)
+local i,amari;
+for i from 2 to evalf(sqrt(n)) do 
+  amari:=irem(n,i);
+  if amari=0 then
+    return false;
+  end if;
+
+end do:
+return true;
+end proc:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_isprime(104729);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{true}{\[\displaystyle {\it true}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{3}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+x1:=[0.0, 0.0];
+x2:=[1.0, 1.0];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x1 := [0., 0.]}{\[\displaystyle {\it x1}\, := \,[ 0.0, 0.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x2 := [1.0, 1.0]}{\[\displaystyle {\it x2}\, := \,[ 1.0, 1.0]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_distance:=proc(x1,x2)
+local dx,dy;
+dx:=(x1[1]-x2[1]);
+dy:=(x1[2]-x2[2]);
+  sqrt(dx\symbol{94}2+dy\symbol{94}2);
+end proc:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_distance(x1,x2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1.414213562}{\[\displaystyle  1.414213562\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x[1]:=[0.0, 0.0];
+x[2]:=[1.0, 1.0];
+x[3]:=[1.0, 0.0];
+x[4]:=[0.0, 1.0];
+x[5]:=x[1];
+sum(my_distance(x[i],x[i+1]),i=1..4);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x[1] := [0., 0.]}{\[\displaystyle x_{{1}}\, := \,[ 0.0, 0.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x[2] := [1.0, 1.0]}{\[\displaystyle x_{{2}}\, := \,[ 1.0, 1.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x[3] := [1.0, 0.]}{\[\displaystyle x_{{3}}\, := \,[ 1.0, 0.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x[4] := [0., 1.0]}{\[\displaystyle x_{{4}}\, := \,[ 0.0, 1.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x[5] := [0., 0.]}{\[\displaystyle x_{{5}}\, := \,[ 0.0, 0.0]\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4.828427124}{\[\displaystyle  4.828427124\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{4.}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+n:=50:
+A:=[seq(roll(),i=1..n)];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := [93, 45, 96, 6, 98, 59, 44, 100, 38, 69, 27, 96, 17, 90, 34, 18, 52, 56, 43, 83, 25, 90, 93, 60, 93, 14, 50, 47, 8, 46, 44, 9, 77, 59, 16, 1, 70, 77, 39, 92, 71, 67, 78, 51, 53, 12, 19, 63, 40, 90]}{\[\displaystyle A\, := \,[93,45,96,6,98,59,44,100,38,69,27,96,17,90,34,18\\
+\mbox{},52,56,43,83,25,90,93,60,93,14,50,47,8,46,44,9,77\\
+\mbox{},59,16,1,70,77,39,92,71,67,78,51,53,12,19,63,40,90\\
+\mbox{}]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_max:=proc(A)
+local imax,i;
+imax:=0;
+for i from 1 to nops(A) do
+  if A[i]>imax then
+    imax:=A[i]
+  end if
+end do;
+return imax;
+end proc;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{my_max := proc (A) local imax, i; imax := 0; for i to nops(A) do if imax < A[i] then imax := A[i] end if end do; return imax end proc}{\[\displaystyle {\it my\_max}\, := \,\textbf{proc} (A) \\
+\textbf{local} \,imax,\,i; \\
+\mapleIndent{1} imax\,:=\,0;\\
+\mapleIndent{1} \textbf{for} \,i \,\textbf{to} \,\mathit{nops} (A) \,\textbf{do}\\
+\mapleIndent{2} \textbf{if} \,imax<A[i] \, \textbf{then} \\
+\mapleIndent{3} imax\,:=\,A[i]\\
+\mapleIndent{2} \textbf{end\ if}; \\
+\mapleIndent{1} \textbf{end\ do};;\\
+\mapleIndent{1} \textbf{return}\,imax\\
+\textbf{end\ proc};\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{my_max(A);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{100}{\[\displaystyle 100\]}
+\end{maplelatex}
+\end{maplegroup}
+\end{document}

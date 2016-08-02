@@ -1,0 +1,66 @@
+
+!!!初等関数(ElementaryFunctions) 
+
+!!!!!四則演算とevalf 
+四則演算は"+-*/"．割り切れない割り算は分数のまま表示される．
+<<<maple
+> 3/4;
+>>>
+{{dmath ' \frac{3}{4}
+ '}}
+強制的に数値(浮動小数点数)で出力するにはevalfを用いる．
+<<<maple
+> evalf(3/4);
+>>>
+{{dmath ' 0.7500000000
+ '}}
+
+!!!!!多項式関数(polynom) 
+かけ算も省略せずに打ち込む必要がある．またベキ乗は\verb="^"=である．
+<<<maple
+> 3*x^2-4*x+3;
+>>>
+{{dmath ' 3x^2-4x+3
+ '}}
+
+!!!!!平方根(sqrt) 
+平方根はsquare rootを略したsqrtを使う．
+<<<maple
+> sqrt(2);
+>>>
+{{dmath ' \sqrt{2}
+ '}}
+
+
+!!!!!三角関数(trigonal) 
+sin, cosなどの三角関数はラジアンで入力する．ただし， {{math '\sin^2x'}}などは
+<<<maple
+> sin^2 x;
+>>>
+<<<maple
+Error, missing operator or `;`
+>>>
+ではだめで，
+<<<maple
+> sin(x)^2;
+>>>
+{{dmath ' \sin^2x
+ '}}
+と省略せずに打ち込まねばならない．三角関数でよく使う定数{{math '\pi'}}は"Pi"と入力する．Mapleは大文字と小文字を区別するので注意．
+
+ラジアン(radian)に度(degree)から変換するには以下のようにする．
+<<<maple
+> convert(90*degrees, radians);
+  convert(1/6*Pi,degrees);
+>>>
+{{dmath ' \frac{1}{2}\pi
+ '}}
+{{dmath ' 30\,\, degrees
+ '}}
+
+!!!!!その他の関数(inifnc) 
+その他の初等関数やよく使われる超越関数など，Mapleの起動時に用意されている関数のリストは，
+<<<maple
+> ?inifnc;
+>>>
+で得られる．

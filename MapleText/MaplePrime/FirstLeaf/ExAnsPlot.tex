@@ -1,0 +1,27 @@
+\subsubsection{plot}
+\begin{enumerate}
+\item
+\begin{MapleInput}
+> ?plot;
+\end{MapleInput}
+
+\begin{MapleInput}
+> plot(cos(x)+sin(x), x = 0 .. Pi);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot2d4.eps}
+\item
+\begin{MapleInput}
+> plot([sin(t), cos(t), t = -Pi .. Pi]);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot2d5.eps}
+\item
+\begin{MapleInput}
+> plot([sin(x),cos(x)],x=-Pi..Pi);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot2d6.eps}
+\item
+\begin{MapleInput}
+> plot([sin(x),cos(x)],x=-Pi..Pi,color=[red,blue],style=[point,line]);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot2d7.eps}
+\end{enumerate}

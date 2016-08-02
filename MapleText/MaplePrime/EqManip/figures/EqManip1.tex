@@ -1,0 +1,423 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: EqManip1.mw
+%% Generated: Wed Jul 25 18:49:30 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{数式変形実践課題（大学入試センター試験の解法を通して）}}
+\begin{maplelatex}\begin{Maple Normal}{
+今まで出てきたコマンドを使えば，典型的なセンター試験の問題を解くのも容易である．以下の例題を参照して課題を解いてみよ．使うコマンドは，unapply, solve, diff, expand(展開), factor(因数分解)とsubs(一時的代入)である．expand等の数式変形によく使うコマンドは次節以降で詳しく解説している．subsは以下を参考にせよ．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{一時的代入(subs)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+代入(:=)に対して，そこだけでの代入をsubsで行う．}\end{Maple Normal}
+
+\textbf{subs(a=1,a+2);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+典型的な使い方は，solveで求めた解などを式として代入しておいて，それをsubsで一時的に当てはめる．}\end{Maple Normal}
+
+\textbf{eq1:=a=solve(a+b=0,a);}\textbf{subs(eq1,a+2);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq1 := a = -b}{\[\displaystyle {\it eq1}\, := \,a=-b\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-b+2}{\[\displaystyle -b+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{例題}}
+\subsubsection{\textbf{\textit{１．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\textit{a,b}を定数とし,\mapleinline{inert}{2d}{a <> 0}{$\displaystyle a\neq 0$}
+とする．2次関数}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{y = ax^2-bx-a+b}{$\displaystyle y={{\it ax}}^{2}-{\it bx}-a+b$}
+　(1)}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+のグラフが点 (-2, 6) を通るとする.}\end{Maple Normal}
+
+\begin{Maple Normal}{
+このとき}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{b = -a+[`ア`]}{\[\displaystyle b=-a+[\mbox {{\tt ア}}]\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+であり,グラフの頂点の座標を\textit{a}を用いて表すと}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{(-a+[`イ`])/([`ウ`]*a), -([`エ`]*a+[-`オ`])^2/([`カ`]*a)}{\[\displaystyle {\frac {-a+[\mbox {{\tt イ}}]}{[\mbox {{\tt ウ}}]a}},\,-{\frac { \left( [\mbox {{\tt エ}}]a+[-\mbox {{\tt オ}}]\\
+\mbox{} \right) ^{2}}{[\mbox {{\tt カ}}]a}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である (2008 年度大学入試センター試験数学 I より抜粋).}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textit{解答例}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+まず，与えられた２次関数を\mapleinline{inert}{2d}{f(x)*`で定義する．`}{$\displaystyle f \left( x \right) \mbox {{\tt で定義する．}}$}
+}\end{Maple Normal}
+
+\textbf{restart;}\textbf{f:=unapply(a*x\symbol{94}2-b*x-a+b,x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f := proc (x) options operator, arrow; a*x^2-b*x-a+b end proc}{\[\displaystyle f\, := \,x\mapsto a{x}^{2}-bx-a+b\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+与えられた点の座標を関数に入れる．}\end{Maple Normal}
+
+\textbf{eq1:=f(-2)=6;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq1 := 3*a+3*b = 6}{\[\displaystyle {\it eq1}\, := \,3\,a+3\,b=6\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これを\mapleinline{inert}{2d}{b}{$\displaystyle b$}
+について解く．}\end{Maple Normal}
+
+\textbf{eq2:=b=solve(eq1,b);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq2 := b = 2-a}{\[\displaystyle {\it eq2}\, := \,b=2-a\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+次は，頂点の座標で傾きが0になることを用いて解いていく．}\end{Maple Normal}
+
+\textbf{solve(diff(f(x),x)=0,x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(1/2)*b/a}{\[\displaystyle 1/2\,{\frac {b}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{b}{$\displaystyle b$}
+の値はeq2で求まっているので，それを代入(subs)する．}\end{Maple Normal}
+
+\textbf{subs(eq2,solve(diff(f(x),x)=0,x));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(1/2)*(2-a)/a}{\[\displaystyle 1/2\,{\frac {2-a}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これをx0としてeq3で定義しておく．}\end{Maple Normal}
+
+\textbf{eq3:=x0=subs(eq2,solve(diff(f(x),x)=0,x));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq3 := x0 = (1/2)*(2-a)/a}{\[\displaystyle {\it eq3}\, := \,{\it x0}=1/2\,{\frac {2-a}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+頂点のy座標は，\mapleinline{inert}{2d}{f(x0)}{$\displaystyle f \left( {\it x0} \right) $}
+で求まる}\end{Maple Normal}
+
+\textbf{f(x0);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a*x0^2-b*x0-a+b}{\[\displaystyle a{{\it x0}}^{2}-b{\it x0}-a+b\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+eq2,eq3で求まっているx0,bを代入する．}\end{Maple Normal}
+
+\textbf{eq4:=subs(\{eq2,eq3\},f(x0));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq4 := -(1/4)*(2-a)^2/a-2*a+2}{\[\displaystyle {\it eq4}\, := \,-1/4\,{\frac { \left( 2-a \right) ^{2}}{a}}-2\,a+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これを因数分解(factor)する．}\end{Maple Normal}
+
+\textbf{factor(subs(\{eq2,eq3\},f(x0)));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/4)*(3*a-2)^2/a}{\[\displaystyle -1/4\,{\frac { \left( 3\,a-2 \right) ^{2}}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{１．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{P = (x(x+3))(2*x-3)}{$\displaystyle P=x \left( x+3 \right)  \left( 2\,x-3 \right) $}
+とする．また，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+を定数とする．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = a+1}{$\displaystyle x=a+1$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{2*a^3+[`ア`]*a^2+[`イ`]*a+[-`ウ`]}{\[\displaystyle 2\,{a}^{3}+[\mbox {{\tt ア}}]{a}^{2}+[\mbox {{\tt イ}}]a\\
+\mbox{}+[-\mbox {{\tt ウ}}]\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = a+1}{$\displaystyle x=a+1$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値と，\mapleinline{inert}{2d}{x = a}{$\displaystyle x=a$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値が等しいとする．このとき，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{3*a^2+[`エ`]*a+[-`オ`] = 0}{\[\displaystyle 3\,{a}^{2}+[\mbox {{\tt エ}}]a+[-\mbox {{\tt オ}}]\\
+\mbox{}=0\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+を満たす．したがって}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{a = ([`カキ`]+`&+-`(sqrt([`クケ`])))/[`コ`]}{\[\displaystyle a={\frac {[\mbox {{\tt カキ}}]+\mbox {{\tt \&+-}} \left(  \sqrt{[\mbox {{\tt クケ}}]} \right) \\
+\mbox{}}{[\mbox {{\tt コ}}]}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である.}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{arestart:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{P:=unapply(x*(x+3)*(2*x-3),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{P := proc (x) options operator, arrow; x*(x+3)*(2*x-3) end proc}{\[\displaystyle P\, := \,x\mapsto x \left( x+3 \right)  \left( 2\,x-3 \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand(P(a+1));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2*a^3+9*a^2+3*a-4}{\[\displaystyle 2\,{a}^{3}+9\,{a}^{2}+3\,a-4\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand(P(a));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2*a^3+3*a^2-9*a}{\[\displaystyle 2\,{a}^{3}+3\,{a}^{2}-9\,a\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{eq1:=(expand(P(a+1))-expand(P(a)))/2;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq1 := 3*a^2+6*a-2}{\[\displaystyle {\it eq1}\, := \,3\,{a}^{2}+6\,a-2\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sol1:=solve(eq1=0,a);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sol1 := -1+(1/3)*sqrt(15), -1-(1/3)*sqrt(15)}{\[\displaystyle {\it sol1}\, := \,-1+1/3\, \sqrt{15},\,-1-1/3\, \sqrt{15}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{２．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+（例題１．に引き続いて，）}\end{Maple Normal}
+
+\begin{Maple Normal}{
+さらに，２次関数(1)のグラフの頂点のy座標が-2であるとする．このとき，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{[`キ`]*a^2-[`クケ`]*a+[`コ`] = 0}{\[\displaystyle [\mbox {{\tt キ}}]{a}^{2}-[\mbox {{\tt クケ}}]a\\
+\mbox{}+[\mbox {{\tt コ}}]=0\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+を満たす．これより，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+の値は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{a = [`サ`], [`シ`]/[`ス`]}{\[\displaystyle a=[\mbox {{\tt サ}}],\,{\frac {[\mbox {{\tt シ}}]}{[\mbox {{\tt ス}}]}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+以下，\mapleinline{inert}{2d}{a = [`シ`]/[`ス`]}{$\displaystyle a={\frac {[\mbox {{\tt シ}}]}{[\mbox {{\tt ス}}]}}$}
+であるとする．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+このとき，２次関数(1)のグラフの頂点のx座標は[セ]であり，(1)のグラフとx軸の２交点のx座標は[ソ],[タ]である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+また，関数(1)は\mapleinline{inert}{2d}{0 <= x and x <= 9}{$\displaystyle 0\leq x{\rm \: \wedge \:}x\leq 9$}
+において}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = [`チ`]}{$\displaystyle x=[\mbox {{\tt チ}}]$}
+のとき，最小値[ツテ]をとり，\mapleinline{inert}{2d}{x = [`ト`]}{$\displaystyle x=[\mbox {{\tt ト}}]$}
+のとき，最大値\mapleinline{inert}{2d}{[`ナニ`]/[`ヌ`]}{$\displaystyle {\frac {[\mbox {{\tt ナニ}}]}{[\mbox {{\tt ヌ}}]}}$}
+をとる．}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+(2008 年度大学入試センター試験数学 I より抜粋).}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{eq4;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/4)*(2-a)^2/a-2*a+2}{\[\displaystyle -1/4\,{\frac { \left( 2-a \right) ^{2}}{a}}-2\,a+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand((eq4-(-2)));}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-1/a+5-(9/4)*a}{\[\displaystyle -{a}^{-1}+5-9/4\,a\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{eq5:=expand((eq4+2)*(-4)*a);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq5 := 4-20*a+9*a^2}{\[\displaystyle {\it eq5}\, := \,4-20\,a+9\,{a}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{solve(eq5=0,a);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 2/9}{\[\displaystyle 2,\,2/9\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{subs(a=2/9,eq3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x0 = 4}{\[\displaystyle {\it x0}=4\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{eq6:=subs(\{a=2/9,b=2-2/9\},f(x));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq6 := (2/9)*x^2-(16/9)*x+14/9}{\[\displaystyle {\it eq6}\, := \,2/9\,{x}^{2}-{\frac {16}{9}}\,x+{\frac {14}{9}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{solve(eq6=0,x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7, 1}{\[\displaystyle 7,\,1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot(subs(\{a=2/9,b=2-2/9\},f(x)),x=0..9);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{EqManip1plot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{subs(\{a=2/9,b=2-2/9\},f(4));
+subs(\{a=2/9,b=2-2/9\},f(9));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-2}{\[\displaystyle -2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{32/9}{\[\displaystyle {\frac {32}{9}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

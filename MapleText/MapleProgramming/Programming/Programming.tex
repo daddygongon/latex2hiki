@@ -1,0 +1,99 @@
+\documentclass[10pt,a4j]{jbook}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}
+} }
+
+\newif\ifHIKI
+\HIKItrue % TRUEの設定                                                                                                                             
+%\HIKIfalse % FALSEの設定                                                                                                                            
+\begin{document}
+\chapter{Programming}
+\section{代入と出力(Variables, printf)}
+\subsection{解説}
+\input{Variables.tex} 
+
+\pagebreak
+\section{ループ(Loop)}
+
+\subsection{解説}
+\input{Loop.tex} 
+\subsection{課題}
+\input{ExLoop.tex} 
+\subsection{解答例}
+\input{ExAnsLoop.tex} 
+
+
+\pagebreak
+\section{配列(List)}
+\subsection{解説}
+\input{List.tex} 
+\subsection{課題}
+\input{ExList.tex} 
+\subsection{解答例}
+\input{ExAnsList.tex} 
+
+\pagebreak
+\section{交通整理(If)}
+\subsection{解説}
+\input{If.tex} 
+\subsection{課題}
+\input{ExIf.tex} 
+\subsection{解答例}
+\input{ExAnsIf.tex} 
+
+\pagebreak
+\section{手続き関数(Procedure)}
+\subsection{解説}
+\input{Procedure.tex} 
+\subsection{課題}
+\input{ExProcedure.tex} 
+\subsection{解答例}
+\input{ExAnsProcedure.tex} 
+
+\end{document}

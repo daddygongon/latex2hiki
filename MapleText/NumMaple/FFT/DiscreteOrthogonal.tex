@@ -1,0 +1,64 @@
+ところが，実際に積分していては，時間がかかりすぎる．直交関数系の選点直交性を使うとより簡単になる．
+
+\paragraph{直交関数系の選点直交性}
+\begin{quotation}
+直交多項式は，
+\begin{equation*}
+\varphi _{n} \left( x \right) =0 \,at\,x_1,\,x_2,\,\cdots x_{n}
+\end{equation*}
+である．$n-1$以下の次数$m,\,l$では，
+\begin{equation*}
+\sum _{i=1}^{n}\phi_{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) =\delta_{\it ml}C_{l}
+\end{equation*}
+が成り立つ．これは，直交関係と違い積分でないことに注意．証明は略．
+\end{quotation}
+これを使えば，この先程の直交関数展開
+\begin{equation*}
+F \left( x \right) =\sum _{l=1}^{N}a_{l}\varphi _{l} \left( x \right)
+\end{equation*}
+の両辺に$\varphi _{m} \left( x_{i} \right)$を掛けて$i$について和をとれば，
+\begin{gather}
+\sum _{i=1}^{n} F \left(x _{i }\right)\phi _{m }\left(x _{i }\right) = \\
+\sum _{i=1}^{n}  \sum _{l=1}^{N}a_{l}\varphi _{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right)  \notag \\
+=\sum _{l=1}^{N}  a_{l}\sum _{i=1}^{n}\varphi _{l} \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) \notag \\
+=\sum _{l=1}^{N}a_{l}\delta_{\it ml}C_{m}=a_{m}C_{m} \notag
+\end{gather}
+となる．つまり，
+\begin{equation*}
+a_{m}=\frac{1}{C_{m}} {\sum _{i=1}^{n}F \left( x_{i} \right) \varphi _{m} \left( x_{i} \right) }
+\end{equation*}
+となり，単純な関数の代入とかけ算で係数が決定される．
+
+\subsection{選点直交性を用いた結果}
+\begin{MapleInput}
+> KK:=4; N:=2^KK;L:=1-0;
+> for k from 0 to N-1 do 
+    c[k]:=evalf(sum(F(i*L/N)*exp(-I*2*Pi*k*i/N),i=0..N-1));
+  end do;
+\end{MapleInput}
+\begin{MapleError}
+c_0:=0. 
+c_1:=-2.000000000 + 10.05467898 I 
+c_2:=0. 
+c_3:=-2.000000000 + 2.993211524 I 
+c_4:=0. 
+c_5:=-2.000000001 + 1.336357276 I 
+c_6:=0. 
+c_7:=-2.000000001 + 0.3978247331 I 
+c_8:=0. 
+c_9:=-2.000000001 - 0.3978247331 I 
+c_10:=0. 
+c_11:=-2.000000001 - 1.336357276 I 
+c_12:=0. 
+c_13:=-2.000000000 - 2.993211524 I 
+c_14:=0. 
+c_15:=-2.000000000 - 10.05467898 I
+\end{MapleError}
+
+\begin{MapleInput}
+> F1:=unapply(sum(evalf(c[i]*exp(I*2*Pi*i/L*x)/N),i=0..(N/2-1))+
+> sum(evalf(c[N-i]*exp(-I*2*Pi*i/L*x)/N),i=1..(N/2-1)),x):
+> plot({Re(F1(x)),F(x)},x=0..1);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/C10_FFTplot2d13.eps}
+

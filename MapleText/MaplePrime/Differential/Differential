@@ -1,0 +1,294 @@
+{{toc}}
+
+!微積分
+
+!微分(Diff)-I
+
+!解説
+
+!!!単純な微分(diff) 
+単純な一変数関数の一次微分は，以下の通り．
+<<<maple
+> diff(x^2-3*x+2,x);	#res: 2x-3
+>>>
+高次の微分は，微分変数を必要なだけ並べる．
+<<<maple
+> diff(sin(x),x,x);	#res: -sin(x)
+>>>
+さらに高次では次のように\$を使った記法が便利．これはxについての3次微分を表わす．
+<<<maple
+> diff(x^4,x$3);	#res: 24x
+>>>
+
+
+!!!!!偏微分(PartialDiff) 
+複数の変数を持つ多変数の関数では，微分する変数を明示すれば偏微分が求められる．
+<<<maple
+> eq1:=(x+y)/(x*y);
+> diff(eq1,x);
+>>>
+{{dmath ' eq1 := \,{\frac {x+y}{xy}}
+ '}}
+{{dmath ' {\frac {1}{xy}}-{\frac {x+y}{{x}^{2}y}}
+ '}}
+
+!例題
+
+!!!例題:関数の微分と増減表 
+次の関数とその1次導関数を同時にプロットし概形を確認し，さらに増減表を求めよ．
+{{dmath ' \frac {x}{{x}^{2}-2x+4}
+ '}}
+
+
+!!!!!解答例 
+<<<maple
+> f0:=unapply(x/(x^2-2*x+4),x):
+> df:=unapply(diff(f0(x),x),x);
+> plot([f0(x),df(x)],x);
+>>>
+
+{{dmath ' {\it df}\, := \,x\mapsto  \left( {x}^{2}-2\,x+4 \right) ^{-1}-{\frac {x \left( 2\,x-2 \right) }{ \left( {x}^{2}-2\,x+4 \right) ^{2}}}
+ '}}
+
+||{{attach_view(Diffplot2d1.png,Differential)}}||
+
+!!!例題:接線(Tangent) 
+次の関数の{{math ' x=3'}}での接線を求め，2つの関数を同時にプロットせよ．
+{{dmath ' y={x}^{3}-2\,{x}^{2}-35\,x
+ '}}
+
+
+!!!!!解答例 
+与関数をf0と定義．
+<<<maple
+> f0:=unapply(x^3 - 2*x^2 - 35*x,x);
+>>>
+{{dmath ' {\it f0}\, := \,x\mapsto {x}^{3}-2\,{x}^{2}-35\,x
+ '}}
+微分関数をdfと定義
+<<<maple
+> df:=unapply(diff(f0(x),x),x);
+>>>
+{{dmath ' {\it df}\, := \,x\mapsto 3\,{x}^{2}-4\,x-35
+ '}}
+接点(x0,f0(x0))で傾きdf(x0)の直線をf1と定義．
+<<<maple
+> x0:=3;
+> eq1:=df(x0)*(x-x0)+f0(x0);
+> f1:=unapply(eq1,x);
+>>>
+{{dmath ' {\it x0}\, := \,3  '}}
+{{dmath ' {\it eq1}\, := \,-20\,x-36  '}}
+{{dmath ' {\it f1}\, := \,x\mapsto -20\,x-36  '}}
+{{dmath '  '}}
+2つの関数を同時にプロット．
+<<<maple
+> plot([f0(x),f1(x)],x=-5..5);
+>>>
+||{{attach_view(Diffplot2d2.png,Differential)}}||
+
+!微分(Diff)-II
+
+!解説
+
+!!!級数展開(series) 
+Taylor級数は以下のようにして，中心点(x=a)，次数(4次)を指定する．
+<<<maple
+> t1:=series(sin(x),x=a,4);
+>>>
+{{dmath ' t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3+O((x-a)^4)
+ '}}
+<<<maple
+> e1:=convert(t1,polynom);
+> f1:=unapply(e1,x);
+>>>
+{{dmath ' t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3  '}}
+{{dmath '  {\it f1}\, := \,x\mapsto 
+ \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3  '}}
+{{dmath '  '}}
+
+!!!全微分(D) 
+全微分を計算するときは，Dを用いる．
+<<<maple
+> f:=unapply(x^4*exp(-y^2),(x,y));
+> D(f(x,y));
+> (D@@2)(f(x,y));
+>>>
+{{dmath ' f\, := \,( {x,y} )\mapsto {x}^{4}\exp(-{y}^{2})  '}}
+{{dmath ' 4\, {D} \left( x \right) {x}^{3}\exp(-{y}^{2})+{x}^{4} {D} \left( \exp(-{y}^{2}) \right)  '}}
+{{dmath ' 4\, \left( D^{ \left( 2 \right) } \right)  \left( x \right) {x}^{3}\exp(-{y}^{2})+12\, \left(  {D} \left( x \right)  \right) ^{2}{x}^{2}\exp(-{y}^{2})+8\, {D} \left( x \right) {x}^{3} {D} \left( \exp(-{y}^{2}) \right) +{x}^{4} \left( D^{ \left( 2 \right) } \right)  \left( \exp(-{y}^{2}) \right)  '}}
+{{dmath '  '}}
+
+ここで，D(x)などはxの全微分を表わす．これは，x,yを変数としているので
+<<<maple
+> diff(x,x);
+> diff(exp(-y^2),y);
+>>>
+{{dmath ' 1  '}}
+{{dmath '  -2\,y\exp(-{y}^{2})  '}}
+{{dmath '  '}}
+であるがMapleには分からない．そこで全微分の最終形を得るには，あらかじめD(x)などの結果を求めておき，subsで明示的に代入する必要がある．
+<<<maple
+> dd:=D(f(x,y)):
+> eqs:={D(x)=diff(x,x),D(exp(-y^2))=diff(exp(-y^2),y)};
+> subs(eqs,dd);
+>>>
+{{dmath '  {\it eqs}\, := \, \left\{  {D} \left( x \right) =1, {D} \left( \exp(-{y}^{2}) \right) =-2\,y\exp(-{y}^{2}) \right\}   '}}
+{{dmath '  4\,{x}^{3}\exp(-{y}^{2})-2\,{x}^{4}y\exp(-{y}^{2})  '}}
+{{dmath '  '}}
+
+!!!複合関数の微分 
+<<<maple
+> diff(f(x)*g(x),x);
+> diff(f(g(x)),x);
+>>>
+{{dmath ' \left( {\frac {d}{dx}}f \left( x \right)  \right) g \left( x \right) +f \left( x \right) {\frac {d}{dx}}g \left( x \right)  '}}
+{{dmath ' \mbox {D} \left( f \right)  \left( g \left( x \right)  \right) {\frac {d}{dx}}g \left( x \right)  '}}
+{{dmath '  '}}
+
+<<<maple
+> f:=x->exp(x);
+> g:=x->cos(x);
+> diff(f(x)*g(x),x);
+> diff(f(g(x)),x);
+>>>
+{{dmath '  f\, := \,x\mapsto \exp(x)  '}}
+{{dmath '  g\, := \,x\mapsto \cos \left( x \right)   '}}
+{{dmath '   \exp(x)\cos \left( x \right) -\exp(x)\sin \left( x \right)   '}}
+{{dmath '   -\sin \left( x \right) \exp(\cos x )  '}}
+{{dmath '  '}}
+
+!課題
+
+!!!!微分に関する課題 
+
+1. 
+次の関数を微分せよ．
+
+i){{math ' {x} \log x'}}, 
+ii) {{math ' \frac{1}{  \left( 1+x \right) ^{3}}'}}, 
+iii) {{math ' \sqrt{4\,x+3}'}}, 
+iv) {{math ' \frac{1}{{a}^{2}+ \left( x-x_{{0}} \right) ^{2} }'}}
+
+
+2. 
+次の関数の1次から5次導関数を求めよ．
+
+i) {{math '\sin^2 x'}}, 
+ii) {{math '{e}^{x}'}}
+
+
+3.  以下の関数をx0まわりで３次までテイラー展開し，得られた関数ともとの関数をプロットせよ．さらに5次まで展開した場合はどう変化するか．
+
+i) {{math ' y=\sin x, x_0=0 '}}, 
+ii) {{math ' y=\cos x, x_0=\frac{\pi}{2}'}}
+
+
+4. 
+(発展課題）{{math 'f \left( x,y \right) ={e}^{x}{\it log} \left( 1+y \right) '}}
+を{{math ' x=0,\,y=0'}}のまわりで3次まで展開せよ．
+
+
+!解答例
+
+!!!!Diff 
+
+1.  
+<<<maple
+> diff(x*log(x),x);
+> diff(1/(1 + x)^3,x);
+> diff(sqrt(4*x + 3),x);
+>diff(1/(a^2+(x-x0)^2),x);
+>>>
+{{dmath ' \ln  \left( x \right) +1  '}}
+{{dmath ' -3\, \left( 1+x \right) ^{-4}  '}}
+{{dmath '  2\, \left(  \sqrt{4\,x+3} \right) ^{-1}  '}}
+{{dmath '  -{\frac {2\,x-2\,{\it x0}}{ \left( {a}^{2}+ \left( x-{\it x0} \right) ^{2} \right) ^{2}}}  '}}
+{{dmath '  '}}
+
+
+2. 
+<<<maple
+> diff(sin(x)^2,x);
+> diff(sin(x)^2,x$2);
+>>>
+
+{{dmath ' 2\,\sin \left( x \right) \cos \left( x \right)  '}}
+{{dmath '  2\, \left( \cos \left( x \right)  \right) ^{2}-2\, \left( \sin \left( x \right)  \right) ^{2} '}}
+{{dmath '  '}}
+<<<maple
+以下略
+>>>
+
+
+
+3. 
+先ず与関数をf0と定義
+<<<maple
+> f0:=unapply(sin(x),x);
+>>>
+{{dmath '  {\it f0}\, := \,x\mapsto \sin \left( x \right)
+ '}}
+テイラー展開した結果をeq1とする．関数として定義するためにeq1を多項式に変換し(convert)，unapplyをかける．
+<<<maple
+> eq1:=series(f0(x),x=0,3);
+> f1:=unapply(convert(eq1,polynom),x);
+>>>
+{{dmath ' {\it eq1}\, := \,x+O \left( {x}^{3} \right)  '}}
+{{dmath ' {\it f1}\, := \,x\mapsto x  '}}
+{{dmath '  '}}
+５次についても同様
+<<<maple
+> eq2:=series(f0(x),x=0,5);
+> f2:=unapply(convert(eq2,polynom),x);
+>>>
+{{dmath '  {\it eq2}\, := \,x-1/6\,{x}^{3}+O \left( {x}^{5} \right)  '}}
+{{dmath '  {\it f2}\, := \,x\mapsto x-1/6\,{x}^{3}  '}}
+{{dmath '  '}}
+3つの関数を同時プロット
+<<<maple
+> plot([f0(x),f1(x),f2(x)],x=-Pi..Pi);
+>>>
+||{{attach_view(Diffplot2d3.png,Differential)}}||
+
+<<<maple
+> series(f0(x),x=Pi/2,3)
+>>>
+以外は前問とおなじ．
+
+
+4. 
+<<<maple
+f:=unapply(exp(x)*log(1+y),(x,y));
+>>>
+{{dmath ' f\, := \,( {x,y} )\mapsto \exp(x)\ln  \left( 1+y \right)
+ '}}
+<<<maple
+eq1:=series(series(f(x,y),x=0,3),y=0,3);
+>>>
+{{dmath ' {\it eq1}\, := \,O \left( {x}^{3} \right) + \left( 1+1/2\,{x}^{2}+x \right) y+ \left( -1/2\,x-1/2-1/4\,{x}^{2} \right) {y}^{2}\\
+\mbox{}+O \left( {y}^{3} \right)
+ '}}
+
+<<<maple
+> g:=unapply(convert(convert(eq1,polynom),polynom),(x,y));
+>>>
+{{dmath ' g\, := \,( {x,y} )\mapsto  \left( 1+1/2\,{x}^{2}+x \right) y+ \left( -1/2\,x-1/2-1/4\,{x}^{2} \right) {y}^{2}
+ '}}
+<<<maple
+> plot3d([f(x,y),g(x,y)],x=-1..1,y=-1..1,axes=box);
+>>>
+||{{attach_view(Diffplot3d4.png,Differential)}}||
+
+!!!!きれいな表示 
+
+以下のようにすると表示がきれい．
+<<<maple
+> f:=unapply(x^4*exp(-y^2),(x,y));
+> d:=Diff(f(x,y),x);
+> d=value(d);
+>>>
+{{dmath ' f\, := \,( {x,y} )\mapsto {x}^{4}\exp(-{y}^{2})  '}}
+{{dmath ' d\, := \,{\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right)  '}}
+{{dmath ' {\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right) =4\,{x}^{3}\exp(-{y}^{2}) '}}
+{{dmath '  '}}

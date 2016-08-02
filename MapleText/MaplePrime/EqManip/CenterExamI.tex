@@ -1,0 +1,17 @@
+\paragraph{数式変形実践課題（大学入試センター試験の解法を通して）}
+今まで出てきたコマンドを使えば，典型的なセンター試験の問題を解くのも容易である．以下の例題を参照して課題を解いてみよ．使うコマンドは，unapply, solve, diff, expand(展開), factor(因数分解)とsubs(一時的代入)である．expand等の数式変形によく使うコマンドは次節以降で詳しく解説している．subsは以下を参考にせよ．
+
+\subsection{一時的代入(subs)}
+代入(:=)が永続的なのに対して，一時的な代入はsubsで行う．
+\begin{MapleInput}
+> subs(a=1,a+2); #res: 3
+\end{MapleInput}
+典型的な使い方は，solveで求めた解などを式(equation)として代入しておいて，それをsubsで一時的に当てはめる．
+\begin{MapleInput}
+> eq1:=a=solve(a+b=0,a); subs(eq1,a+2);
+\end{MapleInput}
+\begin{MapleOutputGather}
+a = -b \notag \\
+-b + 2 \notag
+\end{MapleOutputGather}
+

@@ -1,0 +1,941 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: C7_InterpolationIntegral.mw
+%% Generated: Sat Aug 11 17:10:28 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\begin{center}
+\textbf{補間(interpolation)と数値積分}\end{center}
+}
+\begin{maplelatex}\begin{center}
+ー数値計算(11/11/18)ー\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+関西学院大学理工学部 西谷滋人\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{flushright}
+Copyright @2007-11 by Shigeto R. Nishitani\end{flushright}
+\end{maplelatex}
+\section{\textbf{補間(interpolation)}}
+\subsection{\textbf{補間と近似}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+単純な2次元データについて補間と近似を考える．補間はたんに点をつなぐことを，近似はある関数にできるだけ近くなるようにフィットすることを言う．補間はIllustratorなどのドロー系ツールで曲線を引くときの，ベジエやスプライン補間の基本となる．本章では補間とそれに密接に関連した積分について述べる．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+補間と近似の模式図}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{多項式補間}}
+\begin{maplelatex}\begin{Maple Normal}{
+データを単純に多項式で補間する方法を先ず示そう．\mapleinline{inert}{2d}{N+1}{$\displaystyle N+1$}
+点を\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+次の多項式でつなぐ．この場合の補間関数は，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-mi("F", italic = "true", mathvariant = "italic"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic")), mathvariant = "normal"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-munderover(Typesetting:-mo("&Sum;", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "true", symmetric = "unset", largeop = "true", movablelimits = "true", accent = "unset", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("i", italic = "true", mathvariant = "italic"), Typesetting:-mo("=", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "unset", symmetric = "unset", largeop = "unset", movablelimits = "unset", accent = "unset", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), accent = "false", accentunder = "false"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("i", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-msup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("i", italic = "true", mathvariant = "italic")), superscriptshift = "0"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"))}{\[\displaystyle F \left(x \right)=\Mapleoverset{N }{\Mapleunderset{i =0}{\sum }}a _{i }x ^{i }=a _{0}+a _{1}x +a _{2}x ^{2}+\esctdot +a _{N }x _{}^{N }\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+である．データの点を\mapleinline{inert}{2d}{x[i], y[i]}{$\displaystyle x_{{i}},\,y_{{i}}$}
+とすると}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-msub(Typesetting:-mi("y", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"))}{\[\displaystyle a _{0}+a _{1}x _{0}+a _{2}x _{0}^{2}+\esctdot +a _{N }x _{0}^{N }=y _{0}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-msub(Typesetting:-mi("y", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"))}{\[\displaystyle a _{0}+a _{1}x _{1}+a _{2}x _{1}^{2}+\esctdot +a _{N }x _{1}^{N }=y _{1}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("a", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-msubsup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-msub(Typesetting:-mi("y", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"))}{\[\displaystyle a _{0}+a _{1}x _{N }+a _{2}x _{N }^{2}+\esctdot +a _{N }x _{N }^{N }=y _{N }\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+が，係数\mapleinline{inert}{2d}{a[i]}{$\displaystyle a_{{i}}$}
+を未知数と見なした線形の連立方程式となっている．係数行列は}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-mi("A", italic = "true", mathvariant = "italic"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-maction(Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-maction(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mtable(Typesetting:-mtr(Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mi("")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), rowalign = "", columnalign = "", groupalign = ""), Typesetting:-mtr(Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), rowalign = "", columnalign = "", groupalign = ""), Typesetting:-mtr(Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&vellip;", foreground = "[200,0,200]", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&vellip;", foreground = "[200,0,200]", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&vellip;", foreground = "[200,0,200]", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&vellip;", foreground = "[200,0,200]", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&vellip;", foreground = "[200,0,200]", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), rowalign = "", columnalign = "", groupalign = ""), Typesetting:-mtr(Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), Typesetting:-mtd(Typesetting:-mrow(Typesetting:-msubsup(Typesetting:-mi("x", italic = "false", mathvariant = "normal"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), superscriptshift = "0", subscriptshift = "0", Typesetting:-msemantics = "[none,none]"), Typesetting:-mi("")), rowalign = "", columnalign = "", groupalign = "", rowspan = "1", columnspan = "1"), rowalign = "", columnalign = "", groupalign = ""), align = "axis", rowalign = "baseline", columnalign = "center", groupalign = "{left}", alignmentscope = "true", columnwidth = "auto", width = "auto", rowspacing = "1.0ex", columnspacing = "0.8em", rowlines = "none", columnlines = "none", frame = "none", framespacing = "0.4em 0.5ex", equalrows = "false", equalcolumns = "false", displaystyle = "false", side = "right", minlabelspacing = "0.8em"), Typesetting:-mi("")), mathvariant = "normal", Typesetting:-msemantics = "Matrix", open = "[", close = "]", Typesetting:-msemantics = "Matrix"), actiontype = "rtableaddress"), Typesetting:-mi("")), Typesetting:-mi("")), actiontype = "rtableaddress"), Typesetting:-mi(""))}{\[\displaystyle A =\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となる．\mapleinline{inert}{2d}{a[i]}{$\displaystyle a_{{i}}$}
+と\mapleinline{inert}{2d}{y[i]}{$\displaystyle y_{{i}}$}
+をそれぞれベクトルとみなすと}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+により未知数ベクトル\mapleinline{inert}{2d}{a[i]}{$\displaystyle a_{{i}}$}
+が求まる．これは単純に，前に紹介した Gauss の消去法や LU 分解で解ける．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{多項式補間(polynomial interpolation)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+X:=[0,1,2,3]:
+Y:=[1,2,3,-2]:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{with(LinearAlgebra):with(plots):
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{list1:=[X,Y];
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{list1 := [[0, 1, 2, 3], [1, 2, 3, -2]]}{\[\displaystyle {\it list1}\, := \,[[0,1,2,3],[1,2,3,-2]]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{l1p:=listplot(Transpose(Matrix(list1))):
+display(l1p);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{C7_InterpolationIntegralplot2d1.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A:=Matrix(4,4):
+for i from 1 to 4 do
+for j from 1 to 4 do
+  A[i,j]:=X[i]\symbol{94}(j-1);
+end do;
+end do:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4381001072)}{\[\displaystyle  \left[ \begin {array}{cccc} 1&0&0&0\\ \noalign{\medskip}1&1&1&1\\ \noalign{\medskip}1&2&4&8\\ \noalign{\medskip}1&3&9&27\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{a1:=MatrixInverse(A).Vector(Y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a1 := Vector[column](%id = 4379795568)}{\[\displaystyle {\it a1}\, := \, \left[ \begin {array}{c} 1\\ \noalign{\medskip}-1\\ \noalign{\medskip}3\\ \noalign{\medskip}-1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{f1:=unapply(add(a1[ii]*x\symbol{94}(ii-1),ii=1..4),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f1 := proc (x) options operator, arrow; 1-x+3*x^2-x^3 end proc}{\[\displaystyle {\it f1}\, := \,x\mapsto 1-x+3\,{x}^{2}-{x}^{3}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{f1p:=plot(f1(x),x=0..3):
+l1p:=listplot(Transpose(Matrix(list1))):
+display(f1p,l1p);
+}{}
+\end{mapleinput}
+\mapleresult
+\mapleplot{C7_InterpolationIntegralplot2d2.eps}
+\end{maplegroup}
+\subsection{\textbf{Lagrange(ラグランジュ) の内挿公式}}
+\begin{maplelatex}\begin{Maple Normal}{
+多項式補間は手続きが簡単であるため，計算間違いが少ないように思えるが，あまり"みとうし"のよい方法とはいえない．その点，Lagrange(ラグランジュ) の内挿公式は見通しがよい．これは}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-mi("F", italic = "true", mathvariant = "italic"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic")), mathvariant = "normal"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-munderover(Typesetting:-mo("&Sum;", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "true", symmetric = "unset", largeop = "true", movablelimits = "true", accent = "unset", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("k", italic = "true", mathvariant = "italic"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), accent = "false", accentunder = "false"), Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mo("&Product;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "true", symmetric = "false", largeop = "true", movablelimits = "true", accent = "false", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("j", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&NotEqual;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("j", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-msub(Typesetting:-mo("&Product;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "true", symmetric = "false", largeop = "true", movablelimits = "true", accent = "false", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("j", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&NotEqual;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("j", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mi("")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false"), Typesetting:-mo(" ", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-msub(Typesetting:-mi("y", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-munderover(Typesetting:-mo("&Sum;", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "true", symmetric = "unset", largeop = "true", movablelimits = "true", accent = "unset", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("k", italic = "true", mathvariant = "italic"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), accent = "false", accentunder = "false"), Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", family = "Times New Roman", mathvariant = "normal")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", family = "Times New Roman", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mi("")), family = "Times New Roman", mathvariant = "normal"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mi("")), Typesetting:-mi("")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false"), Typesetting:-mi("")), Typesetting:-mi("")), Typesetting:-mi("")), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", family = "Times New Roman", mathvariant = "normal")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", family = "Times New Roman", mathvariant = "normal")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em")), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mo("&minus;", family = "Times New Roman", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", family = "Times New Roman", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", family = "Times New Roman", italic = "true", mathvariant = "italic")), subscriptshift = "0")), family = "Times New Roman", mathvariant = "normal")), Typesetting:-mi("")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false")), Typesetting:-mi("")), Typesetting:-mi("")), Typesetting:-mi("")), Typesetting:-mi("")), Typesetting:-mi("")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false"), Typesetting:-mo(" ", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-msub(Typesetting:-mi("y", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("k", italic = "true", mathvariant = "italic")), subscriptshift = "0"))}{\[\displaystyle F \left(x \right)=\Mapleoverset{N }{\Mapleunderset{k =0}{\sum }}\frac{\prod _{j \neq k }\left(x -x _{j }\right)}{\prod _{j \neq k }\left(x _{k }-x _{j }\right)}\mathop{\rm  }y _{k }=\Mapleoverset{N }{\Mapleunderset{k =0}{\sum }}\frac{\frac{\left(x -x _{0}\right)\left(x -x _{1}\right)\esctdot \left(x -x _{N }\right)}{\left(x -x _{k }\right)}}{\frac{\left(x _{k }-x _{0}\right)\left(x _{k }-x _{1}\right)\esctdot \left(x _{k }-x _{N }\right)}{\left(x _{k }-x _{k }\right)}}\mathop{\rm  }y _{k }\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+と表わされる．数学的に 2 つ目の表記は間違っているが，先に割り算を実行すると読み取って欲しい．これは一見複雑に見えるが，単純な発想から出発している．求めたい関数\mapleinline{inert}{2d}{F(x)*`を`}{$\displaystyle F \left( x \right) \mbox {{\tt を}}$}
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{F(x) = y[0]*L[0](x)+y[1]*L[1](x)+y[2]*L[2](x)}{\[\displaystyle F \left( x \right) =y_{{0}}L_{{0}} \left( x \right) +y_{{1}}L_{{1}} \left( x \right) +y_{{2}}L_{{2}} \left( x \right) \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+とすると}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[0](x[0]) = 1}{\[\displaystyle L_{{0}} \left( x_{{0}} \right) =1\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[0](x[1]) = 0}{\[\displaystyle L_{{0}} \left( x_{{1}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[0](x[2]) = 0}{\[\displaystyle L_{{0}} \left( x_{{2}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[1](x[0]) = 0}{\[\displaystyle L_{{1}} \left( x_{{0}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[1](x[1]) = 1}{\[\displaystyle L_{{1}} \left( x_{{1}} \right) =1\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[1](x[2]) = 0}{\[\displaystyle L_{{1}} \left( x_{{2}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[2](x[0]) = 0}{\[\displaystyle L_{{2}} \left( x_{{0}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[2](x[1]) = 0}{\[\displaystyle L_{{2}} \left( x_{{1}} \right) =0\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{L[2](x[2]) = 1}{\[\displaystyle L_{{2}} \left( x_{{2}} \right) =1\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となるように関数\mapleinline{inert}{2d}{L[i](x)}{$\displaystyle L_{{i}} \left( x \right) $}
+を決めればよい．これを以下のようにとればLagrangeの内挿公式となる．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{Newton(ニュートン) の内挿公式}}
+\begin{maplelatex}\begin{Maple Normal}{
+Newton(ニュートン) の内挿公式は，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-mi("F", italic = "true", mathvariant = "italic"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic")), mathvariant = "normal"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mi("F", italic = "true", mathvariant = "italic"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal"), Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal", open = "[", close = "]"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal"), Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mi("")), mathvariant = "normal", open = "[", close = "]"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"))}{\[\displaystyle F \left(x \right)=F \left(x _{0}\right)+\left(x -x _{0}\right)f _{1}\left(x _{0}-x _{1}\right)+\left(x -x _{0}\right)\left(x -x _{1}\right)f _{2}\left(x _{0},x _{1},x _{2}\right)+\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
++\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-munderover(Typesetting:-mo("&Product;", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "true", symmetric = "unset", largeop = "true", movablelimits = "true", accent = "unset", lspace = "0.0em", rspace = "0.1666667em"), Typesetting:-mrow(Typesetting:-mi("i", italic = "true", mathvariant = "italic"), Typesetting:-mo("=", family = "Times New Roman", mathvariant = "normal", fence = "unset", separator = "unset", stretchy = "unset", symmetric = "unset", largeop = "unset", movablelimits = "unset", accent = "unset", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mn("0", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mn("1", mathvariant = "normal")), accent = "false", accentunder = "false"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("i", italic = "true", mathvariant = "italic")), subscriptshift = "0")), mathvariant = "normal"), Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0")), mathvariant = "normal", open = "[", close = "]"))}{$\displaystyle \Mapleoverset{N -1}{\Mapleunderset{i =0}{\prod }}\left(x -x _{i }\right)f _{N }\left(x _{0},x _{1},\esctdot ,x _{N }\right)$}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となる．ここで\mapleinline{inert}{2d}{f[n][]}{$\displaystyle f_{n;{}}$}
+は次のような関数を意味していて，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{f[1][x[0], x[1]] = (y[0]-y[1])/(x[0]-x[1])}{\[\displaystyle f_{1;{x_{{0}},x_{{1}}}}={\frac {y_{{0}}-y_{{1}}}{x_{{0}}-x_{{1}}}}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{f[2][x[0], x[1], x[2]] = (f[1][x[0], x[1]]-f[1][x[1], x[2]])/(x[0]-x[2])}{\[\displaystyle f_{2;{x_{{0}},x_{{1}},x_{{2}}}}={\frac {f_{1;{x_{{0}},x_{{1}}}}-f_{1;{x_{{1}},x_{{2}}}}}{x_{{0}}-x_{{2}}}}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mi(""), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("n", italic = "true", mathvariant = "italic")), subscriptshift = "0")), mathvariant = "normal", open = "[", close = "]"), Typesetting:-mo("=", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2777778em", rspace = "0.2777778em"), Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("n", italic = "true", mathvariant = "italic"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0")), mathvariant = "normal", open = "[", close = "]"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("f", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("N", italic = "true", mathvariant = "italic")), subscriptshift = "0"), Typesetting:-mi(""), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("1", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-mo("&ctdot;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.0em"), Typesetting:-mo(",", mathvariant = "normal", fence = "false", separator = "true", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.0em", rspace = "0.3333333em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("n", italic = "true", mathvariant = "italic")), subscriptshift = "0")), mathvariant = "normal", open = "[", close = "]")), Typesetting:-mi("")), Typesetting:-mrow(Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("0", mathvariant = "normal")), subscriptshift = "0"), Typesetting:-mo("&minus;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-msub(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mi("n", italic = "true", mathvariant = "italic")), subscriptshift = "0")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false"))}{\[\displaystyle f _{N }\left(x _{0},x _{1},\esctdot ,x _{n }\right)=\frac{f _{N }\left(x _{0},x _{1},\esctdot ,x _{n -1}\right)-f _{N }\left(x _{0},x _{1},\esctdot ,x _{n }\right)}{x _{0}-x _{n }}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+差分商と呼ばれる．得られた多項式は，Lagrange の内挿公式で得られたものと当然一致する．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{ニュートンの補間公式の導出}}
+\begin{maplelatex}\begin{Maple Normal}{
+関数\mapleinline{inert}{2d}{F(x)}{$\displaystyle F \left( x \right) $}
+を\mapleinline{inert}{2d}{x}{$\displaystyle x$}
+の多項式として展開．その時の，係数の取るべき値と，差商公式で得られる値が一致．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart:
+F:=x->f0+(x-x0)*f1p+(x-x0)*(x-x1)*f2p;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{F := proc (x) options operator, arrow; f0+(x-x0)*f1p+(x-x0)*(x-x1)*f2p end proc}{\[\displaystyle F\, := \,x\mapsto {\it f0}+ \left( x-{\it x0} \right) {\it f1p}+ \left( x-{\it x0} \right)  \left( x-{\it x1} \right) {\it f2p}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{F(x1);
+s1:=solve(F(x1)=f1,f1p);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f0+(x1-x0)*f1p}{\[\displaystyle {\it f0}+ \left( {\it x1}-{\it x0} \right) {\it f1p}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1 := (f0-f1)/(-x1+x0)}{\[\displaystyle {\it s1}\, := \,{\frac {{\it f0}-{\it f1}}{-{\it x1}+{\it x0}}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+f20の取るべき値の導出}\end{Maple Normal}
+
+\textbf{s2:=solve(F(x2)=f2,f2p);}\textbf{fac\_f2p:=factor(subs(f1p=s1,s2));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s2 := -(f0+f1p*x2-f1p*x0-f2)/((-x2+x0)*(-x2+x1))}{\[\displaystyle {\it s2}\, := \,-{\frac {{\it f0}+{\it f1p}\,{\it x2}-{\it f1p}\,{\it x0}-{\it f2}}{ \left( -{\it x2}+{\it x0} \right) \\
+\mbox{} \left( -{\it x2}+{\it x1} \right) }}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{fac_f2p := (f0*x1-x2*f0+x2*f1-x0*f1-f2*x1+f2*x0)/((-x1+x0)*(-x2+x0)*(-x2+x1))}{\[\displaystyle {\it fac\_f2p}\, := \,{\frac {{\it f0}\,{\it x1}-{\it x2}\,{\it f0}+{\it x2}\,{\it f1}-{\it x0}\,{\it f1}-{\it f2}\,{\it x1}\\
+\mbox{}+{\it f2}\,{\it x0}}{ \left( -{\it x1}+{\it x0} \right)  \left( -{\it x2}+{\it x0} \right)  \left( -{\it x2}+{\it x1} \right) }}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ニュートンの差分商公式を変形}\end{Maple Normal}
+
+\textbf{ff11:=(f0-f1)/(x0-x1);}\textbf{ff12:=(f1-f2)/(x1-x2);}\textbf{ff2:=(ff11-ff12)/(x0-x2);}\textbf{fac\_newton:=factor(ff2);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ff11 := (f0-f1)/(-x1+x0)}{\[\displaystyle {\it ff11}\, := \,{\frac {{\it f0}-{\it f1}}{-{\it x1}+{\it x0}}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ff12 := (f1-f2)/(-x2+x1)}{\[\displaystyle {\it ff12}\, := \,{\frac {{\it f1}-{\it f2}}{-{\it x2}+{\it x1}}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ff2 := ((f0-f1)/(-x1+x0)-(f1-f2)/(-x2+x1))/(-x2+x0)}{\[\displaystyle {\it ff2}\, := \, \left( {\frac {{\it f0}-{\it f1}}{-{\it x1}+{\it x0}}}-{\frac {{\it f1}-{\it f2}}{-{\it x2}+{\it x1}}}\\
+\mbox{} \right)  \left( -{\it x2}+{\it x0} \right) ^{-1}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{fac_newton := (f0*x1-x2*f0+x2*f1-x0*f1-f2*x1+f2*x0)/((-x1+x0)*(-x2+x0)*(-x2+x1))}{\[\displaystyle {\it fac\_newton}\, := \,{\frac {{\it f0}\,{\it x1}-{\it x2}\,{\it f0}+{\it x2}\,{\it f1}-{\it x0}\,{\it f1}-{\it f2}\,{\it x1}\\
+\mbox{}+{\it f2}\,{\it x0}}{ \left( -{\it x1}+{\it x0} \right)  \left( -{\it x2}+{\it x0} \right)  \left( -{\it x2}+{\it x1} \right) }}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+二式が等しいかどうかをevalbで判定}\end{Maple Normal}
+
+\textbf{evalb(fac\_f2p=fac\_newton);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{true}{\[\displaystyle {\it true}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\section{\textbf{数値積分 (Numerical integration)}}
+\begin{maplelatex}\begin{Maple Normal}{
+積分，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I = int(f(x), x = a .. b)}{\[\displaystyle i=\int _{a}^{b}\!f \left( x \right) {dx}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+を求めよう．1次元の数値積分法では連続した領域を細かい短冊に分けて，それぞれの面積を寄せ集めることに相当する．分点の数を\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+とすると，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x[i] = a+(b-a)*i/N and a+(b-a)*i/N = a+Typesetting:-delayCrossProduct(h, i)}{\[\displaystyle x_{{i}}=a+{\frac { \left( b-a \right) i}{N}}{\rm \: \wedge \:}a+{\frac { \left( b-a \right) i}{N}}=a+{\it delayCrossProduct} \left( h,i \right) \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{h = (b-a)/N}{\[\displaystyle h={\frac {b-a}{N}}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+ととれる．そうすると，もっとも単純には，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I[N] = {sum(f(x[i]), i = 0 .. N-1)}*h and {sum(f(x[i]), i = 0 .. N-1)}*h = {sum(f(a+Typesetting:-delayCrossProduct(i, h)), i = 0 .. N-1)}*h}{\[\displaystyle i_{{N}}= \left\{ \sum _{i=0}^{N-1}f \left( x_{{i}} \right)  \right\} h{\rm \: \wedge \:} \left\{ \sum _{i=0}^{N-1}f \left( x_{{i}} \right)  \right\} h= \left\{ \sum _{i=0}^{N-1}f \left( a+{\it delayCrossProduct} \left( i,h \right)  \right)  \right\} \\
+\mbox{}h\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となる．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+数値積分の模式図}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{中点則 (midpoint rule)}}
+\begin{maplelatex}\begin{Maple Normal}{
+中点法 (midpoint rule) は，短冊を左端から書くのではなく，真ん中から書くことに対応し，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I[N] = {sum(f(a+Typesetting:-delayCrossProduct(i+1/2, h)), i = 0 .. N-1)}*h}{\[\displaystyle i_{{N}}= \left\{ \sum _{i=0}^{N-1}f \left( a+{\it delayCrossProduct} \left( i+1/2,h \right)  \right)  \right\} h\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となる．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{台形則 (trapezoidal rule)}}
+\begin{maplelatex}\begin{Maple Normal}{
+さらに短冊の上側を斜めにして，短冊を台形にすれば精度が上がりそうに思う．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+その場合は，短冊一枚の面積\mapleinline{inert}{2d}{S[i]}{$\displaystyle S_{{i}}$}
+は，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{S[i] = ((f(x[i])+f(x[i+1]))*(1/2))*h}{\[\displaystyle S_{{i}}=1/2\, \left( f \left( x_{{i}} \right) +f \left( x_{{i+1}} \right)  \right) h\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+で求まる．これを端から端まで加えあわせると，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I[N] = sum(S[i], i = 0 .. N-1) and sum(S[i], i = 0 .. N-1) = h*{(1/2)*f(x[0])+sum(f(x[i]), i = 1 .. N-1)+(1/2)*f(x[N])}}{\[\displaystyle i_{{N}}=\sum _{i=0}^{N-1}S_{{i}}{\rm \: \wedge \:}\sum _{i=0}^{N-1}S_{{i}}=h \left\{ 1/2\,f \left( x_{{0}} \right) +\sum _{i=1}^{N-1}f \left( x_{{i}} \right) +1/2\,f \left( x_{{N}} \right)  \right\} \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+が得られる．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{Simpson(シンプソン) 則}}
+\begin{maplelatex}\begin{Maple Normal}{
+Simpson(シンプソン) 則では，短冊を 2 次関数，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{f(x) = ax^2+bx+c}{\[\displaystyle f \left( x \right) ={{\it ax}}^{2}+{\it bx}+c\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+で近似することに対応する．こうすると，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{S[i] = int(f(x), x = x[i] .. x[i+1]) and int(f(x), x = x[i] .. x[i+1]) = int(ax^2+bx+c, x = x[i] .. x[i+1])}{\[\displaystyle S_{{i}}=\int _{x_{{i}}}^{x_{{i+1}}}\!f \left( x \right) {dx}{\rm \: \wedge \:}\int _{x_{{i}}}^{x_{{i+1}}}\!f \left( x \right) {dx}=\int _{x_{{i}}}^{x_{{i+1}}}\!{{\it ax}}^{2}+{\it bx}\\
+\mbox{}+c{dx}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{(1/6)*h*{f(x[i])+4*f(x[i]+(1/2)*h)+f(x[i]+h)}}{\[\displaystyle 1/6\,h \left\{ f \left( x_{{i}} \right) +4\,f \left( x_{{i}}+1/2\,h \right) +f \left( x_{{i}}+h \right)  \right\} \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+となる．これより，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I[N] = (1/6)*h*{f(x[0])+4*(sum(f(x[i]+(1/2)*h), i = 0 .. N-1))+2*(sum(f(x[i]), i = 1 .. N-1))+f(x[N])}}{\[\displaystyle i_{{N}}=1/6\,h \left\{ f \left( x_{{0}} \right) +4\,\sum _{i=0}^{N-1}f \left( x_{{i}}+1/2\,h \right) +2\,\sum _{i=1}^{N-1}f \left( x_{{i}} \right) +f \left( x_{{N}} \right)  \right\} \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+として計算できる．ただし，関数値を計算する点は台形則などの倍となっている．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+教科書によっては，分割数 N を偶数にかぎって，点を偶数番目 (even) と奇数番目 (odd) に分}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+けて，}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{I[N] = (1/3)*h*{f(x[0])+4*(sum(f(x[i]+(1/2)*h), i = even .. N-2))+2*(sum(f(x[i]), i = odd .. N-1))+f(x[N])}}{\[\displaystyle i_{{N}}=1/3\,h \left\{ f \left( x_{{0}} \right) +4\,\sum _{i={\it even}}^{N-2}f \left( x_{{i}}+1/2\,h \right) +2\,\sum _{i={\it odd}}^{N-1}f \left( x_{{i}} \right) +f \left( x_{{N}} \right) \\
+\mbox{} \right\} \]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+としているテキストもあるが，同じ計算になるので誤解せぬよう．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{Derivation of Simpson's rule}}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+f:=x->a*x\symbol{94}2+b*x+c;
+e1:=expand(subs(x1=x0+h,int(f(x),x=x0..x1)));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f := proc (x) options operator, arrow; a*x^2+b*x+c end proc}{\[\displaystyle f\, := \,x\mapsto a{x}^{2}+bx+c\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{e1 := a*x0^2*h+a*x0*h^2+(1/3)*a*h^3+b*x0*h+(1/2)*b*h^2+c*h}{\[\displaystyle {\it e1}\, := \,a{{\it x0}}^{2}h+a{\it x0}\,{h}^{2}+1/3\,a{h}^{3}+b{\it x0}\,h+1/2\,b{h}^{2}+ch\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{e2:=expand(h/6*(f(x0)+4*f(x0+h/2)+f(x0+h)));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{e2 := a*x0^2*h+a*x0*h^2+(1/3)*a*h^3+b*x0*h+(1/2)*b*h^2+c*h}{\[\displaystyle {\it e2}\, := \,a{{\it x0}}^{2}h+a{\it x0}\,{h}^{2}+1/3\,a{h}^{3}+b{\it x0}\,h+1/2\,b{h}^{2}+ch\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{evalb(e1=e2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{true}{\[\displaystyle {\it true}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{Numerical integration}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart;
+f1:=x->4/(1+x\symbol{94}2);
+plot(f1(x),x=0..5);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f1 := proc (x) options operator, arrow; 4/(1+x^2) end proc}{\[\displaystyle {\it f1}\, := \,x\mapsto 4\, \left( 1+{x}^{2} \right) ^{-1}\]}
+\end{maplelatex}
+\mapleresult
+\mapleplot{C7_InterpolationIntegralplot2d3.eps}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{int(f1(x),x=0..1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Pi}{\[\displaystyle \pi \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{int(1/(1+x\symbol{94}2),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{arctan(x)}{\[\displaystyle \arctan \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{N:=8:
+x0:=0:
+xn:=1:
+Digits:=20:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\subsubsection{\textbf{Midpoint rule(中点法)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{h:=(xn-x0)/N:
+S:=0:
+for i from 0 to N-1 do
+  xi:=x0+(i+1/2)*h;
+  dS:=h*f1(xi);
+  S:=S+dS;
+end do:
+evalf(S);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3.1428947295916887799}{\[\displaystyle  3.1428947295916887799\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{Trapezoidal rule(台形公式)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{h:=(xn-x0)/N:
+S:=f1(x0)/2:
+for i from 1 to N-1 do
+  xi:=x0+i*h;
+  dS:=f1(xi);
+  S:=S+dS;
+end do:
+S:=S+f1(xn)/2:
+evalf(h*S);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3.1389884944910890093}{\[\displaystyle  3.1389884944910890093\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{Simpson's rule(シンプソンの公式)}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{M:=N/2:
+h:=(xn-x0)/(2*M):
+Seven:=0:
+Sodd:=0:
+for i from 1 to 2*M-1 by 2 do
+  xi:=x0+i*h;
+  Sodd:=Sodd+f1(xi);
+end do:
+for i from 2 to 2*M-1 by 2 do
+  xi:=x0+i*h;
+  Seven:=Seven+f1(xi);
+end do:
+evalf(h*(f1(x0)+4*Sodd+2*Seven+f1(xn))/3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3.1415925024587069144}{\[\displaystyle  3.1415925024587069144\]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{課題}}
+\subsection{\textbf{1}\textbf{補間と近似の違いについて，適切な図を描いて説明せよ．}}
+\subsection{\textbf{2}\textbf{多項式補間}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+次の4点}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+x  y0  11  2}\end{Maple Normal}
+\end{center}
+\begin{center}
+\begin{Maple Normal}{
+2  3}\end{Maple Normal}
+\end{center}
+\begin{center}
+\begin{Maple Normal}{
+3  -2}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+を通る多項式を以下のそれぞれの手法で求めよ．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+(a) 逆行列}\end{Maple Normal}
+
+\begin{Maple Normal}{
+(b)ラグランジュ補間}\end{Maple Normal}
+
+\begin{Maple Normal}{
+(c)ニュートンの差分商公式　}\end{Maple Normal}
+\end{maplegroup}
+\subsection{\textbf{3 tan(5}\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msup(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mo("&compfn;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.1666667em", rspace = "0.1666667em")), superscriptshift = "0"))}{$\displaystyle ^{\circ }$}
+\textbf{)=}\mapleinline{inert}{2d}{0.8748866355e-1}{$\displaystyle  0.08748866355$}
+\textbf{, tan(10}\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msup(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mo("&compfn;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.1666667em", rspace = "0.1666667em")), superscriptshift = "0"))}{$\displaystyle ^{\circ }$}
+\textbf{)=}\mapleinline{inert}{2d}{.1763269807}{$\displaystyle  0.1763269807$}
+\textbf{, tan(15}\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-msup(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mo("&compfn;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.1666667em", rspace = "0.1666667em")), superscriptshift = "0"))}{$\displaystyle ^{\circ }$}
+\textbf{)=}\mapleinline{inert}{2d}{.2679491924}{$\displaystyle  0.2679491924$}
+\textbf{の値を用いて，ラグランジュ補間法により，tan(}\mapleinline{inert}{2d}{`#msup(mn("17"),mo("&compfn;"))`}{$\displaystyle \mbox {{\tt `\#msup(mn("17"),mo("`}}\circ \mbox {{\tt `"))`}}\\
+\mbox{}$}
+\textbf{)の値を推定せよ．(2008年度期末試験）}}
+\subsection{\textbf{4 exp(0)=}\mapleinline{inert}{2d}{1.0}{$\displaystyle  1.0$}
+\textbf{, exp(0.1)=}\mapleinline{inert}{2d}{1.1052}{$\displaystyle  1.1052$}
+\textbf{, exp(0.3)=}\mapleinline{inert}{2d}{1.3499}{$\displaystyle  1.3499$}
+\textbf{の値を用いて，ラグランジュ補間法により，exp(0.2)の値を推定せよ．(2009年度期末試験）}}
+\subsection{5次の関数}
+\begin{maplelatex}\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{f(x) = 4/(1+x^2)}{\[\displaystyle f \left( x \right) =4\, \left( 1+{x}^{2} \right) ^{-1}\]}
+}\end{Maple Normal}
+\end{center}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+を\mapleinline{inert}{2d}{x = 0 .. 1}{$\displaystyle x={0\ldots 1}$}
+で数値積分する．}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{（１）\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+を2,4,8,…256ととり，\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+個の等間隔な区間にわけて中点法で求めよ．(15)}
+\subsubsection{（２）小数点以下10桁まで求めた値\mapleinline{inert}{2d}{3.141592654}{$\displaystyle  3.141592654$}
+との差をdXとする．dXと分割数\mapleinline{inert}{2d}{`Nとを`}{$\displaystyle \mbox {{\tt Nとを}}$}
+両対数プロット(loglogplot)して比較せよ(10) (2008年度期末試験）}
+\subsection{\textbf{6}次の関数\begin{center}
+\mapleinline{inert}{2d}{y = 1/(1+x^2)}{\[\displaystyle y= \left( 1+{x}^{2} \right) ^{-1}\]}
+\end{center}
+を\mapleinline{inert}{2d}{x = `&ctdot;`(0, 1)}{$\displaystyle x=\mbox {{\tt `\&ctdot;`}} \left( 0,1 \right) $}
+で等間隔に\mapleinline{inert}{2d}{N+1}{$\displaystyle N+1$}
+点とり，\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+個の区間にわけて数値積分で求める．\mapleinline{inert}{2d}{N}{$\displaystyle N$}
+を\mapleinline{inert}{2d}{2, 4, 8, 16, 32, 64, 128, 256}{$\displaystyle 2,\,4,\,8,\,16,\,32,\,64,\,128,\,256$}
+と取ったときのそれぞれの手法の収束性を比較せよ．(a)中点法(b)台形公式(c)シンプソン公式ヒント：Maple script にあるそれぞれの数値積分法を関数 (procedure) に直して，for-loop で回せば楽．出来なければ，一つ一つ手で変えても OK. 両対数プロット (loglogplot) すると見やすい．}
+\end{document}

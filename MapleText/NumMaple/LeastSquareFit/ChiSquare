@@ -1,0 +1,33 @@
+<<<maple
+> restart; X:=[1,2,3,4]: Y:=[0,5,15,24]: f1:=x->a0+a1*x:
+  S:=0: 
+  for i from 1 to 4 do 
+    S:=S+(f1(X[i])-Y[i])^2; 
+  end do:
+> fS:=unapply(S,(a0,a1));
+>>>
+{{dmath ' {\it fS}\, := \,( {{\it a0},{\it a1}} )\mapsto  \left( {\it a0}+{\it a1} \right) ^{2}+ \left( {\it a0}+2\,{\it a1}-5 \right) ^{2}+ \left( {\it a0}+3\,{\it a1}-15 \right) ^{2}+ \left( {\it a0}+4\,{\it a1}-24 \right) ^{2}
+ '}}
+<<<maple
+> expand(fS(a0,a1));
+>>>
+{{dmath ' 4\,{{\it a0}}^{2}+20\,{\it a0}\,{\it a1}+30\,{{\it a1}}^{2}-88\,{\it a0}-302\,{\it a1}+826
+ '}}
+
+<<<maple
+> plot3d(fS(a0,a1),a0=-20..20,a1=0..20);
+>>>
+||{{attach_view(C8_LeastSquareFitplot3d3.png,LeastSquareFit)}}||
+
+
+<<<maple
+> eqs:={diff(expand(S),a0)=0, diff(expand(S),a1)=0};
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ 8\,{\it a0}+20\,{\it a1}-88=0,20\,{\it a0}+60\,{\it a1}-302=0 \right\}
+ '}}
+
+<<<maple
+> solve(eqs,{a0,a1});
+>>>
+{{dmath ' \left\{ {\it a0}=-\frac{19}{2},{\it a1}={\frac {41}{5}} \right\}
+ '}}

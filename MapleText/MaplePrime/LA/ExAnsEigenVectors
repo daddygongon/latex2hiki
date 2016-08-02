@@ -1,0 +1,32 @@
+
+1. 
+<<<maple
+> A:=Matrix([[1,-2,1],[-1,2,1],[1,2,1]]); E:=Matrix(3,3,shape=identity):
+> eq:=Determinant(A-x*E); solve(eq,x);
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&-2&1\\  -1&2&1\\  1&2&1\end {array} \right]  '}}
+{{dmath ' {\it eq}\, := \,4\,{x}^{2}-{x}^{3}-8  '}}
+{{dmath ' 2,\,1+ \sqrt{5},\,1- \sqrt{5}  '}}
+{{dmath '  '}}
+<<<maple
+> l,v:=Eigenvectors(A); v1:=Column(v,3); evalf(A.v1); evalf(l[3].v1);
+> Normalize(v1,Euclidean); evalf(Normalize(v1,Euclidean));
+>>>
+{{dmath ' l,\,v\, := \, \left[ \begin {array}{c} \sqrt {5}+1\\  1-\sqrt {5}\\  2\end {array} \right] ,\, \left[ \begin {array}{ccc} {\frac { \left( \sqrt {5}-3 \right) \sqrt {5}}{-5+3\,\sqrt {5}}}&-{\frac { \left( -3-\sqrt {5} \right) \sqrt {5}}{-5-3\,\sqrt {5}}}&1\\  -{\frac {-5+\sqrt {5}}{-5+3\,\sqrt {5}}}&-{\frac {-5-\sqrt {5}}{-5-3\,\sqrt {5}}}&0\\  1&1&1\end {array} \right]  '}}
+{{dmath ' {\it v1}\, := \, \left[ \begin {array}{c} 1\\  0\\  1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  2.0\\   0.0\\   2.0\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  2.0\\   0.0\\   2.0\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c} 1/2\,\sqrt {2}\\  0\\  1/2\,\sqrt {2}\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{c}  0.7071067810\\   0.0\\   0.7071067810\end {array} \right]  '}}
+{{dmath '  '}}
+
+
+2. 
+<<<maple
+> A:=Matrix([[2,0,1],[0,3,0],[1,0,2]]); l,v:=Eigenvectors(A);
+> MatrixInverse(v).A.v;
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 2&0&1\\  0&3&0\\  1&0&2\end {array} \right]  '}}
+{{dmath ' l,\,v\, := \, \left[ \begin {array}{c} 3\\  3\\  1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&0&-1\\  0&1&0\\  1&0&1\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{ccc} 3&0&0\\  0&3&0\\  0&0&1\end {array} \right]  '}}
+{{dmath '  '}}

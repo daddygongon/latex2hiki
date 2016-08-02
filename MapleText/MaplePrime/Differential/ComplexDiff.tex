@@ -1,0 +1,22 @@
+\subsection{複合関数の微分}
+\begin{MapleInput}
+> diff(f(x)*g(x),x);
+> diff(f(g(x)),x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+\left( {\frac {d}{dx}}f \left( x \right)  \right) g \left( x \right) +f \left( x \right) {\frac {d}{dx}}g \left( x \right) \notag \\
+\mbox {D} \left( f \right)  \left( g \left( x \right)  \right) {\frac {d}{dx}}g \left( x \right) \notag
+\end{MapleOutputGather}
+
+\begin{MapleInput}
+> f:=x->exp(x);
+> g:=x->cos(x);
+> diff(f(x)*g(x),x);
+> diff(f(g(x)),x);
+\end{MapleInput}
+\begin{MapleOutputGather}
+ f\, := \,x\mapsto \exp(x) \notag \\
+ g\, := \,x\mapsto \cos \left( x \right)  \notag \\
+  \exp(x)\cos \left( x \right) -\exp(x)\sin \left( x \right)  \notag \\
+  -\sin \left( x \right) \exp(\cos x ) \notag
+\end{MapleOutputGather}

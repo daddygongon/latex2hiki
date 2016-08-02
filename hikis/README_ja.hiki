@@ -6,8 +6,10 @@ latex文書をhiki構造に変換するCUI.
 
 ||options||操作||DIR_NAME/.latex2hiki_rcの初期値
 ||--init [DIR_NAME]|| ベースとなるlatexサイトを構築する，Rakefile, figures, .latex2hiki_rcを作成
-||--figures [DIR_NAME]|| 下部のdirectoriesから画像ファイルを集める ||fig_extension='.eps'
-||--contents|| text, figuresをサイトに構築する || site = '/hoge/hoge'
+||--figures [DIR_NAME]|| 下部のdirectoriesから画像ファイルを集め，pngに変換してhiki/cache/attachへ入れる． ||:fig_extension: ".eps"
+||--scale [VAL]% ||figuresをhikiに変換するときのscale||デフォルトは80%
+||--level [VAL] ||head(!や!!)をどのlevelから始めるか．|| :level: 0
+||--hiki|| text, figuresをサイトに構築する || :local_site: "/hoge/hoge"
 
 !! Installation
 
@@ -55,7 +57,17 @@ bob% mk_maple_hiki --figures NumMaple
 chmod 666 /Users/bob/Sites/new_ist_data/maple_hiki_data/text/NumMaple
 >>>
 
-!!!一括して作る場合
+!!!sectionを分割して作る場合
+<<< tch
+bob% ls
+Error/                 LAEigenvectors/        NonLinearFit/          NumMapleCont.tex       figures/
+FFT/                   LAFundamentals/        NumMaple.out           NumMaple_140130.pdf
+FSolve/                LAMatrixInverse/       NumMaple.tex           NumMaple_160802.pdf
+InterpolationIntegral/ LeastSquareFit/        NumMaple.toc           Rakefile
+bob% rake maple
+"./Error"
+[["begin", "document"], ["chapter", "誤差(Error)"], ["section", "打ち切り誤差と丸め誤差(Truncation and round off errors)"], ["input", "TruncationRoundoff.tex"], ["s
+>>>
 
 !! Development
 

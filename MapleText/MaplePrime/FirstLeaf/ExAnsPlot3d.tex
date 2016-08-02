@@ -1,0 +1,29 @@
+\subsubsection{plot3d}
+plot図に対するいくつかの操作は，plotを選んだときにwindowの上部に表示されるリボンのアイコンにあります．同じ操作は，plot3dに与えるoptionsによっても可能です．以下でいくつかのoptionを示します．詳しくは\texttt{?plot3d[option];}を参照．
+
+\begin{enumerate}
+\item
+\begin{MapleInput}
+> plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi);}
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot3d8.eps}
+\item
+等高線は
+\begin{MapleInput}
+> plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,style=contour);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot3d9.eps}
+
+軸の変更は
+\begin{MapleInput}
+> plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,axes=boxed);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot3d10.eps}
+
+\item
+デフォルトの角度もplot3dのoptionで変更することが可能です．
+\begin{MapleInput}
+> plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi,orientation=[45,80]);
+\end{MapleInput}
+\MaplePlot{30mm}{./figures/FirstLeafplot3d11.eps}
+\end{enumerate}

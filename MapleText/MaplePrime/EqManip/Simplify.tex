@@ -1,0 +1,136 @@
+\subsection{簡単化(simplify)}　
+\begin{MapleInput}
+> simplify(exp1,副関係式):
+> simplify(3*x+4*x+2*y);
+\end{MapleInput}
+\begin{MapleOutput}
+7\,x+2\,y
+\end{MapleOutput}
+\begin{MapleInput}
+> exp1:=3*sin(x)^3-sin(x)*cos(x)^2; 
+> simplify(exp1);
+\end{MapleInput}
+\begin{MapleOutputGather}
+{\it exp1}\, := \,3\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)  \left( \cos \left( x \right)  \right) ^{2} \notag \\
+- \left( 4\, \left( \cos \left( x \right)  \right) ^{2}-3 \right) \sin \left( x \right) \notag
+\end{MapleOutputGather}
+\begin{MapleInput}
+> simplify(exp1,{cos(x)^2=1-sin(x)^2});
+\end{MapleInput}
+\begin{MapleOutput}
+4\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)
+\end{MapleOutput}
+オプションとしてsizeを指定するとより簡単になる場合がある．
+\begin{MapleInput}
+> simplify(exp1,size):
+\end{MapleInput}
+
+\subsection{展開(expand)}　
+\begin{MapleInput}
+> expand((x+y)^2);
+\end{MapleInput}
+\begin{MapleOutput}
+{x}^{2}+2\,xy+{y}^{2}
+\end{MapleOutput}
+
+\subsection{因数分解(factor)}　
+\begin{MapleInput}
+> factor(4*x^2-6*x*y+2*y^2);
+\end{MapleInput}
+\begin{MapleOutput}
+2\, \left( 2\,x-y \right)  \left( x-y \right)
+\end{MapleOutput}
+
+\subsection{約分・通分(normal)}　
+\begin{MapleInput}
+> normal((x+y)/(x^2-3*x*y-4*y^2));
+\end{MapleInput}
+\begin{MapleOutput}
+\frac{1}{ x-4\,y }
+\end{MapleOutput}
+\begin{MapleInput}
+> normal(1/x+1/y);
+ \end{MapleInput}
+\begin{MapleOutput}
+{\frac {y+x}{xy}}
+\end{MapleOutput}
+
+\subsection{項を変数でまとめる(collect)}　
+\begin{MapleInput}
+> collect(4*a*x^2-3*y^2/x+6*b*x*y+3*c*y+2*y^2,y);
+\end{MapleInput}
+\begin{MapleOutput}
+\left( -3\,{x}^{-1}+2 \right) {y}^{2}+ \left( 6\,bx+3\,c \right) y+4\,a{x}^{2}
+\end{MapleOutput}
+
+\subsection{項を公式でまとめる(combine)}　
+\begin{MapleInput}
+> combine(sin(x)^2+3*cos(x)^2);
+\end{MapleInput}
+\begin{MapleOutput}
+2+\cos \left( 2\,x \right)
+\end{MapleOutput}
+
+\subsection{昇べき，降べき(sort)}　
+\begin{MapleInput}
+> sort(exp1,[x,y]); 
+> sort(exp1, [x],opts);
+opts=tdeg(総次数順), plex(辞書式順), ascending(昇順), descending(降順)
+\end{MapleInput}
+
+\begin{MapleInput}
+> exp1:=x^3+4*x-3*x^2+1: 
+> sort(exp1);
+\end{MapleInput}
+\begin{MapleOutput}
+{x}^{3}-3\,{x}^{2}+4\,x+1
+\end{MapleOutput}
+
+\begin{MapleInput}
+> sort(exp1,[x],ascending);
+\end{MapleInput}
+\begin{MapleOutput}
+1+4\,x-3\,{x}^{2}+{x}^{3}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> exp2:=x^3-a*x*y+4*x^2+y^2: 
+> sort(exp2);
+\end{MapleInput}
+\begin{MapleOutput}
+-axy+{x}^{3}+4\,{x}^{2}+{y}^{2}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> sort(exp2,[x]);
+\end{MapleInput}
+\begin{MapleOutput}
+{x}^{3}+4\,{x}^{2}-ayx+{y}^{2}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> sort(exp2,[a,y]); 
+> sort(exp2,[a],plex);
+\end{MapleInput}
+\begin{MapleOutputGather}
+-xay+{y}^{2}+{x}^{3}+4\,{x}^{2} \notag \\
+-xya+{x}^{3}+4\,{x}^{2}+{y}^{2} \notag
+\end{MapleOutputGather}
+
+\subsection{分母の有理化(rationalize)}　
+
+\begin{MapleInput}
+> eq1:=(1+sqrt(2))/(1-sqrt(3));
+\end{MapleInput}
+分母の有理化は，この式を
+\begin{MapleOutput}
+{\frac {1+\sqrt {2}}{1-\sqrt {3}}}{\frac {1+\sqrt {3}}{1+\sqrt {3}}}
+\end{MapleOutput}
+とする事に対応します．
+\begin{MapleInput}
+> rationalize(eq1);
+\end{MapleInput}
+\begin{MapleOutput}
+-1/2\, \left( 1+\sqrt {2} \right)  \left( 1+\sqrt {3} \right) 
+\end{MapleOutput}
+
