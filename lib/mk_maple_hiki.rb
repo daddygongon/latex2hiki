@@ -40,6 +40,9 @@ module MkMapleHiki
         opt.on('--scale [VAL]%','set scale for convert figures.') { |val|
           @scale = val.to_i
         }
+        opt.on('--level [VAL]','set level for head start level .') { |val|
+          @level = val.to_i
+        }
         opt.on('--hiki [NAME]','make hiki contents from NAME directory.') { |name|
           name = name || './'
           @src=read_src(name)
@@ -94,23 +97,23 @@ module MkMapleHiki
       }
       p parser
       converts = @src[:convert_specific_def]
-      level = @src[:level]
+      @level = @level || @src[:level] 
       text="{{toc}}\n"
       parser.each{|elements|
         tt=""
         case elements[0]
         when 'chapter'
-          next if level<0
-          level.times{ tt << '!' }
+          next if @level<0
+          @level.times{ tt << '!' }
           p [tt,elements[1]]
           text << "\n#{tt}#{elements[1]}\n"
         when 'section'
-          next if (level+1)<0
-          (level+1).times{ tt << '!' }
+          next if (@level+1)<0
+          (@level+1).times{ tt << '!' }
           p [tt,elements[1]]
           text << "\n#{tt}#{elements[1]}\n"
         when 'subsection'#,'ChartElement','ChartElementTwo'
-          (level+2).times{ tt << '!' }
+          (@level+2).times{ tt << '!' }
           text << "\n#{tt}#{elements[1]}\n"
         when 'input'
           p elements[1]
@@ -152,21 +155,16 @@ module MkMapleHiki
     end
 
     def init(name)
-      puts name
-      begin
-        Dir.mkdir(name, 0777)
-      rescue => err
-        puts err
-        exit
-      end
-
-      FileUtils.mkdir(File.join(name,'figures'),:verbose=>true)
+      FileUtils.mkdir_p(name,:verbose=>true)
+      FileUtils.mkdir_p(File.join(name,'figures'),:verbose=>true)
 
       @src = {:fig_extension => '.eps',:level => 0,
         :local_site => '/Users/bob/Sites/new_ist_data/maple_hiki_data'}
-      file=File.open(File.join(name,'.latex2hiki_rc'),'w')
-      YAML.dump(@src,file)
-      file.close
+      unless File.exists?(File.join(name,'.latex2hiki_rc'))
+        file=File.open(File.join(name,'.latex2hiki_rc'),'w')
+        YAML.dump(@src,file)
+        file.close
+      end
 
       if File.exists?(File.join(name,'Rakefile')) then
         print "Remove Rakefile from targetdir."

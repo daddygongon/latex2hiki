@@ -1,5 +1,6 @@
 \documentclass[10pt,a4j]{jreport}
 \usepackage[dvips]{graphicx,color}
+\usepackage{tabularx}
 \usepackage{verbatim}
 \usepackage{amsmath,amsthm,amssymb}
 \topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
@@ -38,47 +39,37 @@
 }{%
     \endgather
 }
+
+\newcommand{\ChartElement}[1]{{
+\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+\end{flushleft}
+} }
+
+\newcommand{\ChartElementThree}[2]{{
+\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #2}\right]\right]\right]$
+\end{flushleft}\vspace{#1}
+} }
+
+\newif\ifHIKI
+%\HIKItrue % TRUE’¤Î’Àß’Äê
+\HIKIfalse % FALSE’¤Î’Àß’Äê
+\ifHIKI
+{{toc_here}}
+\else
+\fi
 \begin{document}
-\title{Programming}
-\maketitle
-\chapter{’Âå’Æþ’¤È’½Ð’ÎÏ(Variables, printf)}
-\section{’²ò’Àâ}
-\input{Variables.tex}
-\pagebreak
+\chapter{’¤½’¤Î’Â¾(Etcetra)}
+\section{’¥Õ’¥¡’¥¤’¥ë’¤Î’Æþ’½Ð’ÎÏ(InputOutput)}
+\ChartElementTwo{’²ò’Àâ}
+\input{InputOutput.tex}
+\section{for-loop’¤Î’´ð’ËÜ’µ»(for-loop2)}
+\ChartElementTwo{’²ò’Àâ}
+\input{ForLoop2.tex}
 
-\chapter{’¥ë’¡¼’¥×(Loop)}
-\section{’²ò’Àâ}
-\input{Loop.tex}
-\section{’²Ý’Âê}
-\input{ExLoop.tex}
-\section{’²ò’Åú’Îã}
-\input{ExAnsLoop.tex}
-\pagebreak
-
-\chapter{’ÇÛ’Îó(List)}
-\section{’²ò’Àâ}
-\input{List.tex}
-\section{’²Ý’Âê}
-\input{ExList.tex}
-\section{’²ò’Åú’Îã}
-\input{ExAnsList.tex}
-\pagebreak
-
-\chapter{’¸ò’ÄÌ’À°’Íý(If)}
-\section{’²ò’Àâ}
-\input{If.tex}
-\section{’²Ý’Âê}
-\input{ExIf.tex}
-\section{’²ò’Åú’Îã}
-\input{ExAnsIf.tex}
-\pagebreak
-
-\chapter{’¼ê’Â³’¤­’´Ø’¿ô(Procedure)}
-\section{’²ò’Àâ}
-\input{Procedure.tex}
-\section{’²Ý’Âê}
-\input{ExProcedure.tex}
-\subsection{’²ò’Åú’Îã}
-\input{ExAnsProcedure.tex}
 
 \end{document}

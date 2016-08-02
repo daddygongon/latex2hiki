@@ -34,3 +34,16 @@ task :strip do
   print text
 end
 
+desc "pre handling samples"
+task :pre do
+  lines = File.readlines(ARGV[1])
+  text = ""
+  lines.each{|line|
+    if md=line.match(Regexp.new("\\A\\\\ChartElementTwo")) then
+      line.gsub!("ChartElementTwo","subsection")
+    end
+    text << line
+  }
+  print text
+end
+
