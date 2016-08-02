@@ -1,0 +1,19 @@
+\subsection{恒等式(Identity)}
+式の変形にも等号が使われる．例えば，
+\begin{equation*}
+(x-2)^2=x^2-4x+4
+\end{equation*}
+というのが等号で結ばれている．式の変形とは，変数$x$がどんな値であっても成り立つ恒等的な変形である．
+
+この式変形も，問題としては，
+\begin{MapleError}
+(x-2)^2を展開(expand)せよ
+\end{MapleError}
+と与えられるので，そのままMapleコマンドに読み替えて
+\begin{MapleInput}
+> expand( (x-2)^2 );
+\end{MapleInput}
+\begin{MapleOutput}
+x^2-4x+4
+\end{MapleOutput}
+とすればよい．因数分解(factor)や微分(diff)・積分(int)も同様に等号で結ばれるが，Mapleには操作を指示する必要がある．詳しくは他の単元で．

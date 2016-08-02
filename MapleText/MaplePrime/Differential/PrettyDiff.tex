@@ -1,0 +1,13 @@
+\subsubsection{きれいな表示}
+
+以下のようにすると表示がきれい．
+\begin{MapleInput}
+> f:=unapply(x^4*exp(-y^2),(x,y));
+> d:=Diff(f(x,y),x);
+> d=value(d);
+\end{MapleInput}
+\begin{MapleOutputGather}
+f\, := \,( {x,y} )\mapsto {x}^{4}\exp(-{y}^{2}) \notag \\
+d\, := \,{\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right) \notag \\
+{\frac {\partial }{\partial x}} \left( {x}^{4}\exp(-{y}^{2}) \right) =4\,{x}^{3}\exp(-{y}^{2})\notag
+\end{MapleOutputGather}

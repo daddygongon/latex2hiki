@@ -1,0 +1,116 @@
+
+1. 
+<<<maple
+> A:=Matrix([[1,2,3],[4,5,6],[7,8,9]]); with(LinearAlgebra): ?RowOperation;
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&2&3\\  4&5&6\\  7&8&9\end {array} \right]
+ '}}
+ヘルプに書かれてある例を見本にして，コマンドを記述．
+<<<maple
+> RowOperation(A,[2,1],-4);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  7&8&9\end {array} \right]
+ '}}
+結果を最初の引数(A)に上書きするoption(inplace=true)をつける．最初からではなく，うまくいったのを確認してからつけるのがコツ．
+<<<maple
+> RowOperation(A,[3,1],-7,inplace=true);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  0&-6&-12\end {array} \right] 
+ '}}
+<<<maple
+> RowOperation(A,2,-1/3,inplace=true);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&1&2\\  0&-6&-12\end {array} \right]
+ '}}
+<<<maple
+> RowOperation(A,[3,2],6);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&2&3\\  0&1&2\\  0&0&0\end {array} \right]
+ '}}
+LUDecompositionによる結果と見比べる．
+<<<maple
+> A0:=Matrix([[1,2,3],[4,5,6],[7,8,9]]):
+> LUDecomposition(A0);
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&0&0\\  0&1&0\\  0&0&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&0&0\\  4&1&0\\  7&2&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&2&3\\  0&-3&-6\\  0&0&0\end {array} \right] 
+ '}}
+最後の行がすべて0になっているので，階数は2となる．Rankにより確認．
+<<<maple
+> Rank(A);
+>>>
+{{dmath ' 2
+ '}}
+
+
+2. 
+i) GenerateMatrixによる係数行列と右辺のベクトルを生成する方法は以下のとおり．
+<<<maple
+> eqs:={x+y-z=2,2*x-3*y+z=4,4*x-y+3*z=1}; GenerateMatrix(eqs,{x,y,z});
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ x+y-z=2,2\,x-3\,y+z=4,4\,x-y+3\,z=1 \right\}  '}}
+{{dmath ' \left[ \begin {array}{ccc} 1&1&-1\\  2&-3&1\\  4&-1&3\end {array} \right] ,\, \left[ \begin {array}{c} 2\\  4\\  1\end {array} \right]  '}}
+{{dmath '  '}}
+
+i)
+<<<maple
+> A:= Matrix([[1,1,-1],[2,-3,1],[4,-1,3]]); b:=<2,4,1>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&1&-1\\  2&-3&1\\  4&-1&3\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\  4\\  1\end {array} \right]   '}}
+{{dmath ' \left[ \begin {array}{cccc} 1&0&0&{\frac {13}{10}}\\  0&1&0&-{\frac {21}{20}}\\  0&0&1&-7/4\end {array} \right]   '}}
+{{dmath '  '}}
+
+ii)
+<<<maple
+> A:= Matrix([[2,4,-3],[3,-8,6],[8,-2,-9]]); b:=<1,5,-23>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 2&4&-3\\  3&-8&6\\  8&-2&-9\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 1\\  5\\  -23\end {array} \right]   '}}
+{{dmath ' \left[ \begin {array}{cccc} 1&0&0&1\\  0&1&0&2\\  0&0&1&3\end {array} \right]   '}}
+{{dmath '  '}}
+
+iii)
+<<<maple
+> A:= Matrix([[1,-10,-3,-7],[2,-4,3,4],[3,-2,6,5],[1,8,9,3]]); b:=<2,-3,-1,5>;
+> LUDecomposition(<A|b>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{cccc} 1&-10&-3&-7\\  2&-4&3&4\\  3&-2&6&5\\  1&8&9&3\end {array} \right]   '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\  -3\\  -1\\  5\end {array} \right]    '}}
+{{dmath ' \left[ \begin {array}{ccccc} 1&0&0&0&1\\  0&1&0&0&1/2\\  0&0&1&0&1/3\\  0&0&0&1&-1\end {array} \right]   '}}
+{{dmath '  '}}
+
+iv)
+<<<maple
+> restart; with(LinearAlgebra): A:= Matrix([[1,1,1],[a,b,c],[b*c,c*a,a*b]]);
+> bb:=<a+b+c,a*b+b*c+c*a,3*a*b*c>; RR:=LUDecomposition(<A|bb>,output='R');
+>>>
+{{dmath ' A\, := \, \left[ \begin {array}{ccc} 1&1&1\\  a&b&c\\  bc&ca&ab\end {array} \right]    '}}
+{{dmath ' {\it bb}\, := \, \left[ \begin {array}{c} a+b+c\\  ab+bc+ca\\  3\,abc\end {array} \right]    '}}
+{{dmath ' {\it RR}\, := \, \left[ \begin {array}{cccc} 1&0&0&-{\frac {a \left( {b}^{2}-2\,bc+{c}^{2} \right) }{ \left( a-b \right)  \left( a-c \right) }}\\  0&1&0&{\frac { \left( {a}^{2}-2\,ca+{c}^{2} \right) b}{ \left( b-c \right)  \left( a-b \right) }}\\  0&0&1&-{\frac {c \left( -2\,ab+{b}^{2}+{a}^{2} \right) }{ab-bc+{c}^{2}-ca}}\end {array} \right]    '}}
+{{dmath '  '}}
+
+<<<maple
+> factor(Column(RR,4)[1]);
+>>>
+などとすればさらに見やすく，変形される
+{{dmath ' -{\frac {a \left( b-c \right) ^{2}}{ \left( a-b \right)  \left( a-c \right) }}
+ '}}
+3.
+<<<maple
+> eqs:={x1+2*x2-x3=0,x1+x2+3*x4=0,3*x1+5*x2-2*x3+3*x4=0,x1+3*x2-2*x3-3*x4=0};
+> solve(eqs,{x1,x2,x3,x4}); 
+>>>
+{{dmath ' {\it eqs}\, := \, \left\{ {\it x1}+{\it x2}+3\,{\it x4}=0,{\it x1}+2\,{\it x2}-{\it x3}=0, \right.  '}}
+{{dmath ' \left. {\it x1}+3\,{\it x2}-2\,{\it x3}-3\,{\it x4}=0,3\,{\it x1}+5\,{\it x2}-2\,{\it x3}+3\,{\it x4}=0 \right\}  '}}
+{{dmath ' \left\{ {\it x1}=-6\,{\it x4}-{\it x3},{\it x2}=3\,{\it x4}+{\it x3},{\it x3}={\it x3},{\it x4}={\it x4} \right\}  '}}
+{{dmath '  '}}
+
+<<<maple
+> A1,b:=GenerateMatrix(eqs,[x1,x2,x3,x4]);
+> LUDecomposition(<A1|b>,output='R');
+>>>
+{{dmath ' {\it A1},\,b\, := \, \left[ \begin {array}{cccc} 1&1&0&3\\  1&2&-1&0\\  1&3&-2&-3\\  3&5&-2&3\end {array} \right] ,\, \left[ \begin {array}{c} 0\\  0\\  0\\  0\end {array} \right]    '}}
+{{dmath ' \left[ \begin {array}{ccccc} 1&0&1&6&0\\  0&1&-1&-3&0\\  0&0&0&0&0\\  0&0&0&0&0\end {array} \right]    '}}
+{{dmath '  '}}

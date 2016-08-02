@@ -1,0 +1,119 @@
+\begin{enumerate}
+\item seriesでTaylor展開した後，convertで多項式(polynom)に変換する．
+\begin{MapleInput}
+> convert(series(cos(x),x),polynom);
+\end{MapleInput}
+\begin{MapleOutput}
+1-\frac{1}{2}\,{x}^{2}+\frac{1}{24}\,{x}^{4}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> plot([convert(series(cos(x),x),polynom),cos(x)],x=-Pi..Pi);
+\end{MapleInput}
+\begin{MapleOutput}
+1-\frac{1}{2}\,{x}^{2}+\frac{1}{24}\,{x}^{4}-{\frac {1}{720}}\,{x}^{6}+{\frac {1}{40320}}\,{x}^{8}
+\end{MapleOutput}
+\MaplePlot{50mm}{./figures/EqManip3plot2d1.eps}
+高次展開する場合には，seriesの最後の引数に次数を指定する．デフォルトは6次．関数の一致具合が向上していることに注目．
+\begin{MapleInput}
+convert(series(cos(x),x,9),polynom);
+plot([convert(series(cos(x),x,9),polynom),cos(x)],x=-Pi..Pi);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/EqManip3plot2d2.eps}
+
+seriesでの展開で，x=1とするとその周りでの展開になる．
+\begin{MapleInput}
+> convert(series(ln(x),x=1),polynom);
+\end{MapleInput}
+\begin{MapleOutput}
+x-1-\frac{1}{2}\, \left( x-1 \right) ^{2}+\frac{1}{3}\, \left( x-1 \right) ^{3}-\frac{1}{4}\, \left( x-1 \right) ^{4}+\frac{1}{5}\, \left( x-1 \right) ^{5}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> plot([convert(series(ln(x),x=1),polynom),ln(x)],x=0..2);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/EqManip3plot2d3.eps}
+
+\begin{MapleInput}
+> convert(series(exp(-x),x),polynom);
+\end{MapleInput}
+\begin{MapleOutput}
+1-x+\frac{1}{2}\,{x}^{2}-\frac{1}{6}\,{x}^{3}+\frac{1}{24}\,{x}^{4}-{\frac {1}{120}}\,{x}^{5}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> plot([convert(series(exp(-x),x),polynom),exp(-x)],x=0..2);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/EqManip3plot2d4.eps}
+
+\item
+\begin{MapleInput}
+> restart; eq1:=(x+1)/((x-1)*(x^2+1)^2);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq1}\, := \,{\frac {x+1}{ \left( x-1 \right)  \left( {x}^{2}+1 \right) ^{2}}}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> convert(eq1,parfrac);
+\end{MapleInput}
+\begin{MapleOutput}
+\frac{1}{2 \left(x-1 \right) }-{\frac {x}{ \left( {x}^{2}+1 \right) ^{2}}}+\frac{1}{2}\,{\frac {-x-1}{{x}^{2}+1}}
+\end{MapleOutput}
+
+\item
+\begin{MapleInput}
+> convert(1/(1-x^4),parfrac);
+\end{MapleInput}
+\begin{MapleOutput}
+- \frac{1}{4 \left( x-1 \right)}+ \frac{1}{ 4\,\left(x+1 \right) }+ \frac{1}{2\,\left( {x}^{2}+1 \right)}
+\end{MapleOutput}
+
+\item
+\begin{MapleInput}
+> eq2:=8/(3-sqrt(5))-2/(2+sqrt(5));
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq2}\, := \frac{8}{3- \sqrt{5}}-\frac{2}{2+ \sqrt{5}}
+\end{MapleOutput}
+まずはデフォルトの簡単化(simplify)．
+\begin{MapleInput}
+> simplify(eq2); #res: 10
+\end{MapleInput}
+
+\item
+方程式をたてる．
+\begin{MapleInput}
+> eq3:=x^2+2*k*x+(5-k);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it eq3}\, := \,{x}^{2}+2\,kx+5-k
+\end{MapleOutput}
+単純に解を求めて，
+\begin{MapleInput}
+> sol1:=solve(eq3=0,x);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it sol1}\, := \,-k+ \sqrt{{k}^{2}-5+k},\,-k- \sqrt{{k}^{2}-5+k}
+\end{MapleOutput}
+それが一致する場合のkを解く．
+\begin{MapleInput}
+> solve(sol1[1]=sol1[2],k);
+\end{MapleInput}
+\begin{MapleOutput}
+-\frac{1}{2}+\frac{1}{2}\, \sqrt{21},\,-\frac{1}{2}-\frac{1}{2}\, \sqrt{21}
+\end{MapleOutput}
+別解．まず，係数をcoeffで取り出す．
+\begin{MapleInput}
+> aa:=coeff(eq3,x^2); #res:1
+> bb:=coeff(eq3,x);   #res: 2 k
+> cc:=coeff(eq3,x,0); #res: 5 - k
+\end{MapleInput}
+判別式$D=b^2-4ac$を計算して，$=0$とおいてkについて解く．
+\begin{MapleInput}
+> solve(bb^2-4*aa*cc=0,k);
+\end{MapleInput}
+\begin{MapleOutput}
+-\frac{1}{2}+\frac{1}{2}\, \sqrt{21},\,-\frac{1}{2}-\frac{1}{2}\, \sqrt{21}
+\end{MapleOutput}
+\end{enumerate}

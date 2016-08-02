@@ -1,0 +1,41 @@
+線形代数の計算にはあらかじめ関数パッケージ(LinearAlgebra)を呼び出しておく．
+<<<maple
+> with(LinearAlgebra):
+>>>
+
+
+!!!行列の基本操作 
+行列の掃き出しに必要となる行列の基本操作はRowOperation, ColumnOperationを参照．
+
+
+!!!掃き出し法，LU分解(LUDecomposition) 
+掃き出し法の計算は，LUDecompositionでおこなう．まず拡大係数行列を作る．
+<<<maple
+> A1:=<1,2;3,4>; b:=<2,3>; <A1|b>;
+>>>
+{{dmath ' {\it A1}\, := \, \left[ \begin {array}{cc} 1&2\\ 3&4\end {array} \right]  '}}
+{{dmath ' b\, := \, \left[ \begin {array}{c} 2\\ 3\end {array} \right]  '}}
+{{dmath ' \left[ \begin {array}{ccc} 1&2&2\\ 3&4&3\end {array} \right]   '}}
+{{dmath '  '}}
+これにLU分解をかける．それぞれP(permutation，置換), L(lower triangle，下三角), U(upper
+triangle，上三角)行列に代入している．
+<<<maple
+> P,L,U:=LUDecomposition(<A1|b>);
+>>>
+{{dmath ' P,\,L,\,U\, := \, \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right] ,\, \left[ \begin {array}{cc} 1&0\\ 3&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 1&2&2\\ 0&-2&-3\end {array} \right] 
+ '}}
+さらに被約階段行列(row reduced echelonmatrix;後退代入までおこなって，解まで求めた状態)を求めるには，output='R'を指定する．
+<<<maple
+> LUDecomposition(<A1|b>, output='R');
+>>>
+{{dmath ' \left[ \begin {array}{ccc} 1&0&-1\\ 0&1&3/2\end {array} \right]
+ '}}
+
+
+!!!階数(Rank) 
+行列の性質の中でも特に重要な階数(Rank)は次のコマンドで求められる．
+<<<maple
+> Rank(A1);
+>>>
+{{dmath ' 2
+ '}}

@@ -1,0 +1,45 @@
+\subsection{基本}
+複雑な手続きや，何度も繰り返すルーチンはprocで作る．
+procは以下のようにして作る．
+\begin{verbatim}
+ユーザ関数名:=proc(仮引数)
+  動作
+end proc;
+\end{verbatim}
+\begin{MapleInput}
+> test1:=proc(a) 
+    print(a); 
+  end proc:
+\end{MapleInput}
+procの呼び出しは，以下のようになる．
+\begin{MapleInput}
+> test1(13);
+\end{MapleInput}
+\begin{MapleOutput}
+13
+\end{MapleOutput}
+仮引数としてはどんな型(変数や配列)でもよい．複数指定するときにはコンマで区切る．仮引数をprocの中で変更することはできない．下で示すglobalで取り込むか，local変数にコピーして使う．
+
+\subsection{戻り値}
+procの戻り値はreturnで指定される．return文がないときは，最後の動作結果が戻り値となる．
+\begin{MapleInput}
+> test2:=proc(a) 
+    return a+1; 
+  end proc:
+\end{MapleInput}
+\begin{MapleInput}
+> test2(13);
+\end{MapleInput}
+\begin{MapleOutput}
+14
+\end{MapleOutput}
+
+\subsection{グローバル(大域)，ローカル(局所)変数}
+procの内部だけで使われるのがlocal，外部を参照するのがglobal．global,localを省略してもMapleが適当に判断してくれるが，あまり信用せず，明示的に宣言した方が良い．宣言の仕方は以下の通り．
+\begin{verbatim}
+変数名:=proc(引数)
+  local 変数,変数...;
+  global 変数,変数...;
+  動作の記述
+end proc;
+\end{verbatim}

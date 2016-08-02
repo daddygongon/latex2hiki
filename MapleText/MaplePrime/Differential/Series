@@ -1,0 +1,16 @@
+
+!!!級数展開(series) 
+Taylor級数は以下のようにして，中心点(x=a)，次数(4次)を指定する．
+<<<maple
+> t1:=series(sin(x),x=a,4);
+>>>
+{{dmath ' t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3+O((x-a)^4)
+ '}}
+<<<maple
+> e1:=convert(t1,polynom);
+> f1:=unapply(e1,x);
+>>>
+{{dmath ' t1 := \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3  '}}
+{{dmath '  {\it f1}\, := \,x\mapsto 
+ \sin(a)+\cos(a)(x-a)-\frac{1}{2}\sin(a)(x-a)^2-\frac{1}{6}\cos(a)(x-a)^3  '}}
+{{dmath '  '}}

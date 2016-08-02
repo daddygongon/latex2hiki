@@ -1,0 +1,1136 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: EqManip.mw
+%% Generated: Tue Jul 24 20:34:36 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{数式変形実践課題（大学入試センター試験の解法を通して）}}
+\begin{maplelatex}\begin{Maple Normal}{
+今まで出てきたコマンドを使えば，典型的なセンター試験の問題を解くのも容易である．以下の例題を参照して課題を解いてみよ．使うコマンドは，unapply, solve, diff, expand(展開), factor(因数分解)とsubs(一時的代入)である．expand等の数式変形によく使うコマンドは次節以降で詳しく解説している．subsは以下を参考にせよ．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{一時的代入(subs)}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+代入(:=)に対して，そこだけでの代入をsubsで行う．}\end{Maple Normal}
+
+\textbf{subs(a=1,a+2);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3}{\[\displaystyle 3\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+典型的な使い方は，solveで求めた解などを式として代入しておいて，それをsubsで一時的に当てはめる．}\end{Maple Normal}
+
+\textbf{eq1:=a=solve(a+b=0,a);}\textbf{subs(eq1,a+2);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq1 := a = -b}{\[\displaystyle {\it eq1}\, := \,a=-b\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-b+2}{\[\displaystyle -b+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{例題}}
+\subsubsection{\textbf{\textit{１．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\textit{a,b}を定数とし,\mapleinline{inert}{2d}{a <> 0}{$\displaystyle a\neq 0$}
+とする．2次関数}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{y = ax^2-bx-a+b}{$\displaystyle y={{\it ax}}^{2}-{\it bx}-a+b$}
+　(1)}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+のグラフが点 (-2, 6) を通るとする.}\end{Maple Normal}
+
+\begin{Maple Normal}{
+このとき}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{b = -a+[`ア`]}{\[\displaystyle b=-a+[\mbox {{\tt ア}}]\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+であり,グラフの頂点の座標を\textit{a}を用いて表すと}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{(-a+[`イ`])/([`ウ`]*a), -([`エ`]*a+[-`オ`])^2/([`カ`]*a)}{\[\displaystyle {\frac {-a+[\mbox {{\tt イ}}]}{[\mbox {{\tt ウ}}]a}},\,-{\frac { \left( [\mbox {{\tt エ}}]a+[-\mbox {{\tt オ}}]\\
+\mbox{} \right) ^{2}}{[\mbox {{\tt カ}}]a}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である (2008 年度大学入試センター試験数学 I より抜粋).}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textit{解答例}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+まず，与えられた２次関数を\mapleinline{inert}{2d}{f(x)*`で定義する．`}{$\displaystyle f \left( x \right) \mbox {{\tt で定義する．}}$}
+}\end{Maple Normal}
+
+\textbf{restart;}\textbf{f:=unapply(a*x\symbol{94}2-b*x-a+b,x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f := proc (x) options operator, arrow; a*x^2-b*x-a+b end proc}{\[\displaystyle f\, := \,x\mapsto a{x}^{2}-bx-a+b\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+与えられた点の座標を関数に入れる．}\end{Maple Normal}
+
+\textbf{eq1:=f(-2)=6;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq1 := 3*a+3*b = 6}{\[\displaystyle {\it eq1}\, := \,3\,a+3\,b=6\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これを\mapleinline{inert}{2d}{b}{$\displaystyle b$}
+について解く．}\end{Maple Normal}
+
+\textbf{eq2:=b=solve(eq1,b);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq2 := b = -a+2}{\[\displaystyle {\it eq2}\, := \,b=-a+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+次は，頂点の座標で傾きが0になることを用いて解いていく．}\end{Maple Normal}
+
+\textbf{solve(diff(f(x),x)=0,x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(1/2)*b/a}{\[\displaystyle 1/2\,{\frac {b}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{b}{$\displaystyle b$}
+の値はeq2で求まっているので，それを代入(subs)する．}\end{Maple Normal}
+
+\textbf{subs(eq2,solve(diff(f(x),x)=0,x));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(1/2)*(-a+2)/a}{\[\displaystyle 1/2\,{\frac {-a+2}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これをx0としてeq3で定義しておく．}\end{Maple Normal}
+
+\textbf{eq3:=x0=subs(eq2,solve(diff(f(x),x)=0,x));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{eq3 := x0 = (1/2)*(-a+2)/a}{\[\displaystyle {\it eq3}\, := \,{\it x0}=1/2\,{\frac {-a+2}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+頂点のy座標は，\mapleinline{inert}{2d}{f(x0)}{$\displaystyle f \left( {\it x0} \right) $}
+で求まる}\end{Maple Normal}
+
+\textbf{f(x0);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a*x0^2-b*x0-a+b}{\[\displaystyle a{{\it x0}}^{2}-b{\it x0}-a+b\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+eq2,eq3で求まっているx0,bを代入する．}\end{Maple Normal}
+
+\textbf{subs(\{eq2,eq3\},f(x0));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/4)*(-a+2)^2/a-2*a+2}{\[\displaystyle -1/4\,{\frac { \left( -a+2 \right) ^{2}}{a}}-2\,a+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+これを因数分解(factor)する．}\end{Maple Normal}
+
+\textbf{factor(subs(\{eq2,eq3\},f(x0)));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/4)*(3*a-2)^2/a}{\[\displaystyle -1/4\,{\frac { \left( 3\,a-2 \right) ^{2}}{a}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{課題}}
+\subsubsection{\textbf{\textit{１．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{P = (x(x+3))(2*x-3)}{$\displaystyle P=x \left( x+3 \right)  \left( 2\,x-3 \right) $}
+とする．また，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+を定数とする．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = a+1}{$\displaystyle x=a+1$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{2*a^3+[`ア`]*a^2+[`イ`]*a+[-`ウ`]}{\[\displaystyle 2\,{a}^{3}+[\mbox {{\tt ア}}]{a}^{2}+[\mbox {{\tt イ}}]a\\
+\mbox{}+[-\mbox {{\tt ウ}}]\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = a+1}{$\displaystyle x=a+1$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値と，\mapleinline{inert}{2d}{x = a}{$\displaystyle x=a$}
+のときの\mapleinline{inert}{2d}{P}{$\displaystyle P$}
+の値が等しいとする．このとき，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{3*a^2+[`エ`]*a+[-`オ`] = 0}{\[\displaystyle 3\,{a}^{2}+[\mbox {{\tt エ}}]a+[-\mbox {{\tt オ}}]\\
+\mbox{}=0\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+を満たす．したがって}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{a = ([`カキ`]+`&+-`(sqrt([`クケ`])))/[`コ`]}{\[\displaystyle a={\frac {[\mbox {{\tt カキ}}]+\mbox {{\tt \&+-}} \left(  \sqrt{[\mbox {{\tt クケ}}]} \right) \\
+\mbox{}}{[\mbox {{\tt コ}}]}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である.}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{２．}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+（例題１．に引き続いて，）}\end{Maple Normal}
+
+\begin{Maple Normal}{
+さらに，２次関数(1)のグラフの頂点のy座標が-2であるとする．このとき，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{[`キ`]*a^2-[`クケ`]*a+[`コ`] = 0}{\[\displaystyle [\mbox {{\tt キ}}]{a}^{2}-[\mbox {{\tt クケ}}]a\\
+\mbox{}+[\mbox {{\tt コ}}]=0\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+を満たす．これより，\mapleinline{inert}{2d}{a}{$\displaystyle a$}
+の値は}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{a = [`サ`], [`シ`]/[`ス`]}{\[\displaystyle a=[\mbox {{\tt サ}}],\,{\frac {[\mbox {{\tt シ}}]}{[\mbox {{\tt ス}}]}}\]}
+}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+以下，\mapleinline{inert}{2d}{a = [`シ`]/[`ス`]}{$\displaystyle a={\frac {[\mbox {{\tt シ}}]}{[\mbox {{\tt ス}}]}}$}
+であるとする．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+このとき，２次関数(1)のグラフの頂点のx座標は[セ]であり，(1)のグラフとx軸の２交点のx座標は[ソ],[タ]である．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+また，関数(1)は\mapleinline{inert}{2d}{0 <= x and x <= 9}{$\displaystyle 0\leq x{\rm \: \wedge \:}x\leq 9$}
+において}\end{Maple Normal}
+
+\begin{center}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{x = [`チ`]}{$\displaystyle x=[\mbox {{\tt チ}}]$}
+のとき，最小値[ツテ]をとり，\mapleinline{inert}{2d}{x = [`ト`]}{$\displaystyle x=[\mbox {{\tt ト}}]$}
+のとき，最大値\mapleinline{inert}{2d}{[`ナニ`]/[`ヌ`]}{$\displaystyle {\frac {[\mbox {{\tt ナニ}}]}{[\mbox {{\tt ヌ}}]}}$}
+をとる．}\end{Maple Normal}
+\end{center}
+\begin{Maple Normal}{
+(2008 年度大学入試センター試験数学 I より抜粋).}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{式の変形(I, simplify)}}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+Copyright @2010 by Shigeto R. Nishitani}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+数式の変形は，手で直すほうが圧倒的に早くきれいになる場合が多い．しかし，テイラー展開や，複雑な積分公式，三角関数とexp関数の変換などの手間がかかるところを，Mapleは間違いなく変形してくれる．ここで示すコマンドを全て覚える必要は全くない．というか忘れるもの．ここでは，できるだけコンパクトにまとめて，悩んだときに参照できるようにする．初めての人は，ざっと眺めた後，鉄則からじっくりフォローせよ．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{コマンドの分類}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+まず数式処理でよく使うコマンドをいくつかの範疇に分類してまとめておく．このほかにも前に示した，solve(解), diff(微分), int(積分)，series(級数展開)等は頻繁に数式の導出・変形に登場する．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplelatex}\begin{Maple Normal}{
+式の変形}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+式の分割抽出}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+代入，置換，仮定}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+省略操作，その他}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+simplify:簡単化}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+expand:展開}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+factor:因数分解}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+normal:約分・通分}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+combine:公式でまとめる}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+collect:次数でまとめる}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+sort:昇べき，降べき}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+convert:形式の変換}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+lhs, rhs:左辺，右辺}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+numer, denom:分子，分母}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+coeff:係数}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+nops, op}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+subs:一時的代入}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+asume:仮定}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+assuming:一時的仮定}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+assign:値の確定}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+about:仮定の中身}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+anames('user'):使用変数名}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+restart,a:='a':初期化}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+||:連結作用素}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+seq:for-loopの簡易表記}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+map:関数の要素への適用}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+add,mul:単純な和，積}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+sum,product:数式に対応した和，積}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+limit:極限}\end{Maple Normal}
+\end{maplelatex}
+\subsubsection{\textbf{\textit{式の変形に関連したコマンド}}}
+\subsubsection{\textit{simplify(exp1):}\textit{簡単化> simplify(exp1,副関係式):}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{simplify(3*x+4*x+2*y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7*x+2*y}{\[\displaystyle 7\,x+2\,y\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=3*sin(x)\symbol{94}3-sin(x)*cos(x)\symbol{94}2;
+simplify(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := 3*sin(x)^3-sin(x)*cos(x)^2}{\[\displaystyle {\it exp1}\, := \,3\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)  \left( \cos \left( x \right)  \right) ^{2}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(4*cos(x)^2-3)*sin(x)}{\[\displaystyle - \left( 4\, \left( \cos \left( x \right)  \right) ^{2}-3 \right) \sin \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{simplify(exp1,\{cos(x)\symbol{94}2=1-sin(x)\symbol{94}2\});
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4*sin(x)^3-sin(x)}{\[\displaystyle 4\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+オプションとしてsizeを指定するとより簡単になる場合がある．}\end{Maple Normal}
+
+\textbf{simplify(exp1,size):}\end{maplegroup}
+\subsubsection{\textit{expand(exp1)}\textit{:展開}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand((x+y)\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^2+2*x*y+y^2}{\[\displaystyle {x}^{2}+2\,xy+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{factor(exp1):}\textit{因数分解}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{factor(4*x\symbol{94}2-6*x*y+2*y\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(2*(2*x-y))*(x-y)}{\[\displaystyle 2\, \left( 2\,x-y \right)  \left( x-y \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{normal(exp1):}\textit{約分・通分}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{normal((x+y)/(x\symbol{94}2-3*x*y-4*y\symbol{94}2));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1/(x-4*y)}{\[\displaystyle  \left( x-4\,y \right) ^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{normal(1/x+1/y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(y+x)/(x*y)}{\[\displaystyle {\frac {y+x}{xy}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{collect(exp1,exp2):}\textit{項を変数でまとめる}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{collect(4*a*x\symbol{94}2-3*y\symbol{94}2/x+6*b*x*y+3*c*y+2*y\symbol{94}2,y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(-3/x+2)*y^2+(6*b*x+3*c)*y+4*a*x^2}{\[\displaystyle  \left( -3\,{x}^{-1}+2 \right) {y}^{2}+ \left( 6\,bx+3\,c \right) y+4\,a{x}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{combine(exp1)}\textit{:項を公式でまとめる}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{combine(sin(x)\symbol{94}2+3*cos(x)\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2+cos(2*x)}{\[\displaystyle 2+\cos \left( 2\,x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{sort(exp1)}\textit{:昇べき，降べき}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+> sort(exp1,[x,y]);>sort(exp1, [x], opts);opts=tdeg(総次数順),plex(辞書式順),ascending(昇順), descending(降順)}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}3+4*x-3*x\symbol{94}2+1:
+sort(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^3-3*x^2+4*x+1}{\[\displaystyle {x}^{3}-3\,{x}^{2}+4\,x+1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp1,[x],ascending);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^3-3*x^2+4*x+1}{\[\displaystyle {x}^{3}-3\,{x}^{2}+4\,x+1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp2:=x\symbol{94}3-a*x*y+4*x\symbol{94}2+y\symbol{94}2:
+sort(exp2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp2,[x]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp2,[a,y]);
+sort(exp2,[a],plex);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{演習}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+1. 以下の式を簡単化せよ．i) x\symbol{94}100-1  ii) x\symbol{94}2-y\symbol{94}2+2*x+1 iii) (a+b+c)\symbol{94}3-(a\symbol{94}3+b\symbol{94}3+c\symbol{94}3)}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{式の変形(II, convert, 分割抽出)}}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{式の変換}}}
+\subsubsection{\textit{convert(exp1,opt)}\textit{:形式の変換}}
+\begin{maplelatex}\begin{Maple Normal}{
+opt}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+意味}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+polynom}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+trig}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+sincos}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+exp}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+parfrac}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+rational}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+級数を多項式(polynomial)に}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+三角関数(trigonal)に}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+tanを含まない，sin,cosに}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+指数関数形式に}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+部分分数(partial fraction)に}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+浮動小数点数を有理数形式に}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{s1:=series(sin(x),x,4);
+convert(s1,polynom);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1 := x-(1/6)*x^3+O(x^4)}{\[\displaystyle {\it s1}\, := \,x-1/6\,{x}^{3}+O \left( {x}^{4} \right) \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x-(1/6)*x^3}{\[\displaystyle x-1/6\,{x}^{3}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(sin(x),exp);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(1/2*I)*(exp(I*x)-exp(-I*x))}{\[\displaystyle -1/2\,i \left( {{\rm e}^{ix}}-{{\rm e}^{-ix}} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(sinh(x),exp);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(1/2)*exp(x)-(1/2)*exp(-x)}{\[\displaystyle 1/2\,{{\rm e}^{x}}-1/2\,{{\rm e}^{-x}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(tan(x),sincos);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sin(x)/cos(x)}{\[\displaystyle {\frac {\sin \left( x \right) }{\cos \left( x \right) }}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(exp(I*x),trig);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{cos(x)+I*sin(x)}{\[\displaystyle \cos \left( x \right) +i\sin \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(1/(x-1)/(x+3),parfrac);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-1/(4*(x+3))+1/(4*(x-1))}{\[\displaystyle - \left( 4\,x+12 \right) ^{-1}+ \left( 4\,x-4 \right) ^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{convert(3.14,rational);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{157/50}{\[\displaystyle {\frac {157}{50}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{式の分割・抽出に関連したコマンド}}}
+\subsubsection{\textit{lhs(exp1)}\textit{, rhs:左辺，右辺}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{lhs(sin(x)\symbol{94}2=1-1/x);
+rhs(sin(x)\symbol{94}2=1-1/x);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sin(x)^2}{\[\displaystyle  \left( \sin \left( x \right)  \right) ^{2}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1-1/x}{\[\displaystyle 1-{x}^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{numer(exp1),denom:分子，分母}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{numer(a*x/(x+y)\symbol{94}3);
+denom(a*x/(x+y)\symbol{94}3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a*x}{\[\displaystyle ax\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(y+x)^3}{\[\displaystyle  \left( y+x \right) ^{3}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{coeff(exp1,x\symbol{94}2):}\textit{係数}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{coeff(4*a*x\symbol{94}2-3*y\symbol{94}2/x+6*b*x*y+3*c*y+2*y\symbol{94}2,y\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-3/x+2}{\[\displaystyle -3\,{x}^{-1}+2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{op(exp1), nops(exp1):}\textit{要素の取りだし，要素数}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+op, nopsはlist配列から要素や要素数を取り出すのに便利だが，より一般的な構造に対しても作用させることができる．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{op(4*a*x\symbol{94}2-3*y\symbol{94}2/x+6*b*x*y+3*c*y+2*y\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4*a*x^2, -3*y^2/x, 6*b*x*y, 3*c*y, 2*y^2}{\[\displaystyle 4\,a{x}^{2},\,-3\,{\frac {{y}^{2}}{x}},\,6\,bxy,\,3\,cy,\,2\,{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{nops(4*a*x\symbol{94}2-3*y\symbol{94}2/x+6*b*x*y+3*c*y+2*y\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{演習}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+1. 以下の関数をx0まわりで３次までテイラー展開し，得られた関数ともとの関数をプロットせよ．さらに高次まで展開した場合はどう変化するか．i) y=cos(x), x0=0    ii) y=ln(x), x0=1   iii) y=exp(-x), x0=0}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{2.}{$\displaystyle  2.0$}
+\mapleinline{inert}{2d}{Typesetting:-mrow(Typesetting:-mfrac(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mn("1", mathvariant = "normal")), Typesetting:-mrow(Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mo("&uminus0;", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mn("1", mathvariant = "normal")), mathvariant = "normal"), Typesetting:-mfenced(Typesetting:-mrow(Typesetting:-msup(Typesetting:-mi("x", italic = "true", mathvariant = "italic"), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0"), Typesetting:-mo("+", mathvariant = "normal", fence = "false", separator = "false", stretchy = "false", symmetric = "false", largeop = "false", movablelimits = "false", accent = "false", lspace = "0.2222222em", rspace = "0.2222222em"), Typesetting:-mn("1", mathvariant = "normal")), mathvariant = "normal"), Typesetting:-msup(Typesetting:-mi(""), Typesetting:-mrow(Typesetting:-mn("2", mathvariant = "normal")), superscriptshift = "0")), linethickness = "1", denomalign = "center", numalign = "center", bevelled = "false"), Typesetting:-mi("を部分分数に展開せよ．", italic = "true", mathvariant = "italic"))}{$\displaystyle \frac{x +1}{\left(x -1\right)\left(x ^{2}+1\right)^{2}}\mbox {{\tt を部分分数に展開せよ．}}\\
+\mbox{} $}
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{3./(1-x^4) = a/(x^2+1)+b/(x+1)+c*`が常に成立するa`/(x-1), b, `cを定めよ．`}{\[\displaystyle  3.0\, \left( 1-{x}^{4} \right) ^{-1}={\frac {a}{{x}^{2}+1}}+{\frac {b}{x+1}}+{\frac {c\mbox {{\tt が常に成立するa}}}{x-1}},\,b,\,\mbox {{\tt cを定めよ．}}\]}
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{4.*(8/(3-sqrt(5)))-2*`を簡単化せよ．`/(2+sqrt(5))}{\[\displaystyle  32.0\, \left( 3- \sqrt{5} \right) ^{-1}-2\,{\frac {\mbox {{\tt を簡単化せよ．}}}{2+ \sqrt{5}}}\]}
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{5.*x^2+2*kx+5-k}{$\displaystyle  5.0\,{x}^{2}+2\,{\it kx}+5-k$}
+=0が重根をもつように\mapleinline{inert}{2d}{`kを定めよ．`}{$\displaystyle \mbox {{\tt kを定めよ．}}$}
+}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{式の変形(}\textbf{III, assume, subs)}}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{代入，置換，仮定に関連したコマンド}}}
+\subsubsection{\textit{subs(関係式, exp1):一時的代入}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}2-4*x*y+4;
+subs(x=2,exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := x^2-4*x*y+4}{\[\displaystyle {\it exp1}\, := \,{x}^{2}-4\,xy+4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{8-8*y}{\[\displaystyle 8-8\,y\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{subs(\{x=a+2,y=sin(x)\},exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(a+2)^2-(4*(a+2))*sin(x)+4}{\[\displaystyle  \left( a+2 \right) ^{2}-4\, \left( a+2 \right) \sin \left( x \right) +4\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{assume(関係式):仮定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sqrt(b\symbol{94}2);
+assume(a>0);
+sqrt(a\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sqrt(b^2)}{\[\displaystyle  \sqrt{{b}^{2}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a}{\[\displaystyle a\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{exp1 assuming 関係式:一時的仮定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}2-4*x+4;
+sqrt(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := x^2-4*x+4}{\[\displaystyle {\it exp1}\, := \,{x}^{2}-4\,x+4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sqrt((-2+x)^2)}{\[\displaystyle  \sqrt{ \left( -2+x \right) ^{2}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sqrt(exp1) assuming x>2;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-2+x}{\[\displaystyle -2+x\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{additionally:assumeに加えての仮定}}
+\subsubsection{\textit{assign(exp1)}\textit{:solveで求めた値の確定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x:='x':y:='y':
+s1:=solve(\{x-y+1=0,x+y-2=0\},\{x,y\});
+assign(s1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1 := {x = 1/2, y = 3/2}}{\[\displaystyle {\it s1}\, := \, \left\{ x=1/2,y=3/2 \right\} \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x,y;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1/2, 3/2}{\[\displaystyle 1/2,\,3/2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{about:assumeで仮定した内容の確認}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{about(a);
+}{}
+\end{mapleinput}
+\mapleresult
+Originally a, renamed a\symbol{126}:
+is assumed to be: RealRange(Open(0),infinity)\end{maplegroup}
+\subsubsection{\textit{anames('user'):ユーザが定義した変数の確認}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{anames('user');
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1, y, x, a}{\[\displaystyle {\it s1},\,y,\,x,\,a\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{restart,a:='a': 値の初期化}}
+\subsubsection{\textbf{\textit{省略操作，その他のコマンド}}}
+\subsubsection{\textit{||:連結作用素，前後の変数をくっつけて新たな変数とする．}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{a||1;
+a||b;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a1}{\[\displaystyle {\it a1}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ab}{\[\displaystyle {\it ab}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to 3 do
+  a||i:=i\symbol{94}2;
+end do:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\subsubsection{\textit{seq(exp1,i=0..3):for-loopの単純表記}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{seq(k,k=4..7);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4, 5, 6, 7}{\[\displaystyle 4,\,5,\,6,\,7\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{map(exp1,i=0..3):リスト要素への関数の一括適用}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{f:=x->exp(-x);
+map(f,[0,1,2,3]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f := proc (x) options operator, arrow; exp(-x) end proc}{\[\displaystyle f\, := \,x\mapsto {{\rm e}^{-x}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, exp(-1), exp(-2), exp(-3)]}{\[\displaystyle [1,{{\rm e}^{-1}},{{\rm e}^{-2}},{{\rm e}^{-3}}]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+上記の３つを組み合わせると，効率的に式を扱うことができる．}\end{Maple Normal}
+
+\textbf{map(sin,[seq(theta||i,i=0..3)]);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[sin(theta0), sin(theta1), sin(theta2), sin(theta3)]}{\[\displaystyle [\sin \left( {\it theta0} \right) ,\sin \left( {\it theta1} \right) ,\sin \left( {\it theta2}\\
+\mbox{} \right) ,\sin \left( {\it theta3} \right) ]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{add,mul:単純な和，積}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{add(x\symbol{94}i,i=0..3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1+x+x^2+x^3}{\[\displaystyle 1+x+{x}^{2}+{x}^{3}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{mul(x\symbol{94}i,i=0..3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^6}{\[\displaystyle {x}^{6}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{sum,product:数式に対応した和，積}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{add(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{Maple Error}{
+Error, unable to execute add}\end{Maple Error}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^(n+1)/(x-1)-1/(x-1)}{\[\displaystyle {\frac {{x}^{n+1}}{x-1}}- \left( x-1 \right) ^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{product(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^((1/2)*(n+1)^2-(1/2)*n-1/2)}{\[\displaystyle {x}^{1/2\, \left( n+1 \right) ^{2}-1/2\,n-1/2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{limit:極限}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(exp(-x),x=infinity);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{0}{\[\displaystyle 0\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(tan(x),x=Pi/2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{undefined}{\[\displaystyle {\it undefined}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(tan(x),x=Pi/2,left);
+limit(tan(x),x=Pi/2,complex);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{infinity}{\[\displaystyle \infty \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-infinity+infinity*I}{\[\displaystyle -\infty +i\infty \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplelatex}\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\newpage
+\end{maplegroup}
+\section{\textbf{式の変形(IV, 基本と奥の手)}}
+\subsection{\textbf{解説}}
+\begin{maplelatex}どうしても解かなければならない課題を前にコマンドリファレンスのあちこちを参照しながら解いていくのが数式処理を修得する最速法である．とびかかる前にちょっとした共通のコツがある．それをここでは示す．数式処理ソフトでの数式処理とは，数式処理ソフトが『自動的にやって』くれるのではなく，実際に紙と鉛筆で解いていく手順を数式処理ソフトに『やらせる』ことであることを肝に銘じよ．\end{maplelatex}
+\subsubsection{\textbf{鉄則}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Mapleをはじめとする数式処理ソフトの習得にあたって初心者がつまづく共通の過ちを回避する鉄則がある．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則０：restart をかける}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+続けて入力すると前の入力が生きている．違う問題へ移るときや，もう一度入力をし直すときには，restart;を入力して初期状態からはじめる．入力した順番が狂っている場合もある．頭から順にreturnをやり直す．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則１：出力してみる}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+多くのテキストではページ数の関係で出力を抑止しているが，初心者が問題を解いていく段階ではデータやグラフをできるだけ多く出力する．最後のコロンをセミコロンに変える，あるいは途中にprint文を入れる．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則２：関数に値を代入してみる}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+数値が返ってくるべき時に変数があればどこかで入力をミスっている．plotで以下のようなエラーが出た場合にチェック．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{plot(f(x),x);
+}{}
+\end{mapleinput}
+\mapleresult
+\underline{}Warning, unable to evaluate the function to numeric values in the region; see the plotting command's help page to ensure the calling sequence is correct\underline{}\end{maplegroup}
+\subsubsection{\textbf{\textit{鉄則３：内側から順に入力する}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+長い入力やfor-loopを頭から打ち込んではいけない！！　内側から順に何をしているか解読・確認しながら打ち込む．括弧が合わなかったり，読み飛ばしていたりというエラーが回避できる．}\end{Maple Normal}
+
+\end{maplegroup}
+\subsubsection{\textbf{具体例：無限積分}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+以下に示す積分を実行せよ．}\end{Maple Normal}
+
+\begin{Maple Normal}{
+\mapleinline{inert}{2d}{int(x*e^(-`&beta;c`*x^2)*(1+`&beta;g`*x^3), x = -infinity .. infinity)}{\[\displaystyle \int _{-\infty }^{\infty }\!x{e}^{-\beta c\,{x}^{2}} \left( 1+\beta g\,{x}^{3} \right) {dx}\]}
+}\end{Maple Normal}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+最新版のMapleでは改良が施されていて，このような複雑な積分も一発で求まる．}\end{Maple Normal}
+
+\textbf{f1:=unapply(x*exp(-beta*c*x\symbol{94}2)*(1+beta*g*x\symbol{94}3),x);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f1 := proc (x) options operator, arrow; x*exp(-beta*c*x^2)*(1+beta*g*x^3) end proc}{\[\displaystyle {\it f1}\, := \,x\mapsto x{{\rm e}^{-\beta\,c{x}^{2}}} \left( 1+\beta\,g{x}^{3} \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{int(f1(x),x=-infinity..infinity);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{piecewise(csgn(beta*c) = 1, (3/4)*g*sqrt(Pi)/(beta*c^2*sqrt(beta*c)), infinity)}{\[\displaystyle \cases{3/4\,{\frac {g \sqrt{\pi }}{\beta\,{c}^{2} \sqrt{\beta\,c}}}&${\it csgn} \left( \beta\,c \right) =1$\cr \infty &otherwise\cr}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ここでは，

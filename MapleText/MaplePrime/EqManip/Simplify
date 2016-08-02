@@ -1,0 +1,128 @@
+
+!!!簡単化(simplify) 
+<<<maple
+> simplify(exp1,副関係式):
+> simplify(3*x+4*x+2*y);
+>>>
+{{dmath ' 7\,x+2\,y
+ '}}
+<<<maple
+> exp1:=3*sin(x)^3-sin(x)*cos(x)^2; 
+> simplify(exp1);
+>>>
+{{dmath ' {\it exp1}\, := \,3\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)  \left( \cos \left( x \right)  \right) ^{2}  '}}
+{{dmath ' - \left( 4\, \left( \cos \left( x \right)  \right) ^{2}-3 \right) \sin \left( x \right)  '}}
+{{dmath '  '}}
+<<<maple
+> simplify(exp1,{cos(x)^2=1-sin(x)^2});
+>>>
+{{dmath ' 4\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)
+ '}}
+オプションとしてsizeを指定するとより簡単になる場合がある．
+<<<maple
+> simplify(exp1,size):
+>>>
+
+
+!!!展開(expand) 
+<<<maple
+> expand((x+y)^2);
+>>>
+{{dmath ' {x}^{2}+2\,xy+{y}^{2}
+ '}}
+
+
+!!!因数分解(factor) 
+<<<maple
+> factor(4*x^2-6*x*y+2*y^2);
+>>>
+{{dmath ' 2\, \left( 2\,x-y \right)  \left( x-y \right)
+ '}}
+
+
+!!!約分・通分(normal) 
+<<<maple
+> normal((x+y)/(x^2-3*x*y-4*y^2));
+>>>
+{{dmath ' \frac{1}{ x-4\,y }
+ '}}
+<<<maple
+> normal(1/x+1/y);
+>>>
+{{dmath ' {\frac {y+x}{xy}}
+ '}}
+
+
+!!!項を変数でまとめる(collect) 
+<<<maple
+> collect(4*a*x^2-3*y^2/x+6*b*x*y+3*c*y+2*y^2,y);
+>>>
+{{dmath ' \left( -3\,{x}^{-1}+2 \right) {y}^{2}+ \left( 6\,bx+3\,c \right) y+4\,a{x}^{2}
+ '}}
+
+
+!!!項を公式でまとめる(combine) 
+<<<maple
+> combine(sin(x)^2+3*cos(x)^2);
+>>>
+{{dmath ' 2+\cos \left( 2\,x \right)
+ '}}
+
+
+!!!昇べき，降べき(sort) 
+<<<maple
+> sort(exp1,[x,y]); 
+> sort(exp1, [x],opts);
+opts=tdeg(総次数順), plex(辞書式順), ascending(昇順), descending(降順)
+>>>
+
+<<<maple
+> exp1:=x^3+4*x-3*x^2+1: 
+> sort(exp1);
+>>>
+{{dmath ' {x}^{3}-3\,{x}^{2}+4\,x+1
+ '}}
+
+<<<maple
+> sort(exp1,[x],ascending);
+>>>
+{{dmath ' 1+4\,x-3\,{x}^{2}+{x}^{3}
+ '}}
+
+<<<maple
+> exp2:=x^3-a*x*y+4*x^2+y^2: 
+> sort(exp2);
+>>>
+{{dmath ' -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}
+ '}}
+
+<<<maple
+> sort(exp2,[x]);
+>>>
+{{dmath ' {x}^{3}+4\,{x}^{2}-ayx+{y}^{2}
+ '}}
+
+<<<maple
+> sort(exp2,[a,y]); 
+> sort(exp2,[a],plex);
+>>>
+{{dmath ' -xay+{y}^{2}+{x}^{3}+4\,{x}^{2}  '}}
+{{dmath ' -xya+{x}^{3}+4\,{x}^{2}+{y}^{2}  '}}
+{{dmath '  '}}
+
+
+!!!分母の有理化(rationalize) 
+
+<<<maple
+> eq1:=(1+sqrt(2))/(1-sqrt(3));
+>>>
+分母の有理化は，この式を
+{{dmath ' {\frac {1+\sqrt {2}}{1-\sqrt {3}}}{\frac {1+\sqrt {3}}{1+\sqrt {3}}}
+ '}}
+とする事に対応します．
+<<<maple
+> rationalize(eq1);
+>>>
+{{dmath ' -1/2\, \left( 1+\sqrt {2} \right)  \left( 1+\sqrt {3} \right) 
+ '}}
+

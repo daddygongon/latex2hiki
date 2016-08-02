@@ -1,0 +1,365 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: EqManip2.mw
+%% Generated: Tue Jul 24 21:39:28 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{式の変形(I, simplify)}}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+Copyright @2010 by Shigeto R. Nishitani}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\begin{maplelatex}\begin{flushright}
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{flushright}
+\end{maplelatex}
+\begin{maplelatex}\begin{Maple Normal}{
+数式の変形は，手で直すほうが圧倒的に早くきれいになる場合が多い．しかし，テイラー展開や，複雑な積分公式，三角関数とexp関数の変換などの手間がかかるところを，Mapleは間違いなく変形してくれる．ここで示すコマンドを全て覚える必要は全くない．というか忘れるもの．ここでは，できるだけコンパクトにまとめて，悩んだときに参照できるようにする．初めての人は，ざっと眺めた後，鉄則からじっくりフォローせよ．}\end{Maple Normal}
+\end{maplelatex}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{コマンドの分類}}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+まず数式処理でよく使うコマンドをいくつかの範疇に分類してまとめておく．このほかにも前に示した，solve(解), diff(微分), int(積分)，series(級数展開)等は頻繁に数式の導出・変形に登場する．}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+式の変形}\end{Maple Normal}
+
+\begin{Maple Normal}{
+式の分割抽出}\end{Maple Normal}
+
+\begin{Maple Normal}{
+代入，置換，仮定}\end{Maple Normal}
+
+\begin{Maple Normal}{
+省略操作，その他}\end{Maple Normal}
+
+\begin{Maple Normal}{
+simplify:簡単化}\end{Maple Normal}
+
+\begin{Maple Normal}{
+expand:展開}\end{Maple Normal}
+
+\begin{Maple Normal}{
+factor:因数分解}\end{Maple Normal}
+
+\begin{Maple Normal}{
+normal:約分・通分}\end{Maple Normal}
+
+\begin{Maple Normal}{
+combine:公式でまとめる}\end{Maple Normal}
+
+\begin{Maple Normal}{
+collect:次数でまとめる}\end{Maple Normal}
+
+\begin{Maple Normal}{
+sort:昇べき，降べき}\end{Maple Normal}
+
+\begin{Maple Normal}{
+convert:形式の変換}\end{Maple Normal}
+
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\begin{Maple Normal}{
+式の分割抽出}\end{Maple Normal}
+
+\begin{Maple Normal}{
+lhs, rhs:左辺，右辺}\end{Maple Normal}
+
+\begin{Maple Normal}{
+numer, denom:分子，分母}\end{Maple Normal}
+
+\begin{Maple Normal}{
+coeff:係数}\end{Maple Normal}
+
+\begin{Maple Normal}{
+nops, op}\end{Maple Normal}
+
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\begin{Maple Normal}{
+代入，置換，仮定}\end{Maple Normal}
+
+\begin{Maple Normal}{
+subs:一時的代入}\end{Maple Normal}
+
+\begin{Maple Normal}{
+asume:仮定}\end{Maple Normal}
+
+\begin{Maple Normal}{
+assuming:一時的仮定}\end{Maple Normal}
+
+\begin{Maple Normal}{
+assign:値の確定}\end{Maple Normal}
+
+\begin{Maple Normal}{
+about:仮定の中身}\end{Maple Normal}
+
+\begin{Maple Normal}{
+anames('user'):使用変数名}\end{Maple Normal}
+
+\begin{Maple Normal}{
+restart,a:='a':初期化}\end{Maple Normal}
+
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\begin{Maple Normal}{
+省略操作，その他}\end{Maple Normal}
+
+\begin{Maple Normal}{
+||:連結作用素}\end{Maple Normal}
+
+\begin{Maple Normal}{
+seq:for-loopの簡易表記}\end{Maple Normal}
+
+\begin{Maple Normal}{
+map:関数の要素への適用}\end{Maple Normal}
+
+\begin{Maple Normal}{
+add,mul:単純な和，積}\end{Maple Normal}
+
+\begin{Maple Normal}{
+sum,product:数式に対応した和，積}\end{Maple Normal}
+
+\begin{Maple Normal}{
+limit:極限}\end{Maple Normal}
+
+\begin{Maple Normal}{
+}\end{Maple Normal}
+\end{maplegroup}
+\subsubsection{\textbf{\textit{式の変形に関連したコマンド}}}
+\subsubsection{\textit{simplify(exp1):}\textit{簡単化> simplify(exp1,副関係式):}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{simplify(3*x+4*x+2*y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{7*x+2*y}{\[\displaystyle 7\,x+2\,y\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=3*sin(x)\symbol{94}3-sin(x)*cos(x)\symbol{94}2;
+simplify(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := 3*sin(x)^3-sin(x)*cos(x)^2}{\[\displaystyle {\it exp1}\, := \,3\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right)  \left( \cos \left( x \right)  \right) ^{2}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-(4*cos(x)^2-3)*sin(x)}{\[\displaystyle - \left( 4\, \left( \cos \left( x \right)  \right) ^{2}-3 \right) \sin \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{simplify(exp1,\{cos(x)\symbol{94}2=1-sin(x)\symbol{94}2\});
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4*sin(x)^3-sin(x)}{\[\displaystyle 4\, \left( \sin \left( x \right)  \right) ^{3}-\sin \left( x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+オプションとしてsizeを指定するとより簡単になる場合がある．}\end{Maple Normal}
+
+\textbf{simplify(exp1,size):}\end{maplegroup}
+\subsubsection{\textit{expand(exp1)}\textit{:展開}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{expand((x+y)\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^2+2*x*y+y^2}{\[\displaystyle {x}^{2}+2\,xy+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{factor(exp1):}\textit{因数分解}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{factor(4*x\symbol{94}2-6*x*y+2*y\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(2*(2*x-y))*(x-y)}{\[\displaystyle 2\, \left( 2\,x-y \right)  \left( x-y \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{normal(exp1):}\textit{約分・通分}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{normal((x+y)/(x\symbol{94}2-3*x*y-4*y\symbol{94}2));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1/(x-4*y)}{\[\displaystyle  \left( x-4\,y \right) ^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{normal(1/x+1/y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(y+x)/(x*y)}{\[\displaystyle {\frac {y+x}{xy}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{collect(exp1,exp2):}\textit{項を変数でまとめる}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{collect(4*a*x\symbol{94}2-3*y\symbol{94}2/x+6*b*x*y+3*c*y+2*y\symbol{94}2,y);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(-3/x+2)*y^2+(6*b*x+3*c)*y+4*a*x^2}{\[\displaystyle  \left( -3\,{x}^{-1}+2 \right) {y}^{2}+ \left( 6\,bx+3\,c \right) y+4\,a{x}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{combine(exp1)}\textit{:項を公式でまとめる}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{combine(sin(x)\symbol{94}2+3*cos(x)\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2+cos(2*x)}{\[\displaystyle 2+\cos \left( 2\,x \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{sort(exp1)}\textit{:昇べき，降べき}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+> sort(exp1,[x,y]);>sort(exp1, [x], opts);opts=tdeg(総次数順),plex(辞書式順),ascending(昇順), descending(降順)}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}3+4*x-3*x\symbol{94}2+1:
+sort(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^3-3*x^2+4*x+1}{\[\displaystyle {x}^{3}-3\,{x}^{2}+4\,x+1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp1,[x],ascending);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^3-3*x^2+4*x+1}{\[\displaystyle {x}^{3}-3\,{x}^{2}+4\,x+1\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp2:=x\symbol{94}3-a*x*y+4*x\symbol{94}2+y\symbol{94}2:
+sort(exp2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp2,[x]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sort(exp2,[a,y]);
+sort(exp2,[a],plex);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-a*x*y+x^3+4*x^2+y^2}{\[\displaystyle -axy+{x}^{3}+4\,{x}^{2}+{y}^{2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{演習}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+1. 以下の式を簡単化せよ．i) x\symbol{94}100-1  ii) x\symbol{94}2-y\symbol{94}2+2*x+1 iii) (a+b+c)\symbol{94}3-(a\symbol{94}3+b\symbol{94}3+c\symbol{94}3)}\end{Maple Normal}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{factor(x\symbol{94}100-1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(x-1)*(1+x^4+x^3+x^2+x)*(1+x^20+x^15+x^10+x^5)*(1+x)*(1-x+x^2-x^3+x^4)*(1-x^5+x^10-x^15+x^20)*(1+x^2)*(x^8-x^6+x^4-x^2+1)*(x^40-x^30+x^20-x^10+1)}{\[\displaystyle  \left( x-1 \right)  \left( 1+{x}^{4}+{x}^{3}+{x}^{2}+x \right)  \left( 1+{x}^{20}+{x}^{15}+{x}^{10}+{x}^{5} \right) \\
+\mbox{} \left( 1+x \right)  \left( 1-x+{x}^{2}-{x}^{3}+{x}^{4} \right)  \left( 1-{x}^{5}+{x}^{10}-{x}^{15}+{x}^{20} \right) \\
+\mbox{} \left( 1+{x}^{2} \right)  \left( {x}^{8}-{x}^{6}+{x}^{4}-{x}^{2}+1 \right)  \left( {x}^{40}-{x}^{30}+{x}^{20}-{x}^{10}+1 \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{factor( x\symbol{94}2-y\symbol{94}2+2*x+1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(x+1+y)*(x+1-y)}{\[\displaystyle  \left( x+1+y \right)  \left( x+1-y \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{factor((a+b+c)\symbol{94}3-(a\symbol{94}3+b\symbol{94}3+c\symbol{94}3));
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(3*(b+c))*(c+a)*(a+b)}{\[\displaystyle 3\, \left( b+c \right)  \left( c+a \right)  \left( a+b \right) \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

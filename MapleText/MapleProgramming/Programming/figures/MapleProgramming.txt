@@ -1,0 +1,107 @@
+
+Programming(V) proc
+解説
+複雑な手続きや，何度も繰り返すルーチンはprocで作る．
+基本
+procは以下のようにして作る．
+ユーザ関数名:=proc(仮引数)
+動作
+end proc;
+> test1:=proc(a) print(a); end proc;
+proc(a)  ...  end;
+procの呼び出しは，以下のようになる．
+> test1(13);
+                                      13
+
+仮引数としてはどんな型(変数や配列)でもよい．複数指定するときにはコンマで区切る．仮引数をprocの中で変更すると怒られる．下で示すglobalで取り込むか，l
+ocal変数にコピーして使う．
+戻り値
+procの戻り値はreturnで指定される．return文がないときは，最後の動作結果が戻り値となる．
+> test2:=proc(a) print(a); return a+1; end proc;
+proc(a)  ...  end;
+> test2(13);
+                                      13
+                                      14
+グローバル(大域)，ローカル(局所)変数
+procの内部だけで使われるのがlocal,
+外部を参照するのがglobal．global,localを省略してもMapleが適当に判断してくれる．信用できないけど．宣言の仕方は以下の通り．
+変数名:=proc(引数)
+local 変数;
+global 変数;
+動作の記述
+end proc;
+課題
+1. 三角形の面積
+底辺と高さを引数として，面積を返す関数areaを作れ．
+2. my_isprime
+前章の課題４で求めた素数判定プログラムをprocにせよ．
+3. ルートの距離
+二つの位置座標
+x1:=[0.0, 0.0]
+x2:=[1.0, 1.0]
+から距離を求めるmy_distance関数を作れ．
+
+次に，4つの位置座標
+x[1]=[0.0, 0.0]
+x[2]=[1.0, 1.0]
+x[3]=[1.0, 0.0]
+x[4]=[0.0, 1.0]
+を読み込んで，座標順に[1,2,3,4,1]と巡る距離を求めよ．
+
+4. 最大数
+ランダムな整数が格納されたリストを受け取り，そのリスト中の最大数を返す関数my_maxを作れ．1から100までのランダムな整数のリストは次のようにして作れる．
+> roll:=rand(1..100): n:=50: A:=[seq(roll(),i=1..n)];
+[45, 96, 6, 98, 59, 44, 100, 38, 69, 27, 96, 17, 90, 34, 18, 52, 56, 43, 83, 
+
+  25, 90, 93, 60, 93, 14, 50, 47, 8, 46, 44, 9, 77, 59, 16, 1, 70, 77, 39, 92, 
+
+  71, 67, 78, 51, 53, 12, 19, 63, 40, 90, 3]
+解答例
+1.
+> area:=proc(base,height) base*height/2; end proc;
+proc(base, height)  ...  end;
+> area(3,4);
+                                      6
+2.
+> restart; n:=19: banpei:=0; for i from 2 to n-1 do amari:=irem(n,i);
+> print(amari): if amari=0 then banpei:=1; break; end if; end do: if banpei=1
+> then print(n," is not prime number."); else print(n," is prime number."); end
+> if;
+                                      0
+                                      1
+                                      1
+                                      1
+                           19, " is prime number."
+> my_isprime:=proc(n) local i,amari; for i from 2 to evalf(sqrt(n)) do
+> amari:=irem(n,i); if amari=0 then return false; end if; end do: return true;
+> end proc:
+> my_isprime(104729);
+                                     true
+3
+> restart; x1:=[0.0, 0.0]; x2:=[1.0, 1.0];
+                                   [0., 0.]
+                                  [1.0, 1.0]
+> my_distance:=proc(x1,x2) local dx,dy; dx:=(x1[1]-x2[1]); dy:=(x1[2]-x2[2]);
+> sqrt(dx^2+dy^2); end proc:
+> my_distance(x1,x2);
+                                 1.414213562
+> x[1]:=[0.0, 0.0]; x[2]:=[1.0, 1.0]; x[3]:=[1.0, 0.0]; x[4]:=[0.0, 1.0];
+> x[5]:=x[1]; sum(my_distance(x[i],x[i+1]),i=1..4);
+                                   [0., 0.]
+                                  [1.0, 1.0]
+                                  [1.0, 0.]
+                                  [0., 1.0]
+                                   [0., 0.]
+                                 4.828427124
+4.
+> roll:=rand(1..100): n:=50: A:=[seq(roll(),i=1..n)];
+[93, 45, 96, 6, 98, 59, 44, 100, 38, 69, 27, 96, 17, 90, 34, 18, 52, 56, 43, 
+
+  83, 25, 90, 93, 60, 93, 14, 50, 47, 8, 46, 44, 9, 77, 59, 16, 1, 70, 77, 39, 
+
+  92, 71, 67, 78, 51, 53, 12, 19, 63, 40, 90]
+> my_max:=proc(A) local imax,i; imax:=0; for i from 1 to nops(A) do if A[i]>imax
+> then imax:=A[i] end if end do; return imax; end proc;
+proc(A)  ...  end;
+> my_max(A);
+                                     100

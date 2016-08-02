@@ -1,0 +1,131 @@
+\contentsline {chapter}{\numberline {第1章}基本操作}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}最初の一葉(FirstLeaf):文法とヘルプとプロット}{7}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}入力領域と注意点(ShiftEnter)}{7}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}命令コマンドの基本形(command();)}{7}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}ヘルプ(?)}{8}{subsection.1.1.3}
+\contentsline {subsubsection}{plotに関する課題}{8}{section*.2}
+\contentsline {subsubsection}{plot3dに関する課題}{8}{section*.3}
+\contentsline {subsubsection}{plot}{8}{section*.4}
+\contentsline {subsubsection}{plot3d}{9}{section*.5}
+\contentsline {subsubsection}{間違い(Error)}{10}{section*.6}
+\contentsline {section}{\numberline {1.2}初等関数とそのほかの関数(Functions)}{11}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}初等関数(ElementaryFunctions)}{11}{subsection.1.2.1}
+\contentsline {paragraph}{四則演算とevalf}{11}{section*.7}
+\contentsline {paragraph}{多項式関数(polynom)}{11}{section*.8}
+\contentsline {paragraph}{平方根(sqrt)}{11}{section*.9}
+\contentsline {paragraph}{三角関数(trigonal)}{11}{section*.10}
+\contentsline {paragraph}{その他の関数(inifnc)}{12}{section*.11}
+\contentsline {subsection}{\numberline {1.2.2}ユーザー定義関数(unapply)}{12}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}packageの呼び出し(with)}{12}{subsection.1.2.3}
+\contentsline {subsubsection}{関数についての課題}{13}{section*.12}
+\contentsline {subsubsection}{Functions}{13}{section*.13}
+\contentsline {section}{\numberline {1.3}等号(Equals)}{15}{section.1.3}
+\contentsline {paragraph}{等号の意味}{15}{section*.14}
+\contentsline {subsection}{\numberline {1.3.1}変数への代入:= (colonequal)}{15}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}変数の初期化(restart)}{15}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}方程式の解(solve)}{15}{subsection.1.3.3}
+\contentsline {paragraph}{方程式の数値解(fsolve)}{16}{section*.15}
+\contentsline {subsection}{\numberline {1.3.4}恒等式(Identity)}{16}{subsection.1.3.4}
+\contentsline {subsubsection}{等号についての課題}{16}{section*.16}
+\contentsline {subsubsection}{Equals}{17}{section*.17}
+\contentsline {chapter}{\numberline {第2章}微積分}{19}{chapter.2}
+\contentsline {section}{\numberline {2.1}微分(Diff)-I}{19}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}単純な微分(diff)}{19}{subsection.2.1.1}
+\contentsline {paragraph}{偏微分(PartialDiff)}{19}{section*.18}
+\contentsline {subsection}{\numberline {2.1.2}例題:関数の微分と増減表}{19}{subsection.2.1.2}
+\contentsline {paragraph}{解答例}{19}{section*.19}
+\contentsline {subsection}{\numberline {2.1.3}例題:接線(Tangent)}{20}{subsection.2.1.3}
+\contentsline {paragraph}{解答例}{20}{section*.20}
+\contentsline {section}{\numberline {2.2}微分(Diff)-II}{21}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}級数展開(series)}{21}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}全微分(D)}{21}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}複合関数の微分}{22}{subsection.2.2.3}
+\contentsline {subsubsection}{微分に関する課題}{22}{section*.21}
+\contentsline {subsubsection}{Diff}{22}{section*.22}
+\contentsline {subsubsection}{きれいな表示}{24}{section*.23}
+\contentsline {section}{\numberline {2.3}積分(int)}{25}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}単純な積分(int)}{25}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}studentパッケージいろいろ}{25}{subsection.2.3.2}
+\contentsline {paragraph}{部分積分(integration by parts)}{25}{section*.24}
+\contentsline {paragraph}{置換(change of variables)による積分}{26}{section*.25}
+\contentsline {paragraph}{部分分数(partial fraction)展開による積分}{26}{section*.26}
+\contentsline {chapter}{\numberline {第3章}線形代数}{29}{chapter.3}
+\contentsline {section}{\numberline {3.1}行列・ベクトル生成(MatrixVector)}{29}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}ベクトルの生成(Vector)}{29}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}行列の生成(Matrix)}{29}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}縦横ベクトル・行列の簡易作成法(MVShortcut)}{30}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}行列，ベクトルの成分の抽出(MVextraction)}{30}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}内積外積(DotProduct,CrossProduct)}{32}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}スカラーとのかけ算}{32}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}行列,ベクトルの足し算，引き算}{32}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}内積(DotProduct, `.`)}{32}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}外積(CrossProduct, `\&x`)}{32}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}スカラー3重積}{32}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}転置(Transpose, `\&T`)}{33}{subsection.3.2.6}
+\contentsline {section}{\numberline {3.3}行列の基本操作，掃き出し(LUDecomposition)}{36}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}行列の基本操作}{36}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}掃き出し法，LU分解(LUDecomposition)}{36}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}階数(Rank)}{36}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}逆行列(MatrixInverse)}{41}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}行列式(Determinant)}{41}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}逆行列(MatrixInverse)}{41}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}その他の演算}{41}{subsection.3.4.3}
+\contentsline {section}{\numberline {3.5}固有値(EigenVectors)}{43}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}固有値(EigenVectors)}{43}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}固有ベクトルの取り出し(Column)}{43}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}固有ベクトルの規格化(Normalize)}{43}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}対角化}{44}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}その他の演算}{44}{subsection.3.5.5}
+\contentsline {chapter}{\numberline {第4章}式変形}{47}{chapter.4}
+\contentsline {section}{\numberline {4.1}数式処理コマンドの分類(EquationManipulationTable)}{47}{section.4.1}
+\contentsline {section}{\numberline {4.2}式の変形に関連したコマンド(Simplify)}{48}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}簡単化(simplify)}{48}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}展開(expand)}{48}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}因数分解(factor)}{48}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}約分・通分(normal)}{49}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}項を変数でまとめる(collect)}{49}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}項を公式でまとめる(combine)}{49}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}昇べき，降べき(sort)}{49}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}分母の有理化(rationalize)}{50}{subsection.4.2.8}
+\contentsline {section}{\numberline {4.3}式の分割抽出(convert)}{51}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}形式の変換(convert(exp1,opt))}{51}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}左辺，右辺(lhs, rhs)}{52}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}分母，分子(denom,numer)}{52}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}係数(coeff)}{52}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}要素の取りだし，要素数(op, nops)}{52}{subsection.4.3.5}
+\contentsline {section}{\numberline {4.4}代入，置換，仮定に関連したコマンド(assume, subs)}{56}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}一時的代入(subs)}{56}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}仮定(assume)}{56}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}一時的仮定(assuming)}{56}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}solveで求めた値の確定(assign)}{57}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}assumeで仮定した内容の確認(about)}{57}{subsection.4.4.5}
+\contentsline {subsection}{\numberline {4.4.6}ユーザが定義した変数の確認(anames('user'))}{57}{subsection.4.4.6}
+\contentsline {subsection}{\numberline {4.4.7}値の初期化(restart,a:='a')}{57}{subsection.4.4.7}
+\contentsline {subsection}{\numberline {4.4.8}連結作用素($||$)}{58}{subsection.4.4.8}
+\contentsline {subsection}{\numberline {4.4.9}for-loopの簡略表記(seq)}{58}{subsection.4.4.9}
+\contentsline {subsection}{\numberline {4.4.10}リスト要素への関数の一括適用(map)}{58}{subsection.4.4.10}
+\contentsline {subsection}{\numberline {4.4.11}単純な和，積(add,mul)}{58}{subsection.4.4.11}
+\contentsline {subsection}{\numberline {4.4.12}数式にも対応した和，積(sum,product)}{59}{subsection.4.4.12}
+\contentsline {subsection}{\numberline {4.4.13}極限(limit)}{59}{subsection.4.4.13}
+\contentsline {section}{\numberline {4.5}式の変形の基本(BottomLine)}{60}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}鉄則}{60}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}具体例：無限積分}{60}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}式のフォローのデフォルト}{62}{subsection.4.5.3}
+\contentsline {section}{\numberline {4.6}センター試験I(CenterExamI)}{63}{section.4.6}
+\contentsline {paragraph}{数式変形実践課題（大学入試センター試験の解法を通して）}{63}{section*.27}
+\contentsline {subsection}{\numberline {4.6.1}一時的代入(subs)}{63}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}例題:2次関数の頂点}{63}{subsection.4.6.2}
+\contentsline {subsubsection}{解答例}{63}{section*.28}
+\contentsline {chapter}{\numberline {第5章}描画}{67}{chapter.5}
+\contentsline {section}{\numberline {5.1}CG(ComputerGraphics)}{67}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}listplot, pointplot}{67}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}写像の表示}{68}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}回転写像}{69}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}平行投影図の作成}{69}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}透視図}{71}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}Mapleの描画関数の覚書}{71}{subsection.5.1.6}
+\contentsline {section}{\numberline {5.2}動画(Animation)}{72}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}animate関数}{72}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}リストに貯めて，display表示}{72}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}凝った例}{72}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}ファイルへの保存}{73}{subsection.5.2.4}

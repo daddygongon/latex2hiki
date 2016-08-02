@@ -1,0 +1,80 @@
+% TexShopではいまのところうまく通らず．2016/04/08
+% teminalでdvipdfmx *.dviで変換．
+\documentclass[10pt,a4j]{jbook}
+\usepackage[dvipdfmx]{graphicx,color}
+
+\usepackage[dvipdfmx,colorlinks,linkcolor=blue,bookmarksopenlevel=4]{hyperref}
+% texで日本語のしおり付きpdfを作る方法
+%% pdf の しおり をEUCから unicode へ変換
+\AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{bm}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+%\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}
+} }
+
+\newcommand{\ChartElementThree}[2]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #2}\right]\right]\right]$
+	\end{flushleft}\vspace{#1}
+} }
+
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+
+\begin{document}
+\title{Maple入門}
+\author{西谷@関西学院大・理工}
+\date{\today}
+\maketitle
+\tableofcontents
+
+\include{./MaplePrimeCont}
+
+\end{document}

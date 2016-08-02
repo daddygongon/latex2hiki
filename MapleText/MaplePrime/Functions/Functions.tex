@@ -1,0 +1,55 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+
+\begin{document}
+\section{初等関数とそのほかの関数(Functions)}
+\ChartElement{解説}
+\input{ElementaryFunctions.tex} 
+\input{Unapply.tex} 
+\input{With.tex} 
+
+\ChartElement{課題}
+\input{ExFunctions.tex} 
+
+\ChartElement{解答例}
+\input{ExAnsFunctions.tex} 
+
+\end{document}

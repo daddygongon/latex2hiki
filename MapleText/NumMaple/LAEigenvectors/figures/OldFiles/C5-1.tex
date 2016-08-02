@@ -1,0 +1,257 @@
+%dummy
+%% Created by Maple 9.5, Mac OS X
+%% Source Worksheet: /Users/bob/Documents/Lectures/NumRecipe05/chap2/C2.mw
+%% Generated: Sun Aug 21 13:39:09 JST 2005
+\documentclass[12pt,a4j]{jarticle}
+\usepackage{maplestd2e,linequote,here}
+
+\newcounter{program}
+
+\def\emptyline{\vspace{12pt}}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Error}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Normal}
+\DefineCharStyle{Maple 2D Input}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Hyperlink}
+\begin{document}
+\pagestyle{plain}
+\title{数値計算：行列(II, 固有値-1)}
+\author{関西学院大学・理工学部・情報科学科　西谷滋人}
+\date{2006年10月27日}
+\maketitle
+\section{固有値の幾何学的意味}
+前回の\textbf{逆行列}にひきつづき，\textbf{固有値}に関して具体的な計算方法を示す．先ずは，固有値の幾何学的な意味を2次元行列で確認しておこう．ある点$x0$に対称正方行列$A$を作用すると，$x1$に移動する．これを原点を中心とする円上の点に次々に作用させ，移動前後の点を結ぶ．
+\begin{linequote}\begin{verbatim}> restart;
+with(LinearAlgebra):with(plots):with(plottools):
+A:=Matrix(1..2,1..2,[[3,2/3],[2/3,2]]);
+\end{verbatim}
+\mapleresult
+\begin{maplelatex}
+\QTR{Maple 2D Output}{\mapleinline{inert}{2d}{A := Matrix([[3, 2/3], [2/3, 2]])}{%
+\[
+A\, := \, \left[ \begin {array}{cc} 3&2/3\\\noalign{\medskip}2/3&2\end {array} \right] 
+\]
+}
+}
+\end{maplelatex}
+\end{linequote}
+\begin{linequote}\begin{verbatim}> N:=30:p1:=[]:l1:=[]:
+for k from 0 to N-1 do
+  x0:=Vector([sin(2*Pi*k/N),cos(2*Pi*k/N)]);
+  x1:=MatrixVectorMultiply(A,x0);
+  p1:=[op(p1),pointplot({x0,x1})];
+  l1:=[op(l1),line( evalf(convert(x0,list)),evalf(convert(x1,list)) )];
+end do:
+\end{verbatim}\end{linequote}
+
+\noindent
+こうすると次のような図形が描かれる．始点をうまく選べば，原点から引いた同一直線上にのりそうである．これが変換の主軸(principal axis)と呼ばれるもので直交する．
+
+\begin{linequote}\begin{verbatim}> principal:=plot({1/2*x,-2*x},x=-4..4):
+display([principal,op(p1),op(l1)],view=[-4..4,-4..4],axes=box);
+\end{verbatim}\end{linequote}
+\mapleresult
+\begin{center}
+\mapleplot{EigenVectors3plot1.eps}
+\end{center}
+
+\section{固有値}
+$A$を対称正方行列，$x$をベクトルとしたときに，
+\begin{equation}
+Ax = \lambda x
+\label{Eq:Eigen}
+\end{equation}
+の解，$\lambda$を固有値，$x$を固有ベクトルという．$x$がゼロベクトルではない意味のある解は特性方程式$\texttt{det}(A-\lambda E)=0$が成り立つときにのみ得られる．
+
+まずMapleで特性方程式を解いてみる．
+\begin{linequote}\begin{verbatim}> x:=Matrix([[1,0],[0,1]]):
+Mat_E:=A-lambda.x;
+\end{verbatim}
+\begin{equation}
+\setlength{\unitlength}{1cm}
+\begin{picture}(10,3.5)
+\put(0,0){\framebox(10,3.5){}}
+\end{picture}
+\end{equation}
+\end{linequote}
+
+\begin{linequote}\begin{verbatim}> eq2:=Determinant(A-lambda.x);
+\end{verbatim}
+\mapleresult
+\begin{equation}
+\setlength{\unitlength}{1cm}
+\begin{picture}(10,3.5)
+\put(0,0){\framebox(10,3.5){}}
+\end{picture}
+\end{equation}
+
+\begin{maplelatex}
+\QTR{Maple 2D Output}{\mapleinline{inert}{2d}{eq2 := 50/9-5*lambda+lambda^2}{%
+\[
+{\it eq2}\, := \,{\frac {50}{9}}-5\,\lambda+{\lambda}^{2}
+\]
+}
+}
+\end{maplelatex}
+\end{linequote}
+\begin{linequote}\begin{verbatim}> solve(eq2=0,lambda);
+\end{verbatim}
+\mapleresult
+\begin{maplelatex}
+\QTR{Maple 2D Output}{\mapleinline{inert}{2d}{10/3, 5/3}{%
+\[
+10/3,\,5/3
+\]
+}
+}
+\end{maplelatex}
+\end{linequote}
+\noindent
+固有値を求めるコマンド\texttt{Eigenvectors}を適用すると，固有値と固有ベクトルが求まる．ここで，固有ベクトルは行列の列(Column)ベクトルに入っている．
+\begin{linequote}\begin{verbatim}> (lambda,V):=Eigenvectors(A);
+\end{verbatim}
+\mapleresult
+\begin{maplelatex}
+\QTR{Maple 2D Output}{\mapleinline{inert}{2d}{lambda, V := Vector[column]([[10/3], [5/3]]), Matrix([[2, (-1)/2], [1, 1]])}{%
+\[
+\lambda,\,V\, := \, \left[ \begin {array}{c} 10/3\\\noalign{\medskip}5/3\end {array} \right] ,\, \left[ \begin {array}{cc} 2&-1/2\\\noalign{\medskip}1&1\end {array} \right] 
+\]
+}
+}
+\end{maplelatex}
+\end{linequote}
+
+n次元の固有値方程式は(n+1)個の未知数を持つn次方程式であるので，解を特定するためにはさらに規格化条件が必要となる．
+
+\noindent
+方程式(\ref{Eq:Eigen})が成り立っていることを確認する．
+\begin{linequote}\begin{verbatim}> lambda[1].Column(V,1)=A.Column(V,1);
+\end{verbatim}
+\mapleresult
+\begin{maplelatex}
+\QTR{Maple 2D Output}{\mapleinline{inert}{2d}{Vector[column]([[20/3], [10/3]]) = Vector[column]([[20/3], [10/3]])}{%
+\[
+ \left[ \begin {array}{c} {\frac {20}{3}}\\\noalign{\medskip}10/3\end {array} \right] = \left[ \begin {array}{c} {\frac {20}{3}}\\\noalign{\medskip}10/3\end {array} \right] 
+\]
+}
+}
+\end{maplelatex}
+\begin{equation}
+\setlength{\unitlength}{1cm}
+\begin{picture}(10,3.5)
+\put(0,0){\framebox(10,3.5){}}
+\end{picture}
+\end{equation}
+\end{linequote}
+\section{Googleのページランク}
+\begin{quote}
+\textbf{多くの良質なページからリンクされているページは
+やはり良質なページである}
+\end{quote}
+Googleのpage rankは上のような非常に単純な仮定から成り立っている．ページランクを実際に求めよう．つぎのようなリンクが張られたページを考える．
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=2in]{./linkstruct.eps}
+\end{center}\end{figure}
+
+計算手順は以下の通り\footnote{詳しくは\texttt{http://www.kusastro.kyoto-u.ac.jp/\~baba/wais/pagerank.html}を参照せよ．}．
+\begin{enumerate}
+\item リンクを再現する隣接行列を作る．ページに番号をつけて，その間が結ばれているi-j要素を1，そうでない要素を0とする．
+\item 隣接行列を転置する
+\item 列ベクトルの総和が1となるように規格化する．
+\item こうして得られた推移確率行列の最大固有値に属する固有ベクトルを求め，適当に規格化する．
+\end{enumerate}
+\section*{課題}
+\begin{enumerate}
+\item 上記手順を参考にして，Mapleでページランクを求めよ．
+\item このような問題ではすべての固有値・固有ベクトルを求める必要はなく，最大の固有値を示す固有ベクトルを求めるだけでよい．初期ベクトルを適当に決めて，何度も推移確率行列を掛ける反復法でページランクを求めよ．
+\end{enumerate}
+\begin{small}\begin{itemize}
+\item[隣接行列]
+\[
+{\it A1}\, := \, \left[ \begin {array}{c|c|c|c|c|c|c|c} 
+ &1&2&3&4&5&6&7\\\noalign{\medskip}
+1&0&1&1&1&1&0&1\\\noalign{\medskip}
+2&1&0&0&0&0&0&0\\\noalign{\medskip}
+3& & & & & & & \\\noalign{\medskip}
+4& & & & & & & \\\noalign{\medskip}
+5& & & & & & & \\\noalign{\medskip}
+6& & & & & & & \\\noalign{\medskip}
+7& & & & & & & 
+\end {array} \right] 
+\]
+\item[転置行列]
+\[
+{\rm Transpose}({\it A1})\, := \, \left[ \begin {array}{c|c|c|c|c|c|c} 
+\, \, &\, \, &\, \, &\, \, &\, \, &\, \, &\, \, \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & 
+\end {array} \right] 
+\]
+\item[規格化]
+\[
+\left[ \begin {array}{c|c|c|c|c|c|c} 
+\, \, &\, \, &\, \, &\, \, &\, \, &\, \, &\, \, \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & 
+\end {array} \right] 
+\]
+\item[遷移]
+\[
+\left( \begin {array}{ccccccc} 
+0 &1 &1/2 &0 &1/4 &1/2 &0 \\\noalign{\medskip}
+1/5 &0 &1/2 &1/3 &0 &0 &0 \\\noalign{\medskip}
+1/5 &0 &0 &1/3 &1/4 &0 &0 \\\noalign{\medskip}
+1/5 &0 &0 &0 &1/4 &0 &0 \\\noalign{\medskip}
+1/5 &0 &0 &1/3 &0 &1/2 &1 \\\noalign{\medskip}
+0 &0 &0 &0 &1/4 &0 &0 \\\noalign{\medskip}
+1/5 &0 &0 &0 &0 &0 &0 
+\end {array} \right) 
+\left( \begin {array}{c} 
+1/7\\ \noalign{\medskip}
+1/7\\ \noalign{\medskip}
+1/7\\ \noalign{\medskip}
+1/7\\ \noalign{\medskip}
+1/7\\ \noalign{\medskip}
+1/7\\ \noalign{\medskip}
+1/7 
+\end {array} \right) \, = \, 
+\left( \begin {array}{ccccccc} 
+\, \, &\, \, &\, \, &\, \, &\, \, &\, \, &\, \, \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & \\\noalign{\medskip}
+ & & & & & & 
+\end {array} \right)
+\, = \, \left( \begin {array}{c} 
+0.32\\ \noalign{\medskip}
+0.15\\ \noalign{\medskip}
+0.11\\ \noalign{\medskip}
+0.06\\ \noalign{\medskip}
+0.29\\ \noalign{\medskip}
+0.04\\ \noalign{\medskip}
+0.03 
+\end {array} \right) 
+\]
+\end{itemize}\end{small}
+\end{document}

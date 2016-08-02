@@ -1,0 +1,30 @@
+
+!!!!plot 
+
+1. 
+<<<maple
+> ?plot;
+>>>
+
+<<<maple
+> plot(cos(x)+sin(x), x = 0 .. Pi);
+>>>
+||{{attach_view(FirstLeafplot2d4.png,FirstLeaf)}}||
+
+2. 
+<<<maple
+> plot([sin(t), cos(t), t = -Pi .. Pi]);
+>>>
+||{{attach_view(FirstLeafplot2d5.png,FirstLeaf)}}||
+
+3. 
+<<<maple
+> plot([sin(x),cos(x)],x=-Pi..Pi);
+>>>
+||{{attach_view(FirstLeafplot2d6.png,FirstLeaf)}}||
+
+4. 
+<<<maple
+> plot([sin(x),cos(x)],x=-Pi..Pi,color=[red,blue],style=[point,line]);
+>>>
+||{{attach_view(FirstLeafplot2d7.png,FirstLeaf)}}||

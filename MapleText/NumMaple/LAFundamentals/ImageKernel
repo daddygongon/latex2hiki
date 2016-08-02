@@ -1,0 +1,54 @@
+では，行列式が０になるというのはどういう状態でしょう? 次のような行列を考えてみましょう．
+<<<maple
+> A:=Matrix([[2,1],[4,2]]);
+>>>
+{{dmath '  '}}
+この行列式は
+<<<maple
+> Determinant(A);
+>>>
+{{dmath ' 0
+ '}}
+です．この変換行列で，上と同じように写像の様子を表示させてみましょう．
+<<<maple
+> N:=30:point2:=[]:line2:=[]: 
+  for k from 0 to N-1 do
+    x0:=Vector([sin(2*Pi*k/N),cos(2*Pi*k/N)]); x1:=A.x0; p0:=convert(x0,list);
+    p1:=convert(x1,list);
+    point2:=[op(point2),disk(p0,0.05,color=red),disk(p1,0.05,color=blue)];
+    line2:=[op(line2),line(p0,p1)]; 
+  end:
+> d:=6: display(point2,line2,view=[-d..d,-d..d]);
+>>>
+||{{attach_view(LAFundamentalsplot2d5.png,LAFundamentals)}}||
+
+わかります？
+
+今回の移動先の青点は直線となっています．つまり，determinantが0ということは，変換すると面積がつぶれるという事を意味しています．平面がひとつ次元を落として線になるということです．
+
+次に，この行列の表わす写像によって原点(0,0)に写される元の座標を求めてみます．連立方程式に戻してみると
+<<<maple
+> A.Vector([x,y])=Vector([0,0]);
+>>>
+{{dmath ' \left[ \begin {array}{c} 2\,x+y\\ 4\,x+2\,y\end {array} \right] = \left[ \begin {array}{c} 0\\ 0\end {array} \right]
+ '}}
+となります．とよく見ると，1行目も2行目もおなじ式になっています．2次元正方行列で，行列式が0の時には必ずこういう形になり，直線の式となります．これを表示すると
+<<<maple
+> plot([-2*x,-2*x+1,-2*x-1],x=-4..4,y=-4..4);
+> plot([2*x],x=-4..4,y=-4..4,color=blue);
+>>>
+||{{attach_view(LAFundamentalsKernelImage.png,LAFundamentals)}}||
+左図の赤線となります．この直線上の全ての点が[0,0]へ写されることを確認してください．また，緑の線上の点は全て[1,2]へ写されることが確認できます．
+<<<maple
+> A.Vector([-1,2]);
+>>>
+{{dmath ' \left[ \begin {array}{c} 0\\ 0\end {array} \right]
+ '}}
+
+こうしてすべて調べていけば，左の平面上のすべて点は右の青の直線上へ写されることが分かります．今まで見てきた円と楕円とはまったく違った写像が，行列式が0の行列では起こっていることが分かると思います．右の青線を行列Aによる像(Image, Im{{math 'A'}}と表記)，左の赤線，つまり写像によって[0,0]へ写される集合を核(Kernel, Ker{{math 'A'}}と表記)と呼びます．
+
+これをポンチ絵で描くと，次の通りです．
+
+||像(Image) || 核(Kernel) 
+||{{attach_view(Projection1.png,LAFundamentals)}}||{{attach_view(Projection2.png,LAFundamentals)}}
+

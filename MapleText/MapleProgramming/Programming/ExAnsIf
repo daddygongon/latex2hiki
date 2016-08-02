@@ -1,0 +1,153 @@
+
+1. 
+<<<maple
+> year:=1890; 
+  if year<1868 then printf("明治より前です．\n"); 
+  elif year<1912 then printf("明治%d年です．\n",year-1868+1); 
+  elif year<1926 then printf("大正%d年です．\n",year-1912+1); 
+  elif year<1989 then printf("昭和%d年です．\n",year-1926+1); 
+  elif year<2011 then printf("平成%d年です．\n",year-1989+1); 
+  else printf("今年より後です．\n"); 
+  end;
+>>>
+<<<maple
+明治23年です．
+>>>
+
+
+2. 
+<<<maple
+> n:=10:
+  for i from 1 to n do 
+    if (isprime(i)) then 
+      print(i); 
+    end if; 
+  end do;
+>>>
+<<<maple
+#res: 2 3 5 7
+>>>
+
+
+3. 
+<<<maple
+> for i from 10 to 100-2 do 
+    if (isprime(i) and isprime(i+2)) then 
+      print(i,i+2);
+    end if; 
+  end do;
+>>>
+<<<maple
+                                    11, 13
+                                    17, 19
+                                    29, 31
+                                    41, 43
+                                    59, 61
+                                    71, 73
+>>>
+
+
+4. 
+<<<maple
+> n:=12: 
+  banpei:=0:
+  for i from 2 to n-1 do 
+    residue:=irem(n,i); 
+    # print(n,residue): 
+    if residue=0 then 
+      banpei:=1; 
+      break; 
+    end if; 
+  end do: 
+  if banpei=1 then 
+    printf("%d is not prime number.\n",n); 
+  else 
+    printf("%d is prime number.\n",n); 
+  end if;
+>>>
+<<<maple
+12 is not prime number.
+>>>
+
+
+5. 
+<<<maple
+> year:=[2010,1984,2004,1800,1900,1600,2000]: 
+  for i from 1 to nops(year) do 
+    if (irem(year[i],400)=0) then 
+      printf("%d is a leap year.\n",year[i]); 
+    elif (irem(year[i],4)=0) and (irem(year[i],100)<>0) then
+      printf("%d is a leap year.\n",year[i]); 
+    else printf("%d is not a leap year.\n",year[i]); 
+    end if;
+  end do;
+>>>
+<<<maple
+2010 is not a leap year. 
+1984 is a leap year. 
+2004 is a leap year. 
+1800 is not a leap year. 
+1900 is not a leap year. 
+1600 is a leap year. 
+2000 is a leap year.
+>>>
+
+別解
+<<<maple
+> for i from 1 to nops(year) do 
+    if (irem(year[i],4)=0) and ((irem(year[i],100)<>0) or (irem(year[i],400)=0)) then 
+      printf("%d is a leap year.\n",year[i]); 
+    else 
+      printf("%d is not a leap year.\n",year[i]); 
+    end if;
+  end do;
+>>>
+<<<maple
+略
+>>>
+
+
+6. 
+<<<maple
+> prime1:=[]; 
+  for i from 1 to 100 do 
+    if isprime(i) then 
+      prime1:=[op(prime1),i];
+    end if; 
+  end do; 
+  prime1;
+>>>
+<<<maple
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
+73, 79, 83, 89, 97]
+>>>
+<<<maple
+> nops(prime1);
+>>>
+{{dmath ' 25
+ '}}
+
+<<<maple
+> for i from 6 to 100 by 2 do 
+    for j1 from 1 to nops(prime1) do 
+      for j2 from 1 to nops(prime1) do 
+        if i=(prime1[j1]+prime1[j2]) then
+          print(i,prime1[j1],prime1[j2]); 
+          break;
+        end if 
+      end do; 
+      if j2<=nops(prime1) then
+        break; 
+      end if; 
+    end do; 
+  end do;
+>>>
+<<<maple
+6, 3, 3
+8, 3, 5
+10, 3, 7
+中略
+98, 19, 79
+100, 3, 97
+>>>
+                                  

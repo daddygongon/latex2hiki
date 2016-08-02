@@ -1,0 +1,141 @@
+\documentclass[10pt,a4j]{jbook}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage[dvipdfmx,colorlinks,linkcolor=blue,bookmarksopenlevel=4]{hyperref}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{bm}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+%\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}
+} }
+
+\newcommand{\ChartElementThree}[2]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #2}\right]\right]\right]$
+	\end{flushleft}\vspace{#1}
+} }
+
+\newif\ifHIKI
+%\HIKItrue % TRUEの設定
+\HIKIfalse % FALSEの設定
+
+\begin{document}
+\title{Maple入門（プログラミング編）}
+\author{西谷@関西学院大・理工}
+\date{\today}
+\maketitle
+\tableofcontents
+
+\chapter{基本操作}
+\section{最初の一葉(FirstLeaf):文法とヘルプとプロット}
+
+\ChartElement{解説}
+\input{FirstLeaf/InputShiftEnter.tex} 
+\input{FirstLeaf/CommandTwo.tex} 
+\input{FirstLeaf/Help.tex} 
+
+
+\section{初等関数とそのほかの関数(Functions)}
+\ChartElement{解説}
+\input{Functions/ElementaryFunctions.tex} 
+\input{Functions/Unapply.tex} 
+\input{Functions/With.tex} 
+
+\section{等号(Equals)}
+\ChartElementThree{-6mm}{基本事項}
+\input{Equals/ColonEqual.tex} 
+\input{Equals/Solve.tex} 
+\input{Equals/Identity.tex} 
+
+\chapter{Programming}
+\section{代入と出力(Variables, printf)}
+\ChartElementTwo{解説}
+\input{Programming/Variables.tex} 
+
+\pagebreak
+\section{ループ(Loop)}
+\ChartElementTwo{解説}
+\input{Programming/Loop.tex} 
+\ChartElementTwo{課題}
+\input{Programming/ExLoop.tex} 
+\ChartElementTwo{解答例}
+\input{Programming/ExAnsLoop.tex} 
+
+\pagebreak
+\section{配列(List)}
+\ChartElementTwo{解説}
+\input{Programming/List.tex} 
+\ChartElementTwo{課題}
+\input{Programming/ExList.tex} 
+\ChartElementTwo{解答例}
+\input{Programming/ExAnsList.tex} 
+
+\pagebreak
+\section{交通整理(If)}
+\ChartElementTwo{解説}
+\input{Programming/If.tex} 
+\ChartElementTwo{課題}
+\input{Programming/ExIf.tex} 
+\ChartElementTwo{解答例}
+\input{Programming/ExAnsIf.tex} 
+
+\pagebreak
+\section{手続き関数(Procedure)}
+\ChartElementTwo{解説}
+\input{Programming/Procedure.tex} 
+\ChartElementTwo{課題}
+\input{Programming/ExProcedure.tex} 
+\ChartElementTwo{解答例}
+\input{Programming/ExAnsProcedure.tex} 
+
+\chapter{その他(Etcetra)}
+\section{ファイルの入出力(InputOutput)}
+\ChartElementTwo{解説}
+\input{Etcetra/InputOutput.tex}
+\section{for-loopの基本技(for-loop2)}
+\ChartElementTwo{解説}
+\input{Etcetra/ForLoop2.tex}
+
+\end{document}

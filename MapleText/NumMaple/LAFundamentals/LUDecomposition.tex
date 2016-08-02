@@ -1,0 +1,22 @@
+係数行列$A$とベクトル$b$を足して作られる行列は拡大係数行列と呼ばれます．Mapleでは，これは
+\begin{MapleInput}
+> <A|b>;
+\end{MapleInput}
+\begin{MapleOutput}
+\left[ \begin {array}{ccc} 2&5&7\\ 4&1&5\end {array} \right]
+\end{MapleOutput}
+として作られます．ここから行列の掃き出し操作をおこなうには，LUDecompositionというコマンドを使います．
+\begin{MapleInput}
+> P,L,U:=LUDecomposition(<A|b>);
+\end{MapleInput}
+\begin{MapleOutput}
+P,\,L,\,U\, := \, \left[ \begin {array}{cc} 1&0\\ 0&1\end {array} \right] ,\, \left[ \begin {array}{cc} 1&0\\ 2&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 2&5&7\\ 0&-9&-9\end {array} \right]
+\end{MapleOutput}
+これは，下三角行列(Lower Triangle Matrix)と上三角行列(Upper Triangle Matrix)に分解(decompose)するコマンドです．$P$行列は置換(permutation)行列を意味します．LUDecompositionだけでは，前進消去が終わっただけの状態です．そこで，後退代入までおこなうには，optionにoutput='R'をつけます．そうすると出力は，
+\begin{MapleInput}
+> LUDecomposition(<A|b>,output='R');
+\end{MapleInput}
+\begin{MapleOutput}
+\left[ \begin {array}{ccc} 1&0&1\\ 0&1&1\end {array} \right]
+\end{MapleOutput}
+で，$b$ベクトルの部分が解になっています．

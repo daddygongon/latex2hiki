@@ -1,0 +1,85 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: LUDecomposition.mw
+%% Generated: Thu Aug 09 22:45:26 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart: A:=Matrix([[2,5],[4,1]]); 
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4307605176)}{\[\displaystyle A\, := \, \left[ \begin {array}{cc} 2&5\\ \noalign{\medskip}4&1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{with(LinearAlgebra):
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{b:=Vector([7,5]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{b := Vector[column](%id = 4382055152)}{\[\displaystyle b\, := \, \left[ \begin {array}{c} 7\\ \noalign{\medskip}5\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{<A|b>;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4382330736)}{\[\displaystyle  \left[ \begin {array}{ccc} 2&5&7\\ \noalign{\medskip}4&1&5\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{P,L,U:=LUDecomposition(<A|b>);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{P, L, U := Matrix(%id = 4307605536), Matrix(%id = 4307605656), Matrix(%id = 4307605776)}{\[\displaystyle P,\,L,\,U\, := \, \left[ \begin {array}{cc} 1&0\\ \noalign{\medskip}0&1\end {array} \right] ,\, \left[ \begin {array}{cc} 1&0\\ \noalign{\medskip}2&1\end {array} \right] ,\, \left[ \begin {array}{ccc} 2&5&7\\ \noalign{\medskip}0&-9&-9\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{LUDecomposition(<A|b>,output='R');}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4385109184)}{\[\displaystyle  \left[ \begin {array}{ccc} 1&0&1\\ \noalign{\medskip}0&1&1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

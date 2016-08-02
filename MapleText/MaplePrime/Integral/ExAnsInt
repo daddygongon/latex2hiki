@@ -1,0 +1,50 @@
+
+
+1.  
+<<<maple
+> int(4*x+3,x);
+> int( 1/(1+exp(x)),x);
+> int(1/(exp(-x)+exp(x)),x);
+> int(sqrt(1-x^2),x);
+>>>
+{{dmath '  2\,{x}^{2}+3\,x   '}}
+{{dmath '  -\ln  \left( 1+ \mbox{e}^x \right) +\ln  \left( \mbox{e}^x \right)   '}}
+{{dmath '  \arctan \left( \mbox{e}^x \right)   '}}
+{{dmath '  \frac{1}{2}\,x \sqrt{1-{x}^{2}}+\frac{1}{2}\,\arcsin \left( x \right)   '}}
+{{dmath '  '}}
+
+
+2. 
+<<<maple
+> int(sin(x),x=0..Pi);
+> int(arctan(x),x=0..1);
+> int(1/(sqrt(4-x^(2))),x=-2..2);
+> int(1/(x^2+x+1),x=0..1);
+>>>
+{{dmath '  2    '}}
+{{dmath '  \frac{1}{4}\,\pi -\frac{1}{2}\,\ln  \left( 2 \right)    '}}
+{{dmath '  \pi    '}}
+{{dmath '  \frac{1}{9}\,\pi \, \sqrt{3}   '}}
+{{dmath '  '}}
+
+
+3. 
+<<<maple
+> with(plots):
+> inequal({x-y>=0,x>=0,x<=1,y>=0},x=-0.5..1.5,y=-0.5..1.5,optionsexcluded=(color=white));
+>>>
+
+||{{attach_view(Intplot2d1.png,Integral)}}||
+
+<<<maple
+> f:=unapply(sqrt(x^2+y^2),(x,y)):
+> plot3d(f(x,y),x=0..1,y=0..1,axes=box);
+>>>
+
+||{{attach_view(Intplot3d2.png,Integral)}}||
+<<<maple
+> int(int(f(x,y),y=0..x),x=0..1);
+>>>
+{{dmath '  \frac{1}{6} \sqrt{2}+\frac{1}{6}\,\ln  \left( 1+ \sqrt{2} \right) 
+ '}}
+

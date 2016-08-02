@@ -1,0 +1,570 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: do-loop2.mw
+%% Generated: Mon Sep 03 21:52:40 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\begin{center}
+\textbf{Programmingーfor-loopの基本技ー}\end{center}
+}
+\begin{maplelatex}\begin{flushright}
+Copyright @2006 by Shigeto R. Nishitani\end{flushright}
+\end{maplelatex}
+\section{\textbf{ランダムな配列の生成}}
+\begin{maplelatex}\begin{Maple Normal}{
+1から100までの整数5個からなる配列の生成．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{restart:
+roll:=rand(1..100):
+n:=5:
+A:=Array([seq(roll(),i=1..n)]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4307121744)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 93&45&96&6&98\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{A:=[93,45,96,6,98];
+\begin{Maple Normal}{
+としても同じだが，この後，色々なランダム要素を使うので，ここで馴染んでおいて．}\end{Maple Normal}
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := [93, 45, 96, 6, 98]}{\[\displaystyle A\, := \,[93,45,96,6,98]\]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{要素数の取り出し}}
+\begin{maplelatex}\begin{Maple Normal}{
+for-loopで配列を使うときには，配列の大きさ(要素数)がfor-loopの終了条件になることが多い．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{Maple Normal}{
+リスト構造では単純にnopsとすればよい．}\end{Maple Normal}
+
+\textbf{nops(convert(A,list));}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+Arrayの場合は，厳密には最初と最後が明示されている．これを取り出すには以下の通りにする．}\end{Maple Normal}
+
+\textbf{ArrayDims(A);}\textbf{op(ArrayDims(A))[2];}\textbf{op(ArrayDims(A))[2]-op(ArrayDims(A))[1]+1;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1 .. 5}{\[\displaystyle {1\ldots 5}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+ただし，listは不特定の要素数，Arrayは特定の要素数に対する配列という原則からすると，Arrayの要素数はどこかで宣言しているはずであるのでそれを使うほうが正しい．}\end{Maple Normal}
+
+\end{maplegroup}
+\section{\textbf{すべての要素の表示}}
+\begin{maplelatex}\begin{Maple Normal}{
+配列はおなじ箱が沢山用意されていると考えればよい．配列をfor-loopで使うときは，箱を指す数(示数，index)をいじっているのか，箱の中身(要素)をいじっているのかを意識すれば，動作を理解しやすい．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to n do
+  print(i,A[i]);
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 93}{\[\displaystyle 1,\,93\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 45}{\[\displaystyle 2,\,45\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 96}{\[\displaystyle 3,\,96\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4, 6}{\[\displaystyle 4,\,6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5, 98}{\[\displaystyle 5,\,98\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+逆順の表示}\end{Maple Normal}
+
+\textbf{for i from n by -1 to 1 do}\textbf{print(i,A[i]);}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5, 98}{\[\displaystyle 5,\,98\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4, 6}{\[\displaystyle 4,\,6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 96}{\[\displaystyle 3,\,96\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 45}{\[\displaystyle 2,\,45\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 93}{\[\displaystyle 1,\,93\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+逆順の表示2}\end{Maple Normal}
+
+\textbf{for i from 1 to n do}\textbf{print(n-i+1,A[n-i+1]);}\textbf{end do;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5, 98}{\[\displaystyle 5,\,98\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4, 6}{\[\displaystyle 4,\,6\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{3, 96}{\[\displaystyle 3,\,96\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 45}{\[\displaystyle 2,\,45\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 93}{\[\displaystyle 1,\,93\]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{和}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum1:=0:
+for i from 1 to n do
+  sum1:=sum1+A[i];
+end do:
+sum1;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{338}{\[\displaystyle 338\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Heading 3}{
+\textbf{\textit{課題：積を求めよ．}}}\end{Maple Heading 3}
+
+\end{maplegroup}
+\section{\textbf{値の代入}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{k:=64:
+for i from 1 to n do
+  A[i]:=A[i]/k;
+end do:
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4336295840)}{\[\displaystyle  \left[ \begin {array}{ccccc} {\frac {93}{64}}&{\frac {45}{64}}&3/2&{\frac {3}{32}}&{\frac {49}{32}}\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Heading 3}{
+\textbf{\textit{課題：先の和と組み合わせて，全要素の和が1になるように規格化せよ．}}}\end{Maple Heading 3}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Heading 3}{
+\textbf{\textit{課題：配列Bへ逆順に代入せよ．}}}\end{Maple Heading 3}
+
+\textbf{B:=Array(1..n,0):}\end{maplegroup}
+\section{\textbf{一桁の整数5個から5桁の整数を作る}}
+\begin{maplegroup}
+\begin{Maple Normal}{
+まず，一桁の整数でできるランダムな配列を作成する．}\end{Maple Normal}
+
+\textbf{roll:=rand(0..9):}\textbf{n:=5:}\textbf{A:=Array([seq(roll(),i=1..n)]);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4336749496)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 3&5&4&0&7\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum1:=0;
+for i from 1 to n do
+  sum1:=sum1*10+A[i];
+end do:
+sum1;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sum1 := 0}{\[\displaystyle {\it sum1}\, := \,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{35407}{\[\displaystyle 35407\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{\textit{課題：上記と同様にして，10桁の2進数を10進数へ変換せよ}}}
+\section{\textbf{255以下の10進数をランダムに生成して，8桁の2進数へ変換せよ．}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=8:
+2\symbol{94}n;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{256}{\[\displaystyle 256\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(0..255):
+A:=Array(1..n):
+B:=roll();
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := 161}{\[\displaystyle B\, := \,161\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to n do
+  A[n-i+1]:=irem(B,2);
+  B:=iquo(B,2);
+end do:
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4378565496)}{\[\displaystyle  \left[ \begin {array}{cccccccc} 1&0&1&0&0&0&0&1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Heading 3}{
+\textbf{\textit{課題：8桁の整数のそれぞれの桁の値を配列に格納せよ．8桁の整数は以下のようにして作られる．}}}\end{Maple Heading 3}
+
+\textbf{n:=8;}\textbf{roll:=rand(10\symbol{94}(n-1)..10\symbol{94}n):}\textbf{B:=roll();}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{n := 8}{\[\displaystyle n\, := \,8\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := 17914675}{\[\displaystyle B\, := \,17914675\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{小数点以下8桁のそれぞれの桁の数を配列に格納せよ}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=8:
+roll:=rand(10\symbol{94}(n-1)..10\symbol{94}n):
+A:=Array(1..n);
+B:=evalf(roll()/10\symbol{94}n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4379668960)}{\[\displaystyle A\, := \, \left[ \begin {array}{cccccccc} 0&0&0&0&0&0&0&0\end {array} \right] \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := .6308447100}{\[\displaystyle B\, := \, 0.6308447100\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{B:=10*B;
+for i from 1 to n do
+  A[i]:=floor(B);
+  B:=(B-A[i])*10;
+end do:
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{B := 6.308447100}{\[\displaystyle B\, := \, 6.308447100\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4381076816)}{\[\displaystyle  \left[ \begin {array}{cccccccc} 6&3&0&8&4&4&7&1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{最大数}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+n:=5:
+A:=Array([seq(roll(),i=1..n)]);
+i_max:=A[1]:
+for i from 2 to n do
+  if (A[i]>i_max) then
+    i_max:=A[i];
+  end if;
+end do:
+i_max;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4381489568)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 10&15&64&9&12\end {array} \right] \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{64}{\[\displaystyle 64\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Heading 3}{
+\textbf{\textit{課題：最小値を求めよ．}}}\end{Maple Heading 3}
+
+\end{maplegroup}
+\section{\textbf{ある値の上下で分けた個数}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+n:=5:
+A:=Array([seq(roll(),i=1..n)]);
+i_div:=50:
+i_low:=0:i_high:=0:
+for i from 1 to n do
+  if (A[i]>i_div) then
+    i_high:=i_high+1;
+  else
+    i_low:=i_low+1;
+  end if
+end do;
+print(i_low,i_high);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4382259232)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 52&25&72&90&18\end {array} \right] \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 3}{\[\displaystyle 2,\,3\]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{素数かどうかの判定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{n:=10;
+for i from 1 to n do
+  if (isprime(i)) then 
+    print(i);
+  end if;
+end do;
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\section{\textbf{2つの要素の入れ替え}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(1..100):
+n:=5:
+A:=Array([seq(roll(),i=1..n)]);
+sel:=rand(1..n):
+isel:=sel();
+jsel:=sel();
+a:=A[isel];
+b:=A[jsel];
+A[isel]:=b;
+A[jsel]:=a;
+A;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4383146800)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 59&66&12&49&90\end {array} \right] \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{isel := 3}{\[\displaystyle {\it isel}\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{jsel := 2}{\[\displaystyle {\it jsel}\, := \,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a := 12}{\[\displaystyle a\, := \,12\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{b := 66}{\[\displaystyle b\, := \,66\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A[3] := 66}{\[\displaystyle A_{{3}}\, := \,66\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A[2] := 12}{\[\displaystyle A_{{2}}\, := \,12\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4385783728)}{\[\displaystyle  \left[ \begin {array}{ccccc} 59&12&66&49&90\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+より短くするには，}\end{Maple Normal}
+
+\textbf{roll:=rand(1..100):}\textbf{n:=5:}\textbf{A:=Array([seq(roll(),i=1..n)]);}\textbf{sel:=rand(1..n):}\textbf{isel:=sel();}\textbf{jsel:=sel();}\textbf{a:=A[isel];}\textbf{A[isel]:=A[jsel];}\textbf{A[jsel]:=a;}\textbf{A;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4386222608)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccccc} 32&98&9&53&3\end {array} \right] \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{isel := 2}{\[\displaystyle {\it isel}\, := \,2\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{jsel := 5}{\[\displaystyle {\it jsel}\, := \,5\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a := 98}{\[\displaystyle a\, := \,98\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A[2] := 3}{\[\displaystyle A_{{2}}\, := \,3\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A[5] := 98}{\[\displaystyle A_{{5}}\, := \,98\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4388451352)}{\[\displaystyle  \left[ \begin {array}{ccccc} 32&3&9&53&98\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\section{\textbf{コインの表向きの枚数}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(0..1):
+n:=10:
+up:=0:
+for i from 1 to n do
+  trial:=roll();
+  if (trial=1) then 
+    up:=up+1;
+  end if;
+end do:
+up;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{5}{\[\displaystyle 5\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+上のやり方は，あまりに冗長．もっと短くすると以下でも等価な結果になる．}\end{Maple Normal}
+
+\textbf{roll:=rand(0..1):}\textbf{n:=10:}\textbf{up:=0:}\textbf{for i from 1 to n do}\textbf{up:=up+roll();}\textbf{end do:}\textbf{up;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4}{\[\displaystyle 4\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsection{\textbf{\textit{課題：1..6のサイコロを20回振って，出た目を記録せよ．記録には，要素が0の配列を最初に用意し，出た目を示数にして配列の要素をひとつずつ増やす．}}}
+\section{\textbf{2次元配列}}
+\begin{maplelatex}\begin{Maple Normal}{
+2次元配列に対しても同様の操作ができる．ここでは列に対する規格化を示す．}\end{Maple Normal}
+\end{maplelatex}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{roll:=rand(0..1):
+n:=3:
+A:=Array(1..n,1..n,[seq([seq(roll(),i=1..n)],j=1..n)]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A := Matrix(%id = 4388917672)}{\[\displaystyle A\, := \, \left[ \begin {array}{ccc} 0&0&1\\ \noalign{\medskip}0&1&1\\ \noalign{\medskip}1&0&1\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to n do
+for j from 1 to n do
+print(i,j,A[i,j]);
+end do;
+end do;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 1, 0}{\[\displaystyle 1,\,1,\,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 2, 0}{\[\displaystyle 1,\,2,\,0\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1, 3, 1}{\[\displaystyle 1,\,3,\,1\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{2, 1, 0}{\[\displaystyle 2,\,1,\,0\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+i,jの順序に注意．}\end{Maple Normal}
+
+\textbf{for j from 1 to n do}\textbf{tmp:=0;}\textbf{for i from 1 to n do}\textbf{tmp:=tmp+A[i,j];}\textbf{end do;}\textbf{for i from 1 to n do}\textbf{A[i,j]:=A[i,j]/tmp;}\textbf{end do;}\textbf{end do:}\textbf{A;}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{Matrix(%id = 4391541480)}{\[\displaystyle  \left[ \begin {array}{ccc} 0&0&1/3\\ \noalign{\medskip}0&1&1/3\\ \noalign{\medskip}1&0&1/3\end {array} \right] \]}
+\end{maplelatex}
+\end{maplegroup}
+\end{document}

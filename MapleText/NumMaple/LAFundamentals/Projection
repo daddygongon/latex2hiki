@@ -1,0 +1,71 @@
+次に，これを2次元上のグラフで見てみましょう．先ず描画に必要なライブラリーパッケージ(plotsおよびplottools)をwithで読み込んでおきます．
+<<<maple
+> with(plots):with(plottools): 
+>>>
+ベクトルは，位置座標を意味するようにlistへ変換(convert)しておきます．
+<<<maple
+> p0:=convert(x0,list); p1:=convert(b,list); 
+>>>
+位置p0に円(disk)を半径0.2,赤色で描きます．同じように位置p1に半径0.2，青色でdiskを描きます．もう一つ，p0からp1に向かう矢印(arrow)
+を適当な大きさで描きます．後ろの数字をいじると線の幅や矢印の大きさが変わります．
+<<<maple
+> point1:=[disk(p0,0.2,color=red), disk(p1,0.2,color=blue)]:
+> line1:=arrow(p0,p1,.05,.3,.1 ):
+>>>
+
+これらをまとめて表示(display)します．このとき，表示範囲を-8..8,-8..8とします．
+<<<maple
+> display(point1,line1,view=[-2..8,-2..8],gridlines=true);
+>>>
+||{{attach_view(LAFundamentalsplot2d1.png,LAFundamentals)}}||
+
+逆行列は
+<<<maple
+> MatrixInverse(A);
+>>>
+{{dmath ' \left[ \begin {array}{cc} -1/18&5/18\\ 2/9&-1/9\end {array} \right]
+%\left[  \begin {array}{cc}  -\frac{1}{18}&   \frac{5}{18}\\
+%   \frac{2}{9}&   -\frac{1}{9}\end {array} \right]
+ '}}
+で求まります．先ほどの矢印を逆に青から赤へたどる変換になっています．これが，連立方程式を解く様子をグラフで示しています．つまり，行列Aで示される変換によって求まる青点で示したベクトルb(7,5)を指す元の赤点を捜すというものです．答えは(1,1)となります．
+
+では，元の赤点をもう少しいろいろ取って，行列Aでどのような点へ写されるかを見てみましょう．
+<<<maple
+> N:=30:point2:=[]:line2:=[]: 
+  for k from 0 to N-1 do
+    x0:=Vector([sin(2*Pi*k/N),cos(2*Pi*k/N)]); 
+    x1:=A.x0; 
+    p0:=convert(x0,list);
+    p1:=convert(x1,list); 
+    point2:=[op(point2),disk(p0,0.05,color=red)];
+    point2:=[op(point2),disk(p1,0.05,color=blue)]; 
+    line2:=[op(line2),line(p0,p1)];
+  end do:
+>>>
+N:=30で分割した円周上の点をx0で求めて，point2にその円とそれのＡ.x0を，line2にはその2点を結ぶline(線)を足しています．
+使っているコマンドは，先ほどの描画とほぼ同じです．ただし，Mapleスクリプトに特有のidiom(熟語)を使っています．この基本形をとり出すと，
+<<<maple
+> list1:=[]; 
+  for k from 0 to 2 do 
+    list1:=[op(list1),k]; 
+  end do; 
+  list1;
+>>>
+{{dmath ' []  '}}
+{{dmath ' [0]  '}}
+{{dmath ' [0, 1]  '}}
+{{dmath ' [0, 1, 2]  '}}
+{{dmath ' [0, 1, 2]  '}}
+{{dmath '  '}}
+となります．for-loopでkを0から4まで回し，list1に次々と値を追加していくというテクです．
+
+できあがりの次の図を見てください．
+<<<maple
+> d:=6: display(point2,line2,view=[-d..d,-d..d]);
+>>>
+||{{attach_view(LAFundamentalsplot2d2.png,LAFundamentals)}}||
+
+何やっているか分かります? 中心の赤点で示される円が，青点で示される楕円へ写されていることが分かるでしょうか．
+
+線形代数の講義で，写像を示すときによく使われるポンチ絵を現実の空間で示すとこのようになります．ポンチ絵では，赤で示した{{math 'V'}}空間が青で示した{{math 'W'}}空間へ行列{{math 'A'}}によって写像され，それぞれの要素{{math 'v'}}が{{math 'w'}}へ移されると意図しています．
+||{{attach_view(Projection3-4.png,LAFundamentals)}}||

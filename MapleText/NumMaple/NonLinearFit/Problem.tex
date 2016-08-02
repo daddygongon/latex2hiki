@@ -1,0 +1,31 @@
+\begin{enumerate}
+\item 一山ピークへのフィット
+
+以下の256個のデータ
+\begin{MapleInput}
+> ndata:=256; f1:=t->subs({a1=10,a2=40000,a3=380,a4=128},a1+a2/(a3+(t-a4)^2) );
+> T:=[seq(f1(i)*(0.6+0.8*evalf(rand()/10^12)),i=1..ndata)]:
+> f:=t->a1+a2/(a3+(t-a4)^2);
+\end{MapleInput}
+で近似したときのパラメータa1,a2,a3,a4を求めよ．ただし，パラメータの初期値は，ある程度近い値にしないと収束しない．
+\item 二山ピークのフィット
+以下のように作成したデータ
+\begin{MapleInput}
+> ndata:=256; f1:=t->subs({a=10,b=40000,c=380,d=128},a+b/(c+(t-d)^2) );
+> f2:=t->subs({a=10,b=40000,c=380,e=90},a+b/(c+(t-e)^2) );
+> T:=[seq((f1(i)+f2(i))*(0.6+0.2*evalf(rand()/10^12)),i=1..ndata)]:
+\end{MapleInput}
+を
+\begin{MapleInput}
+> f:=t->a1+a2/(a3+(t-a4)^2)+a2/(a3+(t-a5)^2);
+\end{MapleInput}
+\begin{MapleOutput}
+f\, := \,t\mapsto {\it a1}+{\frac {{\it a2}}{{\it a3}+ \left( t-{\it a4} \right) ^{2}}}+{\frac {{\it a2}}{{\it a3}+ \left( t-{\it a5} \right) ^{2}}}
+\end{MapleOutput}
+で近似したときのパラメータを求めよ．
+\begin{MapleInput}
+> l1:=listplot(T): display(l1);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/C9_NonLinearFitplot2d8.eps}
+
+\end{enumerate}

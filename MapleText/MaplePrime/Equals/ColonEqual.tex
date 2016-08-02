@@ -1,0 +1,42 @@
+\paragraph{等号の意味}
+等号は，数学でいろいろな意味を持つことを中学校で学ぶ．それぞれの状況による意味の違いを人間は適当に判断できるが，プログラムであるMapleでは無理．Mapleでは，それぞれ違った記号や操作として用意され，人間がMapleに指示する必要がある．
+
+\subsection{変数への代入:= (colonequal)}
+変数に値を代入する時には:= (colonequal)を使う．例えば，
+\begin{MapleError}
+a=3, b=2のとき，a+bはいくらか？
+\end{MapleError}
+という問題を，Mapleで解かす時には，
+\begin{MapleError}
+aに3, bに2を代入したとき，a+bはいくらか？
+\end{MapleError}
+と読み直し，
+\begin{MapleInput}
+> a:=3; #res: 3
+> b:=2; #res: 2
+> a+b;  #res: 5
+\end{MapleInput}
+式の定義も同様．以下は$ax+b=cx^2+dx+e$という式をeq1と定義している．
+\begin{MapleInput}
+> eq1:=a*x+b=c*x^2+d*x+e;
+\end{MapleInput}
+\begin{MapleOutput}
+3x+2=cx^2+dx+e
+\end{MapleOutput}
+a,bに値が代入されていることに注意．
+
+\subsection{変数の初期化(restart)}
+一度何かを代入した変数を何も入れていない状態に戻す操作を変数の初期化という．すべての変数を一度に初期化するには，
+\begin{MapleInput}
+> restart;
+\end{MapleInput}
+とする．なにか新たなひとまとまりの作業をするときには，このコマンドを冒頭に入れることを習慣づけるように．
+
+作業の途中でひとつの変数だけを初期化するには，シングルクォート’でくくる．
+\begin{MapleInput}
+> a:='a';
+\end{MapleInput}
+\begin{MapleOutput}
+a
+\end{MapleOutput}
+一時的代入にsubsがある．

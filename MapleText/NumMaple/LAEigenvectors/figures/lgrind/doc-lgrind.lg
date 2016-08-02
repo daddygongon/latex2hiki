@@ -1,0 +1,53 @@
+%%
+%% This is file `doc-lgrind.lg',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% lgrind.dtx  (with options: `example')
+%% 
+%% LGrind is used to format source code of different programming
+%% languages for LaTeX.
+%% 
+%% LGrind is a major adaptation of Jerry Leichter's tgrind for LaTeX,
+%% which was a notable improvement upon Van Jacobsen's tgrind for
+%% plain TeX, which was adapted from vgrind, a troff prettyprinter.
+%% 
+%% LGrind contains non-free code written by Van Jacobson, who does not answer
+%% to any request for changing his licence. This software is therefore not
+%% maintained. I also do not accept any cheques anymore.
+%% Based on Van Jacobson's ``tgrindmac'', a macro package for TeX.
+%% Modified, 1987 by Jerry Leichter. Put '@' in all internal names.
+%% Modified, 1991 by George Reilly. Changed name from tgrind to lgrind.
+%% Modified, 1995 by Michael Piefel. Made it work with \LaTeXe.
+%%          -1999    Hundreds of bells and whistles. No changelog here.
+%%stopzone   % VIM syncing
+\documentclass{report}
+\usepackage{lgrind}
+
+\begin{document}
+
+\chapter{Introduction}
+This is a \LaTeX file with embedded code. Process it with \textsf{LGrind}
+and its option -e.
+
+\appendix
+\chapter{lgrind.c}
+%< lgrind.c
+
+\chapter{regexp.c}
+\section{Header}
+%< regexp.h
+\section{Code}
+%< regexp.c
+
+\chapter{lgrindef.c}
+\section{Header}
+%< lgrindef.h
+\section{Code}
+%< lgrindef.c
+
+\end{document}
+\endinput
+%%
+%% End of file `doc-lgrind.lg'.

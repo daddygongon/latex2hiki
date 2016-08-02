@@ -1,0 +1,61 @@
+\documentclass[10pt,a4j]{jreport}
+\usepackage[dvips]{graphicx,color}
+\usepackage{verbatim}
+\usepackage{amsmath,amsthm,amssymb}
+\topmargin -15mm\oddsidemargin -4mm\evensidemargin\oddsidemargin
+\textwidth 170mm\textheight 257mm\columnsep 7mm
+\setlength{\fboxrule}{0.2ex}
+\setlength{\fboxsep}{0.6ex}
+
+\pagestyle{empty}
+
+\newcommand{\MaplePlot}[2]{{\begin{center}
+    \includegraphics[width=#1,clip]{#2}
+                     \end{center}
+%
+} }
+
+\newenvironment{MapleInput}{%
+    \color{red}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleError}{%
+    \color{blue}\verbatim
+}{%
+    \endverbatim
+}
+
+\newenvironment{MapleOutput}{%
+    \color{blue}\begin{equation*}
+}{%
+    \end{equation*}
+}
+
+\newenvironment{MapleOutputGather}{%
+    \color{blue}\gather
+}{%
+    \endgather
+}
+\newcommand{\ChartElement}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}\vspace{-10mm}
+} }
+
+\newcommand{\ChartElementTwo}[1]{{
+	\color{magenta}\begin{flushleft}$\left[\left[\left[\textbf{\large #1}\right]\right]\right]$
+	\end{flushleft}
+} }
+\begin{document}
+\pagebreak
+\section{積分(int)}
+\ChartElement{解説}
+\input{Int.tex} 
+\input{StudentPackage.tex} 
+\ChartElementTwo{課題}
+\input{ExInt.tex} 
+\ChartElementTwo{解答例}
+\input{ExAnsInt.tex} 
+
+\end{document}

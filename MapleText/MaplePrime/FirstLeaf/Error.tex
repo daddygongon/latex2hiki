@@ -1,0 +1,29 @@
+\subsubsection{間違い(Error)}
+いくつかの典型的な間違い.
+先ずは,左右の括弧の数が合ってないとき．
+\begin{MapleInput}
+> plot(sin(x,x=-Pi..Pi);
+\end{MapleInput}
+\begin{MapleError}
+Error, `;` unexpected
+\end{MapleError}
+正しくは,
+\begin{MapleInput}
+> plot(sin(x),x=-Pi..Pi);
+\end{MapleInput}
+です．関数の中に変数が残ったままplotしようとしたとき．
+\begin{MapleInput}
+> plot(sin(a*x),x=-Pi..Pi);
+\end{MapleInput}
+\begin{MapleError}
+Warning, unable to evaluate the function to numeric values in the region; see
+the plotting command's help page to ensure the calling sequence is correct
+\end{MapleError}
+\MaplePlot{30mm}{./figures/FirstLeafplot2d2.eps}
+何も表示されない．xに1を代入しても，sin(a*x)からは数値ではなく記号で答えが返って来ている．plotは関数が数値を返したときしか表示できない．以下のように，変数aのかわりに数値を入れる．
+\begin{MapleInput}
+> plot(sin(2*x),x=-Pi..Pi);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/FirstLeafplot2d3.eps}
+
+

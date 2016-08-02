@@ -1,0 +1,297 @@
+%% Created by Maple 15.01, Mac OS X
+%% Source Worksheet: EqManip4.mw
+%% Generated: Tue Jul 24 21:39:56 JST 2012
+\documentclass{article}
+\usepackage{maplestd2e}
+\def\emptyline{\vspace{12pt}}
+\begin{document}
+\pagestyle{empty}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Error}
+\DefineCharStyle{Maple Hyperlink}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\section{\textbf{式の変形(}\textbf{III, assume, subs)}}
+\subsection{\textbf{解説}}
+\subsubsection{\textbf{\textit{代入，置換，仮定に関連したコマンド}}}
+\subsubsection{\textit{subs(関係式, exp1):一時的代入}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}2-4*x*y+4;
+subs(x=2,exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := x^2-4*x*y+4}{\[\displaystyle {\it exp1}\, := \,{x}^{2}-4\,xy+4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{8-8*y}{\[\displaystyle 8-8\,y\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{subs(\{x=a+2,y=sin(x)\},exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{(a+2)^2-(4*(a+2))*sin(x)+4}{\[\displaystyle  \left( a+2 \right) ^{2}-4\, \left( a+2 \right) \sin \left( x \right) +4\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{assume(関係式):仮定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sqrt(b\symbol{94}2);
+assume(a>0);
+sqrt(a\symbol{94}2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sqrt(b^2)}{\[\displaystyle  \sqrt{{b}^{2}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a}{\[\displaystyle a\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{exp1 assuming 関係式:一時的仮定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{exp1:=x\symbol{94}2-4*x+4;
+sqrt(exp1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{exp1 := x^2-4*x+4}{\[\displaystyle {\it exp1}\, := \,{x}^{2}-4\,x+4\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{sqrt((-2+x)^2)}{\[\displaystyle  \sqrt{ \left( -2+x \right) ^{2}}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sqrt(exp1) assuming x>2;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-2+x}{\[\displaystyle -2+x\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{additionally:assumeに加えての仮定}}
+\subsubsection{\textit{assign(exp1)}\textit{:solveで求めた値の確定}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x:='x':y:='y':
+s1:=solve(\{x-y+1=0,x+y-2=0\},\{x,y\});
+assign(s1);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1 := {x = 1/2, y = 3/2}}{\[\displaystyle {\it s1}\, := \, \left\{ x=1/2,y=3/2 \right\} \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{x,y;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1/2, 3/2}{\[\displaystyle 1/2,\,3/2\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{about:assumeで仮定した内容の確認}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{about(a);
+}{}
+\end{mapleinput}
+\mapleresult
+Originally a, renamed a\symbol{126}:
+is assumed to be: RealRange(Open(0),infinity)\end{maplegroup}
+\subsubsection{\textit{anames('user'):ユーザが定義した変数の確認}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{anames('user');
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{s1, y, x, a}{\[\displaystyle {\it s1},\,y,\,x,\,a\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{restart,a:='a': 値の初期化}}
+\subsubsection{\textbf{\textit{省略操作，その他のコマンド}}}
+\subsubsection{\textit{||:連結作用素，前後の変数をくっつけて新たな変数とする．}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{a||1;
+a||b;
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{a1}{\[\displaystyle {\it a1}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{ab}{\[\displaystyle {\it ab}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{for i from 1 to 3 do
+  a||i:=i\symbol{94}2;
+end do:
+}{}
+\end{mapleinput}
+\end{maplegroup}
+\subsubsection{\textit{seq(exp1,i=0..3):for-loopの単純表記}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{seq(k,k=4..7);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{4, 5, 6, 7}{\[\displaystyle 4,\,5,\,6,\,7\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{map(exp1,i=0..3):リスト要素への関数の一括適用}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{f:=x->exp(-x);
+map(f,[0,1,2,3]);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{f := proc (x) options operator, arrow; exp(-x) end proc}{\[\displaystyle f\, := \,x\mapsto {{\rm e}^{-x}}\]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[1, exp(-1), exp(-2), exp(-3)]}{\[\displaystyle [1,{{\rm e}^{-1}},{{\rm e}^{-2}},{{\rm e}^{-3}}]\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{Maple Normal}{
+上記の３つを組み合わせると，効率的に式を扱うことができる．}\end{Maple Normal}
+
+\textbf{map(sin,[seq(theta||i,i=0..3)]);}\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[sin(theta0), sin(theta1), sin(theta2), sin(theta3)]}{\[\displaystyle [\sin \left( {\it theta0} \right) ,\sin \left( {\it theta1} \right) ,\sin \left( {\it theta2}\\
+\mbox{} \right) ,\sin \left( {\it theta3} \right) ]\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{add,mul:単純な和，積}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{add(x\symbol{94}i,i=0..3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{1+x+x^2+x^3}{\[\displaystyle 1+x+{x}^{2}+{x}^{3}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{mul(x\symbol{94}i,i=0..3);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^6}{\[\displaystyle {x}^{6}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{sum,product:数式に対応した和，積}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{add(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{Maple Error}{
+Error, unable to execute add}\end{Maple Error}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{sum(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^(n+1)/(x-1)-1/(x-1)}{\[\displaystyle {\frac {{x}^{n+1}}{x-1}}- \left( x-1 \right) ^{-1}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{product(x\symbol{94}i,i=0..n);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{x^((1/2)*(n+1)^2-(1/2)*n-1/2)}{\[\displaystyle {x}^{1/2\, \left( n+1 \right) ^{2}-1/2\,n-1/2}\]}
+\end{maplelatex}
+\end{maplegroup}
+\subsubsection{\textit{limit:極限}}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(exp(-x),x=infinity);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{0}{\[\displaystyle 0\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(tan(x),x=Pi/2);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{undefined}{\[\displaystyle {\it undefined}\]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{limit(tan(x),x=Pi/2,left);
+limit(tan(x),x=Pi/2,complex);
+}{}
+\end{mapleinput}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{infinity}{\[\displaystyle \infty \]}
+\end{maplelatex}
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{-infinity+infinity*I}{\[\displaystyle -\infty +i\infty \]}
+\end{maplelatex}
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{}{}
+\end{mapleinput}
+\end{maplegroup}
+\end{document}

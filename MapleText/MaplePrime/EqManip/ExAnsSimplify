@@ -1,0 +1,20 @@
+<<<maple
+> factor(x^100-1);
+>>>
+{{dmath ' \left( x-1 \right)  \left( 1+{x}^{4}+{x}^{3}+{x}^{2}+x \right)  \left( 1+{x}^{20}+{x}^{15}+{x}^{10}+{x}^{5} \right)  '}}
+{{dmath ' \left( 1+x \right)  \left( 1-x+{x}^{2}-{x}^{3}+{x}^{4} \right)  \left( 1-{x}^{5}+{x}^{10}-{x}^{15}+{x}^{20} \right)  '}}
+{{dmath ' \left( 1+{x}^{2} \right)  \left( {x}^{8}-{x}^{6}+{x}^{4}-{x}^{2}+1 \right)  \left( {x}^{40}-{x}^{30}+{x}^{20}-{x}^{10}+1 \right)   '}}
+{{dmath '  '}}
+
+<<<maple
+> factor( x^2-y^2+2*x+1);
+>>>
+{{dmath ' \left( x+1+y \right)  \left( x+1-y \right) 
+ '}}
+
+<<<maple
+> factor((a+b+c)^3-(a^3+b^3+c^3));
+>>>
+{{dmath ' 3\, \left( b+c \right)  \left( c+a \right)  \left( a+b \right)
+ '}}
+

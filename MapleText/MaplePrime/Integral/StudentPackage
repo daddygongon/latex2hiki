@@ -1,0 +1,35 @@
+
+!!!studentパッケージいろいろ 
+ちょっとぐらい難しい積分も，Mapleは単純にintコマンドだけで実行してくれる．しかし，時には，途中の計算法である部分積分，置換積分，部分分数展開が必要になる．このような計算はstudentパッケージに用意さている．
+<<<maple
+> with(student):
+>>>
+
+!!!!!部分積分(integration by parts) 
+<<<maple
+> intparts(Int(x*exp(x),x),x);
+>>>
+{{dmath ' x\exp(x)-\int \exp(x){dx}
+ '}}
+
+!!!!!置換(change of variables)による積分 
+<<<maple
+> Int((cos(x)+1)^3*sin(x), x);
+> changevar(cos(x)+1=u, Int((cos(x)+1)^3*sin(x), x=a..b), u);
+> changevar(cos(x)+1=u, int((cos(x)+1)^3*sin(x), x), u);
+>>>
+{{dmath ' \int \left( \cos \left( x \right) +1 \right) ^{3}\sin \left( x \right) {dx}  '}}
+{{dmath ' \int _{\cos \left( a \right) +1}^{\cos \left( b \right) +1}-{u}^{3}{du}  '}}
+{{dmath '  -\frac{1}{4}\,{u}^{4}  '}}
+{{dmath '  '}}
+
+!!!!!部分分数(partial fraction)展開による積分 
+部分分数(partial fraction)展開による積分では，convertコマンドを用いる．
+<<<maple
+> pf1:=convert(1/(1+x^3),parfrac,x);
+  int(pf1,x);
+>>>
+{{dmath '  {\it pf1}\, := \frac{1}{3}\,{\frac {-x+2}{{x}^{2}-x+1}}+ \frac{1}{3\,\left( x+1 \right) }  '}}
+{{dmath '  -\frac{1}{6}\,\ln  \left( {x}^{2}-x+1 \right) +\frac{1}{3}\, \sqrt{3}\arctan \left( 1/3\, \left( 2\,x-1 \right)  \sqrt{3} \right) +\frac{1}{3}\,\ln  \left( x+1 \right)  '}}
+{{dmath '  '}}
+

@@ -1,0 +1,150 @@
+どうしても解かなければならない課題を前にコマンドリファレンスのあちこちを参照しながら解いていくのが数式処理を修得する最速法である．とびかかる前にちょっとした共通
+のコツがある．それをここでは示す．数式処理ソフトでの数式処理とは，数式処理ソフトが『自動的にやって』くれるのではなく，実際に紙と鉛筆で解いていく手順を数式処理ソ
+フトに『やらせる』ことであることを肝に銘じよ．
+
+\subsection{鉄則}
+Mapleをはじめとする数式処理ソフトの習得にあたって初心者がつまづく共通の過ちを回避する鉄則がある．
+\begin{description}
+\item[鉄則０：restart をかける]
+続けて入力すると前の入力が生きている．違う問題へ移るときや，もう一度入力をし直すときには，restart;を入力して初期状態からはじめる．入力した順番が狂っている場合もある．頭から順にreturnをやり直す．
+\item[鉄則１：出力してみる]
+多くのテキストではページ数の関係で出力を抑止しているが，初心者が問題を解いていく段階ではデータやグラフをできるだけ多く出力する．最後のコロンをセミコロンに変える，あるいは途中にprint文を入れる．
+\item[鉄則２：関数に値を代入してみる]
+数値が返ってくるべき時に変数があればどこかで入力をミスっている．plotで以下のようなエラーが出た場合にチェック．
+\begin{MapleInput}
+> plot(f(x),x);
+\end{MapleInput}
+\begin{MapleError}
+Warning, unable to evaluate the function to numeric values in the region; see
+the plotting command's help page to ensure the calling sequence is correct
+\end{MapleError}
+\item[鉄則３：内側から順に入力する]
+長い入力やfor-loopを頭から打ち込んではいけない！！　内側から順に何をしているか解読・確認しながら打ち込む．括弧が合わなかったり，読み飛ばしていたりというエラーが回避できる．
+\end{description}
+
+\subsection{具体例：無限積分}
+以下に示す積分を実行せよ．
+\begin{equation*}
+\int _{-\infty }^{\infty }x \exp(-\beta c\,{x}^{2}) \left( 1+\beta g\,{x}^{3} \right) {dx}
+\end{equation*}
+最新版のMapleでは改良が施されていて，このような複雑な積分も一発で求まる．
+\begin{MapleInput}
+> f1:=unapply(x*exp(-beta*c*x^2)*(1+beta*g*x^3),x);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it f1}\, := \,x\mapsto x\exp(-\beta c\,{x}^{2}) \left( 1+\beta\,g{x}^{3} \right) 
+\end{MapleOutput}
+
+\begin{MapleInput}
+> int(f1(x),x=-infinity..infinity);
+\end{MapleInput}
+\begin{MapleOutput}
+\left\{\, \begin {array}{cc} {\displaystyle \frac{3}{4}\,\frac {g \sqrt{\pi }}{\beta\,{c}^{2} \sqrt{c\beta}}}&csgn \left( c\beta \right) =1\\  \infty&otherwise\end {array} \right.
+\end{MapleOutput}
+ここでは，$c \beta$が正の場合(csgn(beta c)=1)とそれ以外の場合(otherwise)に分けて答えを返している．しかしこのような意図したきれいな結果をいつもMapleが返してくれるとは限らない．これだけしか知らないと，なにかうまくいかないときにお手上げになってしまう．このようなきれいで簡単な結果に行き着く前の，裏でおこなういくつかの予備計算を省略せずに示そう．
+
+先ず鉄則０にしたがってrestartをかけ，関数を定義する．
+\begin{MapleInput}
+> restart; f1:=unapply(x*exp(-beta*c*x^2)*(1+beta*g*x^3),x);
+\end{MapleInput}
+\begin{MapleOutput}
+{\it f1}\, := \,x\mapsto x \exp(-\beta c\,{x}^{2}) \left( 1+\beta\,g{x}^{3} \right) \end{MapleOutput}
+次には鉄則１にしたがって積分する前にどのような関数かプロットしてみる．そのままplotへ投げると怒られる．
+\begin{MapleInput}
+> plot(f1(x),x=-10..10);
+\end{MapleInput}
+\begin{MapleError}
+Warning, unable to evaluate the function to numeric values in the region; see
+the plotting command's help page to ensure the calling sequence is correct
+\end{MapleError}
+これは鉄則２にあるとおり，数値を代入すれば，
+\begin{MapleInput}
+> f1(10);
+\end{MapleInput}
+\begin{MapleOutput}
+10\,\exp(-100\,c\beta) \left( 1+1000\,\beta\,g \right)
+\end{MapleOutput}
+
+beta,c,gなどのパラメータの値が入っていないためとわかる．適当に値を代入する．
+\begin{MapleInput}
+> c:=1; g:=0.01; beta:=0.1; #res:1 0.01 0.1
+\end{MapleInput}
+
+再度プロットを試みる．
+\begin{MapleInput}
+> plot(f1(x),x=-10..10);
+\end{MapleInput}
+\MaplePlot{50mm}{./figures/EqManip5plot2d1.eps}
+
+実際に積分してみる．ここでは，鉄則３にしたがって，式を頭から打ち込むのではなく内側からみていくことが肝要である．これは問題を解いていく時に，思考が必ずたどるであ
+ろう順番に相当する．
+先ず変数に入れた数値をクリアする．
+\begin{MapleInput}
+> c:='c': g:='g':beta:='beta':
+\end{MapleInput}
+不定積分でこの関数が積分できることを確認する．
+\begin{MapleInput}
+> int(f1(x),x);
+\end{MapleInput}
+\begin{MapleOutput}
+-\frac{1}{2}\,{\frac {1}{{\exp(c\beta\,{x}^{2})}\beta\,c}}+\beta\,g \left( -\frac{1}{2}\,{\frac {{x}^{3}{ \exp(-c\beta\,{x}^{2}) }}{c\beta}}+\frac{3}{2}\, \left( -\frac{1}{2}\,{\frac {x{\exp(-c\beta\,{x}^{2})}}{c\beta}}+\frac{1}{4}\,{\frac { \sqrt{\pi }{erf\left( \sqrt{c\beta}x\right)}}{c\beta\, \sqrt{c\beta}}} \right) {c}^{-1}{\beta}^{-1} \right)
+\end{MapleOutput}
+
+次にx=-alpha..alphaの定積分を実行する．これは上記のコマンドに付け足すようにしていく．
+\begin{MapleInput}
+> int(f1(x),x=-alpha..alpha);
+\end{MapleInput}
+\begin{MapleOutput}
+-\frac{1}{4}\,{\frac {g \left( 4\,{\alpha}^{3}\exp({-c\beta\,{\alpha}^{2}}) \beta\,c \sqrt{c\beta}+6\,\alpha\,\exp({-c\beta\,{\alpha}^{2}}) \sqrt{c\beta}-3\, \sqrt{\pi }{erf\left( \sqrt{c\beta}\alpha\right)}\\
+\mbox{} \right) }{\beta\,{c}^{2} \sqrt{c\beta}}}
+\end{MapleOutput}
+さらに$\alpha \mapsto \infty$としてみる．
+\begin{MapleInput}
+> limit(int(f1(x),x=-alpha..alpha),alpha=infinity);
+\end{MapleInput}
+\begin{MapleOutput}
+\lim _{\alpha\rightarrow \infty }-\frac{1}{4}\,{\frac {g \left( 4\,{\alpha}^{3}\exp({-c\beta\,{\alpha}^{2}})\beta\,c \sqrt{c\beta}+6\,\alpha\,\exp({-c\beta\,{\alpha}^{2}}) \sqrt{c\beta}-3\, \sqrt{\pi }{erf\left( \sqrt{c\beta}\alpha\right)} \right) \\
+\mbox{}}{\beta\,{c}^{2} \sqrt{c\beta}}}
+\end{MapleOutput}
+
+ところがこれでは答えを返してくれない．積分した後のそれぞれの項を見ると$\beta \,c>0$を仮定すれば簡単になることが分る．assumeを使って，このような変数の仮定おこ
+なう．
+\begin{MapleInput}
+> assume(beta*c>0);
+\end{MapleInput}
+結果として最初に出した解答を得る．
+\begin{MapleInput}
+> limit(int(f1(x),x=-alpha..alpha),alpha=infinity);
+\end{MapleInput}
+\begin{MapleOutput}
+\frac{3}{4}\,{\frac { \sqrt{\pi }g}{\beta \,{c}^{2} \sqrt{\beta \,c}}}
+\end{MapleOutput}
+
+\subsection{式のフォローのデフォルト}
+Mapleで実際に数式をいじる状況というのは，ほとんどの場合が既知の数式変形のフォローだろう．例えば，論文で「(1)式から(2)式への変形は自明である」とかいう
+文章で済ましている変形が本当にあっているのかを確かめたい時．一番単純なやり方は自明と言われた前後の式が一致していることを確かめるだけで十分である．
+最も単純な確認法は以下の通り，変形の前後の式を手入力してその差をexpandした結果が0か否かでする．
+\begin{MapleInput}
+> ex1:=(x-3)^4;
+\end{MapleInput}
+\begin{MapleOutput}
+{\it ex1}\, := \, \left( x-3 \right) ^{4}
+\end{MapleOutput}
+
+\begin{MapleInput}
+> ex2:=x^4-12*x^3+54*x^2-108*x+81;
+\end{MapleInput}
+\begin{MapleOutput}
+{\it ex2}\, := \,{x}^{4}-12\,{x}^{3}+54\,{x}^{2}-108\,x+81
+\end{MapleOutput}
+
+\begin{MapleInput}
+> expand(ex1-ex2); #res: 0
+\end{MapleInput}
+
+0ならば式の変形は保証されているので，その導出が間違いでなく誤植などもないことが確認できる．ただ，これだけでは変形の哲学や技法が身に付くわけではない．あくまでも
+苦し紛れのデフォルトであることは心に留めておくように．
+論理値として確かめたいときには，evalbを使う．
+\begin{MapleInput}
+> evalb(expand(ex1-ex2)=0); #res: true
+\end{MapleInput}
