@@ -69,7 +69,7 @@ Error/                 LAEigenvectors/        NonLinearFit/          NumMapleCon
 FFT/                   LAFundamentals/        NumMaple.out           NumMaple_140130.pdf
 FSolve/                LAMatrixInverse/       NumMaple.tex           NumMaple_160802.pdf
 InterpolationIntegral/ LeastSquareFit/        NumMaple.toc           Rakefile
-bob% rake maple
+bob% rake hiki
 "./Error"
 [["begin", "document"], ["chapter", "誤差(Error)"], ["section", "打ち切り誤差と丸め誤差(Truncation and round off errors)"], ["input", "TruncationRoundoff.tex"], ["s
 >>>
